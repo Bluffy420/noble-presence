@@ -9,7 +9,7 @@ const postsQuery = queryOptions({
   queryFn: () => getPosts({ data: { number: 30 } }),
 });
 
-export const Route = createFileRoute("/blogs")({
+export const Route = createFileRoute("/blogs/")({
   head: () => ({
     meta: [
       { title: "Legal Insights — NB Associates" },
