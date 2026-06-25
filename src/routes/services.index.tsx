@@ -1,6 +1,4 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
-import { SiteHeader } from "@/components/SiteHeader";
-import { SiteFooter } from "@/components/SiteFooter";
 import { SERVICES } from "@/lib/services";
 
 export const Route = createFileRoute("/services/")({
@@ -20,7 +18,6 @@ export const Route = createFileRoute("/services/")({
 function ServicesPage() {
   return (
     <div className="min-h-screen bg-background">
-      <SiteHeader />
       <main>
         <section className="border-b border-border">
           <div className="mx-auto max-w-7xl px-6 pt-24 pb-20 lg:px-10 lg:pt-32 lg:pb-24">
@@ -64,7 +61,6 @@ function ServicesPage() {
           </div>
         </section>
       </main>
-      <SiteFooter />
     </div>
   );
 }

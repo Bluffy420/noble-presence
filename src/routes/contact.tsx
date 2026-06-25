@@ -1,6 +1,4 @@
 import { createFileRoute } from "@tanstack/react-router";
-import { SiteHeader } from "@/components/SiteHeader";
-import { SiteFooter } from "@/components/SiteFooter";
 
 export const Route = createFileRoute("/contact")({
   head: () => ({
@@ -19,7 +17,6 @@ export const Route = createFileRoute("/contact")({
 function ContactPage() {
   return (
     <div className="min-h-screen bg-background">
-      <SiteHeader />
       <main>
         <section className="border-b border-border">
           <div className="mx-auto max-w-7xl px-6 pt-24 pb-20 lg:px-10 lg:pt-32">
@@ -120,7 +117,6 @@ function ContactPage() {
           </div>
         </section>
       </main>
-      <SiteFooter />
     </div>
   );
 }

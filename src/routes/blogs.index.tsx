@@ -1,7 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
-import { SiteHeader } from "@/components/SiteHeader";
-import { SiteFooter } from "@/components/SiteFooter";
 import { getPosts } from "@/lib/wordpress.functions";
 
 const postsQuery = queryOptions({
@@ -24,12 +22,10 @@ export const Route = createFileRoute("/blogs/")({
   component: BlogsPage,
   errorComponent: ({ error }) => (
     <div className="min-h-screen bg-background">
-      <SiteHeader />
       <div className="mx-auto max-w-3xl px-6 py-32 text-center">
         <h1 className="text-2xl font-semibold tracking-tight">Couldn't load articles</h1>
         <p className="mt-3 text-muted-foreground">{error.message}</p>
       </div>
-      <SiteFooter />
     </div>
   ),
 });
@@ -38,7 +34,6 @@ function BlogsPage() {
   const { data: posts } = useSuspenseQuery(postsQuery);
   return (
     <div className="min-h-screen bg-background">
-      <SiteHeader />
       <main>
         <section className="border-b border-border">
           <div className="mx-auto max-w-7xl px-6 pt-24 pb-20 lg:px-10 lg:pt-32">
@@ -99,7 +94,6 @@ function BlogsPage() {
           </div>
         </section>
       </main>
-      <SiteFooter />
     </div>
   );
 }
