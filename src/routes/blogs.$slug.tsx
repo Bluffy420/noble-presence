@@ -1,7 +1,5 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
-import { SiteHeader } from "@/components/SiteHeader";
-import { SiteFooter } from "@/components/SiteFooter";
 import { getPostBySlug } from "@/lib/wordpress.functions";
 
 const postQuery = (slug: string) =>
@@ -33,24 +31,20 @@ export const Route = createFileRoute("/blogs/$slug")({
   component: PostPage,
   notFoundComponent: () => (
     <div className="min-h-screen bg-background">
-      <SiteHeader />
       <div className="mx-auto max-w-3xl px-6 py-32 text-center">
         <h1 className="text-3xl font-semibold tracking-tight">Article not found</h1>
         <Link to="/blogs" className="mt-6 inline-block text-navy underline">
           Back to all articles
         </Link>
       </div>
-      <SiteFooter />
     </div>
   ),
   errorComponent: ({ error }) => (
     <div className="min-h-screen bg-background">
-      <SiteHeader />
       <div className="mx-auto max-w-3xl px-6 py-32 text-center">
         <h1 className="text-2xl font-semibold tracking-tight">Couldn't load this article</h1>
         <p className="mt-3 text-muted-foreground">{error.message}</p>
       </div>
-      <SiteFooter />
     </div>
   ),
 });
@@ -61,7 +55,6 @@ function PostPage() {
 
   return (
     <div className="min-h-screen bg-background">
-      <SiteHeader />
       <main>
         <article>
           <header className="border-b border-border">
@@ -110,7 +103,6 @@ function PostPage() {
           </div>
         </section>
       </main>
-      <SiteFooter />
     </div>
   );
 }

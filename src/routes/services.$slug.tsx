@@ -1,7 +1,5 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
-import { SiteHeader } from "@/components/SiteHeader";
-import { SiteFooter } from "@/components/SiteFooter";
 import { SERVICES } from "@/lib/services";
 import { getPageBySlug } from "@/lib/wordpress.functions";
 
@@ -34,24 +32,20 @@ export const Route = createFileRoute("/services/$slug")({
   component: ServicePage,
   notFoundComponent: () => (
     <div className="min-h-screen bg-background">
-      <SiteHeader />
       <div className="mx-auto max-w-3xl px-6 py-32 text-center">
         <h1 className="text-3xl font-semibold tracking-tight">Service not found</h1>
         <Link to="/services" className="mt-6 inline-block text-navy underline">
           View all services
         </Link>
       </div>
-      <SiteFooter />
     </div>
   ),
   errorComponent: ({ error }) => (
     <div className="min-h-screen bg-background">
-      <SiteHeader />
       <div className="mx-auto max-w-3xl px-6 py-32 text-center">
         <h1 className="text-2xl font-semibold tracking-tight">Couldn't load this page</h1>
         <p className="mt-3 text-muted-foreground">{error.message}</p>
       </div>
-      <SiteFooter />
     </div>
   ),
 });
@@ -63,7 +57,6 @@ function ServicePage() {
 
   return (
     <div className="min-h-screen bg-background">
-      <SiteHeader />
       <main>
         <section className="border-b border-border">
           <div className="mx-auto max-w-5xl px-6 pt-20 pb-16 lg:px-10 lg:pt-28">
@@ -123,7 +116,6 @@ function ServicePage() {
           </div>
         </section>
       </main>
-      <SiteFooter />
     </div>
   );
 }
