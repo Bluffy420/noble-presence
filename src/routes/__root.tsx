@@ -84,6 +84,12 @@ export const Route = createRootRouteWithContext<{ queryClient: QueryClient }>()(
       { property: "og:site_name", content: "NB Associates" },
       { property: "og:type", content: "website" },
       { name: "twitter:card", content: "summary" },
+      { property: "og:title", content: "NB Associates — Advocates & Legal Consultants" },
+      { name: "twitter:title", content: "NB Associates — Advocates & Legal Consultants" },
+      { property: "og:description", content: "Full-service law firm and legal consultancy with 26+ years of experience advising businesses and individuals across India." },
+      { name: "twitter:description", content: "Full-service law firm and legal consultancy with 26+ years of experience advising businesses and individuals across India." },
+      { property: "og:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/b6d37761-8985-4d53-b887-c167120e964a/id-preview-38fd5b6b--547bdb07-dca4-4f3e-a21e-9932b80f7eb9.lovable.app-1782361406971.png" },
+      { name: "twitter:image", content: "https://pub-bb2e103a32db4e198524a2e9ed8f35b4.r2.dev/b6d37761-8985-4d53-b887-c167120e964a/id-preview-38fd5b6b--547bdb07-dca4-4f3e-a21e-9932b80f7eb9.lovable.app-1782361406971.png" },
     ],
     links: [
       {
