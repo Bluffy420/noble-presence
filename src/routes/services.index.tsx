@@ -17,32 +17,27 @@ export const Route = createFileRoute("/services/")({
 
 function ServicesPage() {
   return (
-    <div className="min-h-screen bg-background">
-      <main>
-        <section className="border-b border-border">
-          <div className="mx-auto max-w-7xl px-6 pt-24 pb-20 lg:px-10 lg:pt-32 lg:pb-24">
-            <div className="text-[11px] font-medium uppercase tracking-[0.22em] text-muted-foreground">
-              Practice
-            </div>
-            <h1 className="mt-8 max-w-4xl text-[2.5rem] font-semibold leading-[1.05] tracking-tight sm:text-[3.5rem]">
-              Our Services
-            </h1>
-            <p className="mt-8 max-w-2xl text-lg leading-relaxed text-muted-foreground">
-              Comprehensive legal solutions tailored to diverse legal and business needs.
-            </p>
+    <>
+      <section className="border-b border-border">
+        <div className="mx-auto max-w-7xl px-6 pt-24 pb-20 lg:px-10 lg:pt-32 lg:pb-24">
+          <div className="text-[11px] font-medium uppercase tracking-[0.22em] text-muted-foreground">
+            Practice
           </div>
-        </section>
+          <h1 className="mt-8 max-w-4xl text-[2.5rem] font-semibold leading-[1.05] tracking-tight sm:text-[3.5rem]">
+            Our Services
+          </h1>
+          <p className="mt-8 max-w-2xl text-lg leading-relaxed text-muted-foreground">
+            Comprehensive legal solutions tailored to diverse legal and business needs.
+          </p>
+        </div>
+      </section>
 
-        <section>
-          <div className="mx-auto max-w-7xl px-6 py-16 lg:px-10 lg:py-24">
-            <div className="grid gap-px overflow-hidden border border-border bg-border md:grid-cols-2">
-              {SERVICES.map((s, i) => (
-                <Link
-                  key={s.slug}
-                  to="/services/$slug"
-                  params={{ slug: s.slug }}
-                  className="group flex flex-col bg-background p-10 transition-colors hover:bg-surface"
-                >
+      <section>
+        <div className="mx-auto max-w-7xl px-6 py-16 lg:px-10 lg:py-24">
+          <div className="grid gap-px overflow-hidden border border-border bg-border md:grid-cols-2">
+            {SERVICES.map((s, i) => {
+              const inner = (
+                <>
                   <div className="text-[11px] font-medium tracking-[0.2em] text-muted-foreground">
                     {String(i + 1).padStart(2, "0")}
                   </div>
@@ -55,12 +50,27 @@ function ServicesPage() {
                   <span className="mt-8 inline-flex items-center text-[12px] font-medium uppercase tracking-[0.18em] text-navy">
                     Read more →
                   </span>
+                </>
+              );
+              const cls = "group flex flex-col bg-background p-10 transition-colors hover:bg-surface";
+              return s.externalUrl ? (
+                <a key={s.slug} href={s.externalUrl} className={cls}>
+                  {inner}
+                </a>
+              ) : (
+                <Link
+                  key={s.slug}
+                  to="/services/$slug"
+                  params={{ slug: s.slug }}
+                  className={cls}
+                >
+                  {inner}
                 </Link>
-              ))}
-            </div>
+              );
+            })}
           </div>
-        </section>
-      </main>
-    </div>
+        </div>
+      </section>
+    </>
   );
 }

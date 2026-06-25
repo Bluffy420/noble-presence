@@ -55,7 +55,7 @@ function PostPage() {
 
   return (
     <div className="min-h-screen bg-background">
-      <main>
+      
         <article>
           <header className="border-b border-border">
             <div className="mx-auto max-w-3xl px-6 pt-20 pb-12 lg:px-10 lg:pt-28">
@@ -102,7 +102,7 @@ function PostPage() {
             </Link>
           </div>
         </section>
-      </main>
+      
     </div>
   );
 }

@@ -1,6 +1,6 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
-import { SERVICES } from "@/lib/services";
+import { SERVICES, WP_BASE } from "@/lib/services";
 import { getPosts } from "@/lib/wordpress.functions";
 
 const postsQuery = queryOptions({
@@ -31,28 +31,47 @@ export const Route = createFileRoute("/")({
 
 function HomePage() {
   return (
-    <div className="min-h-screen bg-background">
-      <main>
-        <Hero />
-        <TrustStats />
-        <ServicesSection />
-        <Clients />
-        <WhyUs />
-        <ConsultSection />
-        <Insights />
-      </main>
-    </div>
+    <>
+      <Hero />
+      <TrustStats />
+      <ServicesSection />
+      <Clients />
+      <WhyUs />
+      <ConsultSection />
+      <Insights />
+    </>
   );
 }
 
 function Hero() {
   return (
-    <section className="border-b border-border">
-      <div className="mx-auto max-w-7xl px-6 pt-24 pb-28 lg:px-10 lg:pt-32 lg:pb-36">
+    <section className="relative overflow-hidden border-b border-border bg-background">
+      {/* Subtle decorative pattern — sits behind content, soft enough to not compete */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute inset-0 opacity-[0.35]"
+        style={{
+          backgroundImage:
+            "radial-gradient(circle at 1px 1px, rgba(11,29,58,0.18) 1px, transparent 0)",
+          backgroundSize: "22px 22px",
+          maskImage:
+            "radial-gradient(ellipse 70% 80% at 80% 30%, rgba(0,0,0,0.9), transparent 70%)",
+          WebkitMaskImage:
+            "radial-gradient(ellipse 70% 80% at 80% 30%, rgba(0,0,0,0.9), transparent 70%)",
+        }}
+      />
+      {/* Soft navy glow accent, top-right */}
+      <div
+        aria-hidden="true"
+        className="pointer-events-none absolute -right-40 -top-40 h-[520px] w-[520px] rounded-full opacity-[0.07] blur-3xl"
+        style={{ background: "var(--navy)" }}
+      />
+
+      <div className="relative mx-auto max-w-7xl px-6 pt-24 pb-28 lg:px-10 lg:pt-32 lg:pb-36">
         <div className="text-[11px] font-medium uppercase tracking-[0.22em] text-muted-foreground">
           Est. 1998 · New Delhi
         </div>
-        <h1 className="mt-8 max-w-5xl text-[2.5rem] font-semibold leading-[1.05] tracking-tight sm:text-[3.5rem] lg:text-[4.5rem]">
+        <h1 className="mt-8 max-w-5xl text-[2.5rem] font-semibold leading-[1.05] tracking-tight text-foreground sm:text-[3.5rem] lg:text-[4.5rem]">
           Trusted legal counsel for businesses and individuals across India.
         </h1>
         <p className="mt-8 max-w-2xl text-lg leading-relaxed text-muted-foreground">
@@ -63,7 +82,7 @@ function Hero() {
         <div className="mt-10 flex flex-wrap items-center gap-4">
           <Link
             to="/contact"
-            className="inline-flex h-12 items-center justify-center bg-navy px-7 text-sm font-medium tracking-wide text-navy-foreground transition-colors hover:bg-navy-hover"
+            className="inline-flex h-12 items-center justify-center bg-navy px-7 text-sm font-medium tracking-wide text-navy-foreground shadow-[0_8px_24px_-12px_rgba(11,29,58,0.5)] transition-colors hover:bg-navy-hover"
           >
             Consult Us
           </Link>
@@ -109,6 +128,42 @@ function TrustStats() {
   );
 }
 
+function ServiceCard({
+  s,
+  index,
+}: {
+  s: (typeof SERVICES)[number];
+  index: number;
+}) {
+  const inner = (
+    <>
+      <div className="text-[11px] font-medium tracking-[0.2em] text-muted-foreground">
+        {String(index + 1).padStart(2, "0")}
+      </div>
+      <h3 className="mt-6 text-xl font-semibold leading-snug tracking-tight text-foreground group-hover:text-navy">
+        {s.title}
+      </h3>
+      <p className="mt-4 flex-1 text-sm leading-relaxed text-muted-foreground">{s.short}</p>
+      <span className="mt-8 inline-flex items-center text-[12px] font-medium uppercase tracking-[0.18em] text-navy">
+        Learn more
+        <svg className="ml-2 h-3 w-3 transition-transform group-hover:translate-x-1" viewBox="0 0 12 12" fill="none">
+          <path d="M1 6h10M7 2l4 4-4 4" stroke="currentColor" strokeWidth="1.25" strokeLinecap="square" />
+        </svg>
+      </span>
+    </>
+  );
+  const cls = "group flex flex-col bg-background p-8 transition-colors hover:bg-surface lg:p-10";
+  return s.externalUrl ? (
+    <a href={s.externalUrl} className={cls}>
+      {inner}
+    </a>
+  ) : (
+    <Link to="/services/$slug" params={{ slug: s.slug }} className={cls}>
+      {inner}
+    </Link>
+  );
+}
+
 function ServicesSection() {
   return (
     <section id="services" className="border-b border-border">
@@ -130,28 +185,7 @@ function ServicesSection() {
 
         <div className="mt-16 grid gap-px overflow-hidden border border-border bg-border md:grid-cols-2 lg:grid-cols-3">
           {SERVICES.map((s, i) => (
-            <Link
-              key={s.slug}
-              to="/services/$slug"
-              params={{ slug: s.slug }}
-              className="group flex flex-col bg-background p-8 transition-colors hover:bg-surface lg:p-10"
-            >
-              <div className="text-[11px] font-medium tracking-[0.2em] text-muted-foreground">
-                {String(i + 1).padStart(2, "0")}
-              </div>
-              <h3 className="mt-6 text-xl font-semibold leading-snug tracking-tight text-foreground group-hover:text-navy">
-                {s.title}
-              </h3>
-              <p className="mt-4 flex-1 text-sm leading-relaxed text-muted-foreground">
-                {s.short}
-              </p>
-              <span className="mt-8 inline-flex items-center text-[12px] font-medium uppercase tracking-[0.18em] text-navy">
-                Learn more
-                <svg className="ml-2 h-3 w-3 transition-transform group-hover:translate-x-1" viewBox="0 0 12 12" fill="none">
-                  <path d="M1 6h10M7 2l4 4-4 4" stroke="currentColor" strokeWidth="1.25" strokeLinecap="square" />
-                </svg>
-              </span>
-            </Link>
+            <ServiceCard key={s.slug} s={s} index={i} />
           ))}
         </div>
       </div>
@@ -306,10 +340,9 @@ function Insights() {
 
         <div className="mt-14 grid gap-px overflow-hidden border border-border bg-border md:grid-cols-3">
           {posts.slice(0, 3).map((p) => (
-            <Link
+            <a
               key={p.ID}
-              to="/blogs/$slug"
-              params={{ slug: p.slug }}
+              href={`${WP_BASE}/${p.slug}`}
               className="group flex flex-col bg-background"
             >
               {p.featured_image ? (
@@ -339,7 +372,7 @@ function Insights() {
                   Read more →
                 </span>
               </div>
-            </Link>
+            </a>
           ))}
         </div>
       </div>
