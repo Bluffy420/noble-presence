@@ -57,7 +57,7 @@ function ServicePage() {
 
   return (
     <div className="min-h-screen bg-background">
-      <main>
+      
         <section className="border-b border-border">
           <div className="mx-auto max-w-5xl px-6 pt-20 pb-16 lg:px-10 lg:pt-28">
             <div className="text-[11px] font-medium uppercase tracking-[0.22em] text-muted-foreground">
@@ -115,7 +115,7 @@ function ServicePage() {
             </div>
           </div>
         </section>
-      </main>
+      
     </div>
   );
 }
