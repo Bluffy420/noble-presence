@@ -1,0 +1,4 @@
+/shell.json
+  Access-Control-Allow-Origin: https://nbassociates.net
+  Access-Control-Allow-Methods: GET
+  Cache-Control: public, max-age=3600, stale-while-revalidate=86400

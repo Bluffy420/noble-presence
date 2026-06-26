@@ -1,4 +1,7 @@
-Options -MultiViews
-RewriteEngine On
-RewriteCond %{REQUEST_FILENAME} !-f
-RewriteRule ^ index.html [QL]
+<IfModule mod_headers.c>
+  <FilesMatch "^shell\.json$">
+    Header set Access-Control-Allow-Origin "https://nbassociates.net"
+    Header set Access-Control-Allow-Methods "GET"
+    Header set Cache-Control "public, max-age=3600, stale-while-revalidate=86400"
+  </FilesMatch>
+</IfModule>
