@@ -45,9 +45,9 @@ while ((m = serviceRe.exec(servicesSource)) !== null) {
 // Home → React site.  Services/Blogs → WordPress.  About/Contact → React.
 const NAV = [
   { label: "Home",     href: `${REACT_URL}/`,       external: false },
-  { label: "Services", href: `${WP_URL}/services`,  external: true  },
+  { label: "Services", href: `${REACT_URL}/services`, external: false },
   { label: "About Us", href: `${REACT_URL}/about`,  external: false },
-  { label: "Blogs",    href: `${WP_URL}/`,          external: true  },
+  { label: "Blogs", href: `${REACT_URL}/blogs`, external: false },
   { label: "Contact",  href: `${REACT_URL}/contact`,external: false },
 ];
 
