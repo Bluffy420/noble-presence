@@ -1,15 +1,44 @@
-// @lovable.dev/vite-tanstack-config already includes the following — do NOT add them manually
-// or the app will break with duplicate plugins:
-//   - tanstackStart, viteReact, tailwindcss, tsConfigPaths, nitro (build-only using cloudflare as a default target),
-//     componentTagger (dev-only), VITE_* env injection, @ path alias, React/TanStack dedupe,
-//     error logger plugins, and sandbox detection (port/host/strictPort).
-// You can pass additional config via defineConfig({ vite: { ... }, etc... }) if needed.
-import { defineConfig } from "@lovable.dev/vite-tanstack-config";
+import { defineConfig } from "vite";
+import react from "@vitejs/plugin-react";
+import tailwindcss from "@tailwindcss/vite";
+import tsconfigPaths from "vite-tsconfig-paths";
+import { TanStackRouterVite } from "@tanstack/router-plugin/vite";
+import { execSync } from "child_process";
+import path from "path";
+
+/**
+ * Vite plugin: after every production build, runs scripts/generate-shell.mjs
+ * which writes dist/shell.json.  The plugin only fires on `vite build` — not
+ * during `vite dev` — so it has zero impact on hot-reload speed.
+ */
+function shellJsonPlugin() {
+  return {
+    name: "nba-shell-json",
+    closeBundle() {
+      const script = path.resolve(__dirname, "scripts/generate-shell.mjs");
+      console.log("\n[nba-shell-json] Generating dist/shell.json …");
+      try {
+        execSync(`node "${script}"`, { stdio: "inherit" });
+        console.log("[nba-shell-json] ✓ dist/shell.json written\n");
+      } catch (e) {
+        console.error("[nba-shell-json] ✗ Failed to generate shell.json:", e);
+      }
+    },
+  };
+}
 
 export default defineConfig({
-  tanstackStart: {
-    // Redirect TanStack Start's bundled server entry to src/server.ts (our SSR error wrapper).
-    // nitro/vite builds from this
-    server: { entry: "server" },
+  plugins: [
+    TanStackRouterVite({ autoCodeSplitting: true }),
+    react(),
+    tailwindcss(),
+    tsconfigPaths(),
+    shellJsonPlugin(),
+  ],
+  resolve: {
+    alias: { "@": path.resolve(__dirname, "./src") },
+  },
+  build: {
+    outDir: "dist",
   },
 });
