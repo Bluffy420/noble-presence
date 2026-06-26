@@ -1,7 +1,5 @@
 import { createFileRoute, Link } from "@tanstack/react-router";
 import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
-import { SiteHeader } from "@/components/SiteHeader";
-import { SiteFooter } from "@/components/SiteFooter";
 import { SERVICES } from "@/lib/services";
 import { getPosts } from "@/lib/wordpress.functions";
 
@@ -33,19 +31,7 @@ export const Route = createFileRoute("/")({
 
 function HomePage() {
   return (
-
-    <>
-      <Hero />
-      <TrustStats />
-      <ServicesSection />
-      <Clients />
-      <WhyUs />
-      <ConsultSection />
-      <Insights />
-    </>
-
     <div className="min-h-screen bg-background">
-      <SiteHeader />
       <main>
         <Hero />
         <TrustStats />
@@ -55,9 +41,7 @@ function HomePage() {
         <ConsultSection />
         <Insights />
       </main>
-      <SiteFooter />
     </div>
-
   );
 }
 
