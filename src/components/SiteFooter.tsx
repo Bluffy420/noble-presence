@@ -35,25 +35,17 @@ export function SiteFooter() {
               Practice Areas
             </div>
             <ul className="space-y-3 text-sm text-muted-foreground">
-              {SERVICES.slice(0, 6).map((s) =>
-                s.externalUrl ? (
-                  <li key={s.slug}>
-                    <a href={s.externalUrl} className="hover:text-navy">
-                      {s.title}
-                    </a>
-                  </li>
-                ) : (
-                  <li key={s.slug}>
-                    <Link
-                      to="/services/$slug"
-                      params={{ slug: s.slug }}
-                      className="hover:text-navy"
-                    >
-                      {s.title}
-                    </Link>
-                  </li>
-                ),
-              )}
+              {SERVICES.slice(0, 6).map((s) => (
+                <li key={s.slug}>
+                  <Link
+                    to="/services/$slug"
+                    params={{ slug: s.slug }}
+                    className="hover:text-navy"
+                  >
+                    {s.title}
+                  </Link>
+                </li>
+              ))}
             </ul>
           </div>
 

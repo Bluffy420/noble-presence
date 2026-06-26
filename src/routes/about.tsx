@@ -1,10 +1,12 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
+import { SiteHeader } from "@/components/SiteHeader";
+import { SiteFooter } from "@/components/SiteFooter";
 import { getPageBySlug } from "@/lib/wordpress.functions";
 
 const aboutQuery = queryOptions({
   queryKey: ["wp-page", "about-us"],
-  queryFn: () => getPageBySlug({ data: { slug: "about-us" } }),
+  queryFn: () => getPageBySlug("about-us"),
 });
 
 export const Route = createFileRoute("/about")({
@@ -22,10 +24,12 @@ export const Route = createFileRoute("/about")({
   component: AboutPage,
   errorComponent: ({ error }) => (
     <div className="min-h-screen bg-background">
+      <SiteHeader />
       <div className="mx-auto max-w-3xl px-6 py-32 text-center">
         <h1 className="text-2xl font-semibold tracking-tight">Couldn't load this page</h1>
         <p className="mt-3 text-muted-foreground">{error.message}</p>
       </div>
+      <SiteFooter />
     </div>
   ),
 });
@@ -34,7 +38,8 @@ function AboutPage() {
   const { data: page } = useSuspenseQuery(aboutQuery);
   return (
     <div className="min-h-screen bg-background">
-      
+      <SiteHeader />
+      <main>
         <section className="border-b border-border">
           <div className="mx-auto max-w-5xl px-6 pt-24 pb-20 lg:px-10 lg:pt-32">
             <div className="text-[11px] font-medium uppercase tracking-[0.22em] text-muted-foreground">
@@ -53,7 +58,7 @@ function AboutPage() {
         <section>
           <div className="mx-auto max-w-3xl px-6 py-20 lg:px-10">
             {page?.content ? (
-              <article className="wp-content" dangerouslySetInnerHTML={{ __html: page.content }} />
+              <article className="wp-content" dangerouslySetInnerHTML={{ __html: page?.content.rendered }} />
             ) : (
               <div className="space-y-6 text-base leading-relaxed text-muted-foreground">
                 <p>
@@ -71,7 +76,8 @@ function AboutPage() {
             )}
           </div>
         </section>
-      
+      </main>
+      <SiteFooter />
     </div>
   );
 }

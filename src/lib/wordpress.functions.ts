@@ -1,74 +1,60 @@
-import { createServerFn } from "@tanstack/react-start";
+/**
+ * WordPress REST API helpers — plain async functions, no server runtime.
+ * The WordPress.com public REST API is used (no auth required for public content).
+ * For self-hosted WordPress, swap the base URL to your domain + /wp-json/wp/v2/.
+ */
 
-const SITE_ID = "255750078";
-const GATEWAY_URL = "https://connector-gateway.lovable.dev/wordpress_com";
+const WP_BASE = "https://nbassociates.net/wp-json/wp/v2";
 
-export type WPPage = {
-  ID: number;
-  title: string;
+export type WPPost = {
+  id: number;
   slug: string;
-  URL: string;
-  content: string;
-  excerpt: string;
-  featured_image: string;
+  link: string;
+  title: { rendered: string };
+  excerpt: { rendered: string };
+  content: { rendered: string };
   date: string;
-  metadata?: { key: string; value: string }[];
+  featured_media: number;
+  _embedded?: {
+    "wp:featuredmedia"?: Array<{ source_url: string; alt_text: string }>;
+  };
 };
 
-export type WPPost = WPPage;
+export type WPPage = WPPost;
 
-async function wpGet(path: string, params?: Record<string, string>): Promise<any> {
-  const apiKey = process.env.LOVABLE_API_KEY;
-  const connKey = process.env.WORDPRESS_COM_API_KEY;
-  if (!apiKey || !connKey) throw new Error("WordPress connection missing");
-  const qs = params ? "?" + new URLSearchParams(params).toString() : "";
-  const res = await fetch(`${GATEWAY_URL}${path}${qs}`, {
-    headers: {
-      Authorization: `Bearer ${apiKey}`,
-      "X-Connection-Api-Key": connKey,
-    },
-  });
-  if (!res.ok) {
-    throw new Error(`WordPress ${res.status}: ${await res.text()}`);
-  }
-  return res.json();
+async function wpFetch<T>(path: string, params?: Record<string, string>): Promise<T> {
+  const url = new URL(`${WP_BASE}${path}`);
+  if (params) Object.entries(params).forEach(([k, v]) => url.searchParams.set(k, v));
+  const res = await fetch(url.toString());
+  if (!res.ok) throw new Error(`WordPress API error ${res.status}: ${url}`);
+  return res.json() as Promise<T>;
 }
 
-const PAGE_FIELDS = "ID,title,slug,URL,content,excerpt,featured_image,date,metadata";
-
-export const getPageBySlug = createServerFn({ method: "GET" })
-  .inputValidator((d: { slug: string }) => d)
-  .handler(async ({ data }): Promise<WPPage | null> => {
-    try {
-      const r = await wpGet(`/rest/v1.1/sites/${SITE_ID}/posts/slug:${encodeURIComponent(data.slug)}`, {
-        fields: PAGE_FIELDS,
-      });
-      return r as WPPage;
-    } catch {
-      return null;
-    }
+/** Fetch a list of published posts */
+export async function getPosts(args: { perPage?: number } = {}): Promise<WPPost[]> {
+  return wpFetch<WPPost[]>("/posts", {
+    per_page: String(args.perPage ?? 10),
+    _embed: "wp:featuredmedia",
+    status: "publish",
   });
+}
 
-export const getPosts = createServerFn({ method: "GET" })
-  .inputValidator((d: { number?: number } = {}) => d)
-  .handler(async ({ data }): Promise<WPPost[]> => {
-    const r = await wpGet(`/rest/v1.1/sites/${SITE_ID}/posts`, {
-      fields: PAGE_FIELDS,
-      number: String(data.number ?? 20),
-      type: "post",
-    });
-    return r.posts ?? [];
+/** Fetch a single post by slug */
+export async function getPostBySlug(slug: string): Promise<WPPost | null> {
+  const posts = await wpFetch<WPPost[]>("/posts", {
+    slug,
+    _embed: "wp:featuredmedia",
+    status: "publish",
   });
+  return posts[0] ?? null;
+}
 
-export const getPostBySlug = createServerFn({ method: "GET" })
-  .inputValidator((d: { slug: string }) => d)
-  .handler(async ({ data }): Promise<WPPost | null> => {
-    try {
-      const r = await wpGet(`/rest/v1.1/sites/${SITE_ID}/posts/slug:${encodeURIComponent(data.slug)}`, {
-        fields: PAGE_FIELDS,
-      });
-      return r as WPPost;
-    } catch {
-      return null;
-    }
+/** Fetch a single page by slug */
+export async function getPageBySlug(slug: string): Promise<WPPage | null> {
+  const pages = await wpFetch<WPPage[]>("/pages", {
+    slug,
+    _embed: "wp:featuredmedia",
+    status: "publish",
   });
+  return pages[0] ?? null;
+}

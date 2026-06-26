@@ -7,21 +7,22 @@ import { execSync } from "child_process";
 import path from "path";
 
 /**
- * Vite plugin: after every production build, runs scripts/generate-shell.mjs
- * which writes dist/shell.json.  The plugin only fires on `vite build` — not
- * during `vite dev` — so it has zero impact on hot-reload speed.
+ * After every production build, runs scripts/generate-shell.mjs which
+ * writes dist/shell.json. Has zero effect during `vite dev`.
  */
 function shellJsonPlugin() {
   return {
     name: "nba-shell-json",
+    apply: "build" as const,
     closeBundle() {
       const script = path.resolve(__dirname, "scripts/generate-shell.mjs");
-      console.log("\n[nba-shell-json] Generating dist/shell.json …");
+      console.log("\n[shell.json] Generating…");
       try {
         execSync(`node "${script}"`, { stdio: "inherit" });
-        console.log("[nba-shell-json] ✓ dist/shell.json written\n");
+        console.log("[shell.json] ✓ dist/shell.json written\n");
       } catch (e) {
-        console.error("[nba-shell-json] ✗ Failed to generate shell.json:", e);
+        console.error("[shell.json] ✗ Failed:", e);
+        process.exit(1);
       }
     },
   };
@@ -40,5 +41,6 @@ export default defineConfig({
   },
   build: {
     outDir: "dist",
+    emptyOutDir: true,
   },
 });
