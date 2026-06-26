@@ -46,11 +46,7 @@ function HomePage() {
 function Hero() {
   return (
     <section className="relative overflow-hidden border-b border-border bg-background">
-<<<<<<< HEAD
-      {/* Subtle decorative pattern — sits behind content, soft enough to not compete */}
-=======
       {/* Decorative dot-grid pattern — covers the full Hero section behind the heading */}
->>>>>>> master
       <div
         aria-hidden="true"
         className="pointer-events-none absolute inset-0 opacity-[0.35]"
@@ -58,15 +54,13 @@ function Hero() {
           backgroundImage:
             "radial-gradient(circle at 1px 1px, rgba(11,29,58,0.18) 1px, transparent 0)",
           backgroundSize: "22px 22px",
-<<<<<<< HEAD
           maskImage:
             "radial-gradient(ellipse 70% 80% at 80% 30%, rgba(0,0,0,0.9), transparent 70%)",
           WebkitMaskImage:
             "radial-gradient(ellipse 70% 80% at 80% 30%, rgba(0,0,0,0.9), transparent 70%)",
-=======
->>>>>>> master
         }}
       />
+
       {/* Soft navy glow accent, top-right */}
       <div
         aria-hidden="true"
