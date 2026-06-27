@@ -49,27 +49,17 @@ function HomePage() {
 function Hero() {
   return (
     <section className="hero-section border-b border-border">
-      {/*
-        Two-column grid:
-          Left  col → white content area (always ≥55% width)
-          Right col → navy panel with SVG emblem (≤45% width)
-
-        The diagonal slash is achieved by the SVG's own polygon cut — the
-        left edge of the navy field is angled, not a straight vertical border.
-        overflow-hidden on the section clips any SVG overhang.
-      */}
       <div className="hero-grid">
 
-        {/* ── LEFT: text content ─────────────────────────────── */}
+        {/* ── LEFT: text content ────────────────────────── */}
         <div className="hero-text-col">
           <div className="hero-text-inner">
             <div className="text-[11px] font-medium uppercase tracking-[0.22em] text-muted-foreground">
               Est. 1998 · New Delhi
             </div>
 
-            <h1 className="hero-heading mt-6 font-semibold leading-[1.06] tracking-tight">
+            <h1 className="hero-heading mt-6 font-bold tracking-tight">
               Trusted legal counsel for businesses and individuals across India
-              {/* Gold punctuation dot — matches reference */}
               <span className="hero-gold-dot" aria-hidden="true">.</span>
             </h1>
 
@@ -79,10 +69,10 @@ function Hero() {
               26+ years of practice.
             </p>
 
-            <div className="mt-8 flex flex-wrap items-center gap-4">
+            <div className="mt-9 flex flex-wrap items-center gap-4">
               <Link
                 to="/contact"
-                className="inline-flex h-12 items-center justify-center bg-navy px-7 text-sm font-medium tracking-wide text-navy-foreground transition-colors hover:bg-navy-hover"
+                className="inline-flex h-12 items-center justify-center bg-navy px-7 text-sm font-semibold tracking-wide text-navy-foreground transition-colors hover:bg-navy-hover"
               >
                 Consult Us
               </Link>
@@ -96,7 +86,7 @@ function Hero() {
           </div>
         </div>
 
-        {/* ── RIGHT: navy panel ──────────────────────────────── */}
+        {/* ── RIGHT: navy panel with emblem ─────────────── */}
         <div className="hero-navy-col" aria-hidden="true">
           <GeometricBackground />
         </div>

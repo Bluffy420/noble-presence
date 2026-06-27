@@ -116,141 +116,134 @@
   animation: marquee 40s linear infinite;
 }
 
-/* ─── Hero: diagonal slash layout ────────────────────────────────────────── */
+/* ─── Hero section ────────────────────────────────────────────────────────── */
 /*
- * Layout philosophy:
- *   - True two-column grid, NOT absolute positioning.
- *   - Left col has a MIN width (clamp) so text never gets squeezed.
- *   - Right col fills the remainder; the SVG diagonal polygon creates
- *     the angled cut — no CSS clip-path needed on the column itself.
- *   - overflow:hidden on .hero-section clips the SVG's left overhang.
- *   - On mobile the navy col collapses to zero and is hidden.
+ * Two-column CSS grid layout.
  *
- * Typography uses clamp() so font size scales continuously with viewport —
- * text never wraps awkwardly or gets too large.
+ * Left col  — white background, text content, vertically centred.
+ *             Min width floored at 320px so text is never crushed.
+ *             Padding uses clamp() so it breathes on wide screens but
+ *             never collapses on narrow ones.
+ *
+ * Right col — deep navy panel. The SVG inside it draws its own diagonal
+ *             left edge via a <polygon>; the column itself is a plain
+ *             rectangle. overflow:hidden on .hero-section clips anything
+ *             that would bleed outside.
+ *
+ * Typography scales continuously via clamp() — no sudden font-size jumps
+ * at breakpoints. Hard floors (min) and ceilings (max) prevent extremes.
+ *
+ * Mobile: navy panel hidden, single column, text immediately visible.
+ * Tablet: panel stays visible but shrinks to 36% of width.
+ * Desktop: 60/40 split, min-height 560px, caps at 800px.
  */
 
+/* ── Outer section ── */
 .hero-section {
   overflow: hidden;
-  position: relative;
 }
 
-/* ── Grid ── */
+/* ── Two-column grid ── */
 .hero-grid {
   display: grid;
-  /*
-    Left col: min 340px, max 58% of viewport.
-    Right col: takes the rest.
-    Total never exceeds 1920px (ultra-wide guard).
-  */
-  grid-template-columns: minmax(340px, 58fr) minmax(0, 42fr);
-  min-height: clamp(480px, 60vh, 780px);
-  max-width: 1920px;
-  margin-inline: auto;
+  grid-template-columns: minmax(320px, 60fr) minmax(0, 40fr);
+  min-height: clamp(520px, 65vh, 800px);
 }
 
-/* ── Left text column ── */
+/* ── Left: text column ── */
 .hero-text-col {
   display: flex;
   align-items: center;
   background: var(--background);
-  /* Horizontal padding scales with viewport, never collapses below 24px */
-  padding-inline: clamp(24px, 5vw, 80px);
-  padding-block: clamp(80px, 10vh, 140px);
-  /* Hard floor so text is never pushed to a sliver */
-  min-width: 320px;
+  padding-inline: clamp(28px, 5.5vw, 88px);
+  padding-block: clamp(80px, 10vh, 130px);
 }
 
 .hero-text-inner {
   width: 100%;
-  max-width: 680px;
+  max-width: 640px;
 }
 
-/* ── Heading: fluid type scale ── */
+/* Heading — fluid scale: 2rem → grows with viewport → caps at 4.5rem */
 .hero-heading {
-  /*
-    clamp(min, preferred, max)
-    min = 2rem   → on narrow phones
-    preferred = 4.5vw → scales naturally with viewport
-    max = 4.5rem → caps at large screens
-  */
-  font-size: clamp(2rem, 4.5vw, 4.5rem);
+  font-size: clamp(2rem, 4.2vw, 4.5rem);
   line-height: 1.06;
   letter-spacing: -0.02em;
+  font-weight: 700;
 }
 
-/* Body text: slightly smaller clamp so it stays proportional */
-.hero-body {
-  font-size: clamp(1rem, 1.3vw, 1.125rem);
-  max-width: 56ch;
-}
-
-/* Gold dot after heading text */
+/* Gold terminal dot */
 .hero-gold-dot {
   color: var(--gold);
 }
 
-/* ── Right navy column ── */
+/* Body paragraph */
+.hero-body {
+  font-size: clamp(0.9375rem, 1.2vw, 1.0625rem);
+  max-width: 54ch;
+}
+
+/* ── Right: navy panel ── */
 .hero-navy-col {
   position: relative;
   overflow: hidden;
-  background: #0b1d3a; /* fallback while SVG loads */
-  /* Ensure it fills the full grid cell height */
-  min-height: 100%;
+  /* Solid fallback — visible while SVG parses */
+  background: #061224;
 }
 
-/* ── SVG wrapper fills the column ── */
+/* SVG wrapper fills the column absolutely */
 .geo-bg-wrapper {
   position: absolute;
   inset: 0;
 }
 
 .geo-bg-svg {
+  display: block;
   width: 100%;
   height: 100%;
-  display: block;
 }
 
-/* ── Tablet (768–1023px) ── */
+/* ── Tablet  768px – 1023px ── */
 @media (max-width: 1023px) {
   .hero-grid {
-    /* Give text a bit more room; navy panel shrinks */
-    grid-template-columns: minmax(300px, 62fr) minmax(0, 38fr);
-    min-height: clamp(420px, 55vh, 680px);
+    grid-template-columns: minmax(300px, 64fr) minmax(0, 36fr);
+    min-height: clamp(440px, 58vh, 680px);
   }
   .hero-heading {
-    font-size: clamp(1.75rem, 5vw, 3rem);
+    font-size: clamp(1.875rem, 5vw, 3.25rem);
+  }
+  .hero-body {
+    font-size: clamp(0.9375rem, 1.6vw, 1.0625rem);
   }
 }
 
-/* ── Mobile (<768px) ── */
+/* ── Mobile  < 768px ── */
 @media (max-width: 767px) {
   .hero-grid {
-    /* Single column — navy panel hidden */
     grid-template-columns: 1fr;
+    /* Let content determine height — no fixed min that pushes text below fold */
     min-height: auto;
   }
   .hero-text-col {
-    padding-block: 72px 64px;
-    padding-inline: 24px;
+    padding-inline: clamp(20px, 6vw, 32px);
+    padding-block: 72px 60px;
   }
   .hero-heading {
-    /* On mobile, clamp to readable range — never wraps to single word per line */
-    font-size: clamp(1.75rem, 8vw, 2.5rem);
+    /* Fluid but capped so long headline never wraps to 1 word per line */
+    font-size: clamp(1.75rem, 8.5vw, 2.5rem);
   }
-  /* Hide navy panel entirely on mobile */
+  .hero-body {
+    font-size: 0.9375rem;
+    max-width: 100%;
+  }
+  /* Navy panel out of flow on mobile */
   .hero-navy-col {
     display: none;
   }
 }
 
-/* ── Ultra-wide (≥1600px) ── */
+/* ── Ultra-wide  ≥ 1600px ── */
 @media (min-width: 1600px) {
-  .hero-heading {
-    /* Hard cap — no larger than 4.5rem even on 4K */
-    font-size: 4.5rem;
-  }
-  .hero-body {
-    font-size: 1.125rem;
-  }
+  .hero-heading { font-size: 4.5rem; }
+  .hero-body    { font-size: 1.0625rem; }
 }

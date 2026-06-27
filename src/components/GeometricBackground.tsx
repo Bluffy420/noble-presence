@@ -1,207 +1,164 @@
 /**
- * HeroPanel
+ * LegalHeroPanel
  *
- * Right-side navy panel for the Hero section.
- * Recreates the "diagonal slash + scales of justice + gold accent lines" aesthetic
- * from the design reference.
+ * Premium law-firm hero illustration:
+ *   - Deep navy background with radial depth gradient (#061B44 range)
+ *   - Scales of Justice inside a laurel wreath, thin gold line-art
+ *   - Diagonal slash left edge with two parallel gold accent lines
+ *   - Subtle radial glow behind emblem
  *
- * Pure SVG — no images, no runtime JS, no external deps.
- * aria-hidden + pointer-events:none throughout.
+ * Pure inline SVG. No images, no raster, fully retina-ready.
+ * aria-hidden, pointer-events: none throughout.
+ *
+ * viewBox 560 × 560  preserveAspectRatio="xMidYMid slice"
+ * so it fills any aspect ratio of the right column cleanly.
  */
 
 export function GeometricBackground() {
+  /* Laurel leaf arc positions — generated once, used twice (mirrored) */
+  const leafAngles = [-162, -144, -127, -110, -93, -76, -59, -43, -28, -14];
+  const leafRadii  = [192,  190,  188,  188,  189, 188, 187, 186, 184, 182];
+
   return (
     <div className="geo-bg-wrapper" aria-hidden="true">
-      {/*
-        The SVG viewBox is 800×700.
-        The diagonal slash sits at roughly x=120 in this space,
-        cutting from top-left to bottom-right to match the reference.
-        All coordinates are in this internal space.
-      */}
       <svg
         className="geo-bg-svg"
-        viewBox="0 0 800 700"
+        viewBox="0 0 560 560"
         xmlns="http://www.w3.org/2000/svg"
-        preserveAspectRatio="xMinYMid slice"
+        preserveAspectRatio="xMidYMid slice"
       >
         <defs>
-          {/* Radial glow behind the emblem */}
-          <radialGradient id="emblem-glow" cx="50%" cy="50%" r="50%">
-            <stop offset="0%"   stopColor="#1a3060" stopOpacity="1" />
-            <stop offset="100%" stopColor="#0b1d3a" stopOpacity="1" />
+          {/* ── Deep navy field: lighter in centre, very dark at edges ── */}
+          <radialGradient id="nbNavy" cx="58%" cy="46%" r="60%">
+            <stop offset="0%"   stopColor="#173060" />
+            <stop offset="55%"  stopColor="#0c1f45" />
+            <stop offset="100%" stopColor="#040d1e" />
           </radialGradient>
 
-          {/* Subtle texture shading on the navy field */}
-          <radialGradient id="navy-depth" cx="60%" cy="40%" r="70%">
-            <stop offset="0%"   stopColor="#0f2550" stopOpacity="1" />
-            <stop offset="100%" stopColor="#080f22" stopOpacity="1" />
+          {/* ── Soft radial glow behind the emblem ── */}
+          <radialGradient id="nbGlow" cx="50%" cy="50%" r="50%">
+            <stop offset="0%"   stopColor="#1e3d72" stopOpacity="1"  />
+            <stop offset="65%"  stopColor="#0f2248" stopOpacity="0.6"/>
+            <stop offset="100%" stopColor="#061224" stopOpacity="0"  />
           </radialGradient>
 
-          {/* Clip the whole SVG */}
-          <clipPath id="panel-clip">
-            <rect width="800" height="700" />
+          {/* ── Clip: everything stays inside the diagonal panel ── */}
+          <clipPath id="nbClip">
+            {/* Left edge: (118,0) top → (0,560) bottom — matches 1:4.7 slope */}
+            <polygon points="118,0 560,0 560,560 0,560" />
           </clipPath>
         </defs>
 
-        <g clipPath="url(#panel-clip)">
+        {/* ── NAVY FIELD ──────────────────────────────────── */}
+        <polygon
+          points="118,0 560,0 560,560 0,560"
+          fill="url(#nbNavy)"
+        />
 
-          {/* ── NAVY FIELD ─────────────────────────────────────── */}
+        {/* ── GLOW CIRCLE behind emblem ───────────────────── */}
+        <circle
+          cx="320" cy="285"
+          r="230"
+          fill="url(#nbGlow)"
+          clipPath="url(#nbClip)"
+        />
+
+        {/* ── DIAGONAL GOLD ACCENT LINES ──────────────────── */}
+        {/* Parallel to the slash edge (slope dx=118 over 560px) */}
+        {/* Line 1 — bold, just inside the diagonal edge */}
+        <line
+          x1="152" y1="0"   x2="34"  y2="560"
+          stroke="#c8a85a" strokeWidth="2.4" strokeOpacity="0.92"
+          clipPath="url(#nbClip)"
+        />
+        {/* Line 2 — thin, ~60px right of line 1 */}
+        <line
+          x1="212" y1="0"   x2="94"  y2="560"
+          stroke="#c8a85a" strokeWidth="1.1" strokeOpacity="0.40"
+          clipPath="url(#nbClip)"
+        />
+
+        {/* ── EMBLEM — centred at (320, 278) ──────────────── */}
+        <g
+          transform="translate(320,278)"
+          stroke="#c8a85a"
+          strokeLinecap="round"
+          strokeLinejoin="round"
+          fill="none"
+          clipPath="url(#nbClip)"
+        >
+
+          {/* ════ SCALES OF JUSTICE ════ */}
+
+          {/* Finial sphere */}
+          <circle cx="0" cy="-162" r="7.5" strokeWidth="1.8" />
+
+          {/* Vertical post */}
+          <line x1="0" y1="-154" x2="0" y2="118" strokeWidth="2" />
+
+          {/* Horizontal cross-beam */}
+          <line x1="-114" y1="-100" x2="114" y2="-100" strokeWidth="2" />
+
+          {/* Post knob / collar */}
+          <line x1="-14" y1="-58" x2="14" y2="-58" strokeWidth="1.6" />
+          <line x1="-9"  y1="-49" x2="9"  y2="-49" strokeWidth="1.1" />
+
+          {/* Base foot-rail */}
+          <line x1="-38" y1="118" x2="38" y2="118" strokeWidth="2.2" />
+
+          {/* ── Left pan ── */}
+          {/* Outer suspension cord */}
+          <line x1="-114" y1="-100" x2="-148" y2="-4"  strokeWidth="1.5" />
+          {/* Inner suspension cord */}
+          <line x1="-114" y1="-100" x2="-80"  y2="-4"  strokeWidth="1.5" />
+          {/* Pan arc */}
+          <path d="M-148,-4 Q-114,32 -80,-4" strokeWidth="2" />
+
+          {/* ── Right pan ── */}
+          <line x1="114" y1="-100" x2="148"  y2="-4"  strokeWidth="1.5" />
+          <line x1="114" y1="-100" x2="80"   y2="-4"  strokeWidth="1.5" />
+          <path d="M80,-4 Q114,32 148,-4" strokeWidth="2" />
+
+          {/* ════ LAUREL WREATH ════ */}
           {/*
-            The diagonal slash is a polygon that covers the full canvas.
-            The left edge starts at (120, 0) at the top and (0, 700) at the bottom,
-            creating the angled cut seen in the reference.
+            Each leaf: pointed almond  M0,-12 Q10,0 0,12 Q-10,0 0,-12
+            with a centre-rib line.
+            Positioned by: rotate(angle) then translate(0, -radius)
+            so the tip points outward from the wreath centre.
           */}
-          <polygon
-            points="140,0 800,0 800,700 0,700"
-            fill="url(#navy-depth)"
+
+          {/* Left arm */}
+          {leafAngles.map((angle, i) => (
+            <g key={`L${i}`} transform={`rotate(${angle}) translate(0,-${leafRadii[i]})`}>
+              <path d="M0,-12 Q10,0 0,12 Q-10,0 0,-12" strokeWidth="1.4" />
+              <line x1="0" y1="-12" x2="0" y2="12" strokeWidth="0.75" />
+            </g>
+          ))}
+
+          {/* Right arm — mirror (negate angles) */}
+          {leafAngles.map((angle, i) => (
+            <g key={`R${i}`} transform={`rotate(${-angle}) translate(0,-${leafRadii[i]})`}>
+              <path d="M0,-12 Q10,0 0,12 Q-10,0 0,-12" strokeWidth="1.4" />
+              <line x1="0" y1="-12" x2="0" y2="12" strokeWidth="0.75" />
+            </g>
+          ))}
+
+          {/* Wreath base — connecting arc */}
+          <path d="M-30,118 Q0,134 30,118" strokeWidth="1.6" />
+
+          {/* Base ribbon / bow tie */}
+          <path
+            d="M-30,118 Q-52,130 -44,144 Q-20,132 0,136 Q20,132 44,144 Q52,130 30,118"
+            strokeWidth="1.4"
           />
 
-          {/* ── DIAGONAL GOLD ACCENT LINES ─────────────────────── */}
-          {/*
-            Two parallel diagonal stripes running top-right to bottom-right,
-            matching the reference image.
-          */}
-          {/* Primary gold slash — bold */}
-          <line
-            x1="190" y1="0"
-            x2="40"  y2="700"
-            stroke="#c9a84c"
-            strokeWidth="2.5"
-            strokeOpacity="0.9"
-          />
-          {/* Secondary gold slash — thinner, offset right */}
-          <line
-            x1="260" y1="0"
-            x2="110" y2="700"
-            stroke="#c9a84c"
-            strokeWidth="1.2"
-            strokeOpacity="0.5"
-          />
-          {/* Tertiary hint far right */}
-          <line
-            x1="720" y1="0"
-            x2="640" y2="700"
-            stroke="#c9a84c"
-            strokeWidth="1"
-            strokeOpacity="0.22"
-          />
-
-          {/* ── EMBLEM GLOW CIRCLE ─────────────────────────────── */}
+          {/* Faint outer halo ring — adds premium depth */}
           <circle
-            cx="500" cy="355"
-            r="230"
-            fill="url(#emblem-glow)"
-            opacity="0.7"
+            cx="0" cy="-22"
+            r="214"
+            strokeOpacity="0.10"
+            strokeWidth="1"
           />
-
-          {/* ── SCALES OF JUSTICE + LAUREL WREATH EMBLEM ──────── */}
-          {/*
-            Drawn at centre (500, 355), scaled to fill ~320px diameter.
-            All strokes in gold (#c9a84c), fill none.
-            Stroke width ~2px at this scale for crisp line-art feel.
-          */}
-          <g
-            transform="translate(500, 355)"
-            stroke="#c9a84c"
-            strokeWidth="2"
-            strokeLinecap="round"
-            strokeLinejoin="round"
-            fill="none"
-          >
-            {/* ── SCALES ── */}
-
-            {/* Central vertical post */}
-            <line x1="0" y1="-160" x2="0" y2="120" />
-
-            {/* Base platform */}
-            <line x1="-40" y1="120" x2="40" y2="120" />
-
-            {/* Top cross-beam */}
-            <line x1="-110" y1="-100" x2="110" y2="-100" />
-
-            {/* Top ornament (sphere/finial) */}
-            <circle cx="0" cy="-165" r="8" strokeWidth="1.8" />
-
-            {/* Left chain */}
-            <line x1="-110" y1="-100" x2="-110" y2="-10" />
-            {/* Right chain */}
-            <line x1="110"  y1="-100" x2="110"  y2="-10" />
-
-            {/* Left pan */}
-            <path d="M-150,-10 Q-110,20 -70,-10 Z" strokeWidth="1.8" />
-            {/* Right pan */}
-            <path d="M150,-10 Q110,20 70,-10 Z" strokeWidth="1.8" />
-
-            {/* Left pan suspension lines */}
-            <line x1="-150" y1="-10" x2="-110" y2="-100" />
-            <line x1="-70"  y1="-10" x2="-110" y2="-100" />
-            {/* Right pan suspension lines */}
-            <line x1="150"  y1="-10" x2="110"  y2="-100" />
-            <line x1="70"   y1="-10" x2="110"  y2="-100" />
-
-            {/* Post decorative band */}
-            <line x1="-18" y1="-60" x2="18" y2="-60" strokeWidth="1.2" />
-            <line x1="-14" y1="-50" x2="14" y2="-50" strokeWidth="1" />
-
-            {/* ── LAUREL WREATH ── */}
-            {/*
-              Two arcs of leaves, mirrored left/right.
-              Each leaf is a small ellipse-ish path rotated around the arc.
-              We use 9 leaves per side, spaced 18° apart from ~210° to ~330° (left)
-              and ~210° to ~330° mirrored (right).
-            */}
-
-            {/* LEFT wreath arm — leaves arc from bottom-left up to top-left */}
-            { [
-                { angle: -155, lx: -148, ly:  95 },
-                { angle: -130, lx: -170, ly:  55 },
-                { angle: -110, lx: -182, ly:  15 },
-                { angle:  -92, lx: -186, ly: -28 },
-                { angle:  -75, lx: -178, ly: -70 },
-                { angle:  -58, lx: -162, ly:-108 },
-                { angle:  -42, lx: -138, ly:-140 },
-                { angle:  -27, lx: -108, ly:-163 },
-                { angle:  -14, lx:  -74, ly:-178 },
-              ].map(({ angle, lx, ly }, i) => (
-                <g key={`lL${i}`} transform={`translate(${lx},${ly}) rotate(${angle})`}>
-                  <ellipse rx="14" ry="7" strokeWidth="1.4" />
-                  <line x1="0" y1="-7" x2="0" y2="7" strokeWidth="0.8" />
-                </g>
-              ))
-            }
-
-            {/* RIGHT wreath arm — mirror of left */}
-            { [
-                { angle:  155, lx:  148, ly:  95 },
-                { angle:  130, lx:  170, ly:  55 },
-                { angle:  110, lx:  182, ly:  15 },
-                { angle:   92, lx:  186, ly: -28 },
-                { angle:   75, lx:  178, ly: -70 },
-                { angle:   58, lx:  162, ly:-108 },
-                { angle:   42, lx:  138, ly:-140 },
-                { angle:   27, lx:  108, ly:-163 },
-                { angle:   14, lx:   74, ly:-178 },
-              ].map(({ angle, lx, ly }, i) => (
-                <g key={`lR${i}`} transform={`translate(${lx},${ly}) rotate(${angle})`}>
-                  <ellipse rx="14" ry="7" strokeWidth="1.4" />
-                  <line x1="0" y1="-7" x2="0" y2="7" strokeWidth="0.8" />
-                </g>
-              ))
-            }
-
-            {/* Wreath base bow / tie */}
-            <path
-              d="M-30,115 Q0,130 30,115"
-              strokeWidth="1.6"
-            />
-            <path
-              d="M-30,115 Q-50,128 -42,140 Q-20,128 0,132 Q20,128 42,140 Q50,128 30,115"
-              strokeWidth="1.4"
-            />
-
-            {/* Thin outer ring (halo) */}
-            <circle cx="0" cy="-30" r="208" strokeOpacity="0.12" strokeWidth="1" />
-          </g>
 
         </g>
       </svg>
