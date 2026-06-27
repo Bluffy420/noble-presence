@@ -1,23 +1,17 @@
 /**
- * scripts/generate-shell.mjs
+ * scripts/generate-shell.mjs  —  v11.0.0
  *
- * Runs automatically after `npm run build` via the Vite shellJsonPlugin.
  * Produces dist/shell.json:
+ *   { "css": "…", "header": "…", "footer": "…" }
  *
- *   {
- *     "css":    "… scoped CSS for the injected header/footer …",
- *     "header": "… HTML string for <header> …",
- *     "footer": "… HTML string for <footer> …"
- *   }
+ * Footer grid mirrors SiteFooter.tsx exactly:
+ *   lg:grid-cols-12  (breakpoint: 1024px, NOT 768px)
+ *   brand: lg:col-span-4
+ *   quick links: lg:col-span-2
+ *   practice areas: lg:col-span-3
+ *   contact: lg:col-span-3
  *
- * WHY NOT RENDER THE REACT COMPONENTS DIRECTLY?
- * SiteHeader uses React hooks (useState/useEffect) and TanStack Router's
- * <Link> — neither works in a plain Node.js script without a full SSR
- * pipeline.  Instead, this script is the single source of truth for the
- * shell HTML.  It imports services.ts data via a tiny inline re-parse so
- * service links always stay in sync.  If you change SiteHeader or
- * SiteFooter, mirror the change here too.  The structure is intentionally
- * simple so diffing is trivial.
+ * Mobile (< 1024px): single-column stack, same as React's Tailwind collapse.
  */
 
 import { writeFileSync, readFileSync } from "fs";
@@ -27,13 +21,11 @@ import { fileURLToPath } from "url";
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const ROOT      = resolve(__dirname, "..");
 const DIST      = resolve(ROOT, "dist");
-const REACT_URL = "https://home.nbassociates.net"; // your Node.js / Vite site
-const WP_URL    = "https://nbassociates.net";       // your WordPress site
+const REACT_URL = "https://home.nbassociates.net";
+const WP_URL    = "https://nbassociates.net";
 
-/* ── 1. Read service list from the canonical source ── */
+/* ── 1. Read service list ── */
 const servicesSource = readFileSync(resolve(ROOT, "src/lib/services.ts"), "utf8");
-
-// Extract slug + title pairs with a simple regex (no TS compilation needed)
 const serviceEntries = [];
 const serviceRe = /slug:\s*["']([^"']+)["'][^}]*?title:\s*["']([^"']+)["']/gs;
 let m;
@@ -41,20 +33,19 @@ while ((m = serviceRe.exec(servicesSource)) !== null) {
   serviceEntries.push({ slug: m[1], title: m[2] });
 }
 
-/* ── 2. Nav definition — mirrors SiteHeader ── */
-// Home → React site.  Services/Blogs → WordPress.  About/Contact → React.
+/* ── 2. Nav definition ── */
 const NAV = [
-  { label: "Home",     href: `${REACT_URL}/`,       external: false },
-  { label: "Services", href: `${REACT_URL}/services`, external: false },
-  { label: "About Us", href: `${REACT_URL}/about`,  external: false },
-  { label: "Blogs", href: `${REACT_URL}/blogs`, external: false },
-  { label: "Contact",  href: `${REACT_URL}/contact`,external: false },
+  { label: "Home",     href: `${REACT_URL}/` },
+  { label: "Services", href: `${REACT_URL}/services` },
+  { label: "About Us", href: `${REACT_URL}/about` },
+  { label: "Blogs",    href: `${REACT_URL}/blogs` },
+  { label: "Contact",  href: `${REACT_URL}/contact` },
 ];
 
 /* ── 3. Helper ── */
 const esc = (s) => s.replace(/&/g,"&amp;").replace(/</g,"&lt;").replace(/>/g,"&gt;");
 
-/* ── 4. Build <header> HTML ── */
+/* ── 4. Build <header> HTML (unchanged from v10) ── */
 const desktopLinks = NAV.map(({ label, href }) =>
   `<a href="${href}" class="nba-nav-link">${esc(label)}</a>`
 ).join("\n      ");
@@ -97,7 +88,7 @@ const headerHtml = `
   </div>
 </header>`.trim();
 
-/* ── 5. Build <footer> HTML ── */
+/* ── 5. Build <footer> HTML — mirrors SiteFooter.tsx 12-col grid ── */
 const quickLinks = NAV.map(({ label, href }) =>
   `<li><a href="${href}" class="nba-footer-link">${esc(label)}</a></li>`
 ).join("\n          ");
@@ -113,7 +104,8 @@ const footerHtml = `
   <div class="nba-footer-inner">
     <div class="nba-footer-grid">
 
-      <div class="nba-footer-brand">
+      <!-- col-span-4: Brand -->
+      <div class="nba-footer-col nba-footer-col--brand">
         <div class="nba-footer-brand-name">NB Associates</div>
         <div class="nba-footer-brand-sub">Advocates &amp; Legal Consultants</div>
         <p class="nba-footer-brand-desc">
@@ -122,21 +114,24 @@ const footerHtml = `
         </p>
       </div>
 
-      <div>
+      <!-- col-span-2: Quick Links -->
+      <div class="nba-footer-col nba-footer-col--quick">
         <div class="nba-footer-heading">Quick Links</div>
         <ul class="nba-footer-links">
           ${quickLinks}
         </ul>
       </div>
 
-      <div>
+      <!-- col-span-3: Practice Areas -->
+      <div class="nba-footer-col nba-footer-col--practice">
         <div class="nba-footer-heading">Practice Areas</div>
         <ul class="nba-footer-links">
           ${practiceLinks}
         </ul>
       </div>
 
-      <div>
+      <!-- col-span-3: Contact -->
+      <div class="nba-footer-col nba-footer-col--contact">
         <div class="nba-footer-heading">Contact</div>
         <ul class="nba-footer-links">
           <li><a href="tel:+919811899279" class="nba-footer-link">+91 98118 99279</a></li>
@@ -154,7 +149,7 @@ const footerHtml = `
   </div>
 </footer>`.trim();
 
-/* ── 6. Scoped CSS — mirrors styles.css tokens ── */
+/* ── 6. Scoped CSS ── */
 const css = `
 /* ══ NB Associates Shell — injected by WordPress plugin ══ */
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,400;0,14..32,500;0,14..32,600;0,14..32,700;1,14..32,400&display=swap');
@@ -253,8 +248,30 @@ const css = `
 .nba-footer { border-top:1px solid var(--nba-border); background:var(--nba-bg); font-family:var(--nba-font); }
 .nba-footer-inner { max-width:80rem; margin:0 auto; padding:4rem 1.5rem; }
 @media (min-width:1024px){ .nba-footer-inner{ padding:4rem 2.5rem; } }
-.nba-footer-grid { display:grid; gap:3rem; grid-template-columns:1fr; }
-@media (min-width:768px){ .nba-footer-grid{ grid-template-columns:2fr 1fr 2fr 1fr; gap:2rem; } }
+
+/*
+ * Grid mirrors SiteFooter.tsx exactly:
+ *   mobile  → 1 column (stack)
+ *   ≥1024px → 12-column grid with col-span assignments:
+ *               brand=4, quick-links=2, practice=3, contact=3
+ * IMPORTANT: breakpoint is 1024px (lg:), NOT 768px (md:).
+ */
+.nba-footer-grid {
+  display: grid;
+  gap: 3rem;
+  grid-template-columns: 1fr;
+}
+@media (min-width:1024px){
+  .nba-footer-grid {
+    grid-template-columns: repeat(12, 1fr);
+    gap: 2rem;
+  }
+  .nba-footer-col--brand    { grid-column: span 4; }
+  .nba-footer-col--quick    { grid-column: span 2; }
+  .nba-footer-col--practice { grid-column: span 3; }
+  .nba-footer-col--contact  { grid-column: span 3; }
+}
+
 .nba-footer-brand-name { font-size:1.25rem; font-weight:600; letter-spacing:-.02em; color:var(--nba-fg); }
 .nba-footer-brand-sub  { font-size:11px; text-transform:uppercase; letter-spacing:.18em; color:var(--nba-muted-fg); margin-top:4px; }
 .nba-footer-brand-desc { margin-top:1.25rem; font-size:.875rem; color:var(--nba-muted-fg); line-height:1.6; max-width:320px; }
@@ -272,26 +289,6 @@ const css = `
   .nba-footer-bottom{ flex-direction:row; justify-content:space-between; align-items:center; }
 }
 
-/* ── Main content area ── */
-.nba-page-main {
-  min-height:60vh; max-width:860px; margin:0 auto; padding:3rem 1.5rem 4rem;
-  font-family:var(--nba-font);
-}
-
-/* ── Contact bar (below page title) ── */
-.nba-contact-bar {
-  display:flex; flex-wrap:wrap; gap:.75rem 1.5rem; align-items:center;
-  margin:1rem 0 2.5rem; padding:.75rem 1rem;
-  background:var(--nba-surface); border:1px solid var(--nba-border); border-radius:var(--nba-r);
-}
-.nba-contact-item {
-  display:inline-flex; align-items:center; gap:.4rem;
-  font-size:.8125rem; font-weight:500; color:var(--nba-muted-fg);
-  text-decoration:none; font-family:var(--nba-font);
-}
-a.nba-contact-item:hover{ color:var(--nba-navy) !important; }
-.nba-contact-item svg{ flex-shrink:0; opacity:.7; }
-
 /* ── Disclaimer ── */
 .nba-disclaimer {
   max-width:80rem; margin:0 auto; padding:.875rem 1.5rem;
@@ -308,3 +305,5 @@ writeFileSync(
   JSON.stringify(shell, null, 2),
   "utf8"
 );
+
+console.log(`shell.json written — ${headerHtml.length + footerHtml.length + css.length} bytes total`);
