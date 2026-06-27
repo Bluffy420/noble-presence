@@ -46,6 +46,10 @@
   --navy: #0b1d3a;
   --navy-hover: #13294b;
   --navy-foreground: #ffffff;
+  --ivory: #f2efe8;
+  --ivory-border: #dedad0;
+  --gold: #c9a84c;
+  --gold-hover: #b8963e;
 }
 
 @layer base {
