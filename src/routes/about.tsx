@@ -1,7 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
-import { SiteHeader } from "@/components/SiteHeader";
-import { SiteFooter } from "@/components/SiteFooter";
 import { getPageBySlug } from "@/lib/wordpress.functions";
 
 const aboutQuery = queryOptions({
@@ -23,13 +21,9 @@ export const Route = createFileRoute("/about")({
   loader: ({ context }) => context.queryClient.prefetchQuery(aboutQuery),
   component: AboutPage,
   errorComponent: ({ error }) => (
-    <div className="min-h-screen bg-background">
-      <SiteHeader />
-      <div className="mx-auto max-w-3xl px-6 py-32 text-center">
-        <h1 className="text-2xl font-semibold tracking-tight">Couldn't load this page</h1>
-        <p className="mt-3 text-muted-foreground">{error.message}</p>
-      </div>
-      <SiteFooter />
+    <div className="mx-auto max-w-3xl px-6 py-32 text-center">
+      <h1 className="text-2xl font-semibold tracking-tight">Couldn't load this page</h1>
+      <p className="mt-3 text-muted-foreground">{error.message}</p>
     </div>
   ),
 });
@@ -37,8 +31,6 @@ export const Route = createFileRoute("/about")({
 function AboutPage() {
   const { data: page } = useSuspenseQuery(aboutQuery);
   return (
-    <div className="min-h-screen bg-background">
-      <SiteHeader />
       <main>
         <section className="border-b border-border">
           <div className="mx-auto max-w-5xl px-6 pt-24 pb-20 lg:px-10 lg:pt-32">
@@ -77,7 +69,5 @@ function AboutPage() {
           </div>
         </section>
       </main>
-      <SiteFooter />
-    </div>
   );
 }

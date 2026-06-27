@@ -307,7 +307,7 @@ function Insights() {
         <div className="mt-14 grid gap-px overflow-hidden border border-border bg-border md:grid-cols-3">
           {posts.slice(0, 3).map((p) => (
             <Link
-              key={p.ID}
+              key={p.id}
               to="/blogs/$slug"
               params={{ slug: p.slug }}
               className="group flex flex-col bg-background"
