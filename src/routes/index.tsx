@@ -2,6 +2,7 @@ import { createFileRoute, Link } from "@tanstack/react-router";
 import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
 import { SERVICES } from "@/lib/services";
 import { getPosts } from "@/lib/wordpress.functions";
+import { GeometricBackground } from "@/components/GeometricBackground";
 
 const postsQuery = queryOptions({
   queryKey: ["posts", "home"],
@@ -47,8 +48,14 @@ function HomePage() {
 
 function Hero() {
   return (
-    <section className="border-b border-border">
-      <div className="mx-auto max-w-7xl px-6 pt-24 pb-28 lg:px-10 lg:pt-32 lg:pb-36">
+    <section className="hero-section border-b border-border overflow-hidden">
+      {/* Geometric panel — positioned absolutely on the right, invisible on mobile */}
+      <div className="hero-geo-panel" aria-hidden="true">
+        <GeometricBackground />
+      </div>
+
+      {/* Content — always on top, left-dominant */}
+      <div className="hero-content mx-auto max-w-7xl px-6 pt-24 pb-28 lg:px-10 lg:pt-32 lg:pb-36">
         <div className="text-[11px] font-medium uppercase tracking-[0.22em] text-muted-foreground">
           Est. 1998 · New Delhi
         </div>
