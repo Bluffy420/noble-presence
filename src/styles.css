@@ -116,34 +116,93 @@
   animation: marquee 40s linear infinite;
 }
 
-/* ─── Hero geometric panel ───────────────────────────────────────────────── */
-
+/* ─── Hero: diagonal slash layout ────────────────────────────────────────── */
 /*
- * .hero-section        — the outer <section>; position:relative anchor
- * .hero-geo-panel      — absolute container for the SVG graphic
- * .hero-content        — the text content; always readable on top
- * .geo-bg-wrapper      — inner wrapper sizing the SVG
- * .geo-bg-svg          — the SVG itself
+ * Layout philosophy:
+ *   - True two-column grid, NOT absolute positioning.
+ *   - Left col has a MIN width (clamp) so text never gets squeezed.
+ *   - Right col fills the remainder; the SVG diagonal polygon creates
+ *     the angled cut — no CSS clip-path needed on the column itself.
+ *   - overflow:hidden on .hero-section clips the SVG's left overhang.
+ *   - On mobile the navy col collapses to zero and is hidden.
+ *
+ * Typography uses clamp() so font size scales continuously with viewport —
+ * text never wraps awkwardly or gets too large.
  */
 
 .hero-section {
+  overflow: hidden;
   position: relative;
 }
 
-/* Desktop: right-side panel, ~30% of section width */
-.hero-geo-panel {
-  position: absolute;
-  top: 0;
-  right: 0;
-  bottom: 0;
-  width: 32%;
-  pointer-events: none;
-  overflow: hidden;
+/* ── Grid ── */
+.hero-grid {
+  display: grid;
+  /*
+    Left col: min 340px, max 58% of viewport.
+    Right col: takes the rest.
+    Total never exceeds 1920px (ultra-wide guard).
+  */
+  grid-template-columns: minmax(340px, 58fr) minmax(0, 42fr);
+  min-height: clamp(480px, 60vh, 780px);
+  max-width: 1920px;
+  margin-inline: auto;
 }
 
-.geo-bg-wrapper {
+/* ── Left text column ── */
+.hero-text-col {
+  display: flex;
+  align-items: center;
+  background: var(--background);
+  /* Horizontal padding scales with viewport, never collapses below 24px */
+  padding-inline: clamp(24px, 5vw, 80px);
+  padding-block: clamp(80px, 10vh, 140px);
+  /* Hard floor so text is never pushed to a sliver */
+  min-width: 320px;
+}
+
+.hero-text-inner {
   width: 100%;
-  height: 100%;
+  max-width: 680px;
+}
+
+/* ── Heading: fluid type scale ── */
+.hero-heading {
+  /*
+    clamp(min, preferred, max)
+    min = 2rem   → on narrow phones
+    preferred = 4.5vw → scales naturally with viewport
+    max = 4.5rem → caps at large screens
+  */
+  font-size: clamp(2rem, 4.5vw, 4.5rem);
+  line-height: 1.06;
+  letter-spacing: -0.02em;
+}
+
+/* Body text: slightly smaller clamp so it stays proportional */
+.hero-body {
+  font-size: clamp(1rem, 1.3vw, 1.125rem);
+  max-width: 56ch;
+}
+
+/* Gold dot after heading text */
+.hero-gold-dot {
+  color: var(--gold);
+}
+
+/* ── Right navy column ── */
+.hero-navy-col {
+  position: relative;
+  overflow: hidden;
+  background: #0b1d3a; /* fallback while SVG loads */
+  /* Ensure it fills the full grid cell height */
+  min-height: 100%;
+}
+
+/* ── SVG wrapper fills the column ── */
+.geo-bg-wrapper {
+  position: absolute;
+  inset: 0;
 }
 
 .geo-bg-svg {
@@ -152,17 +211,46 @@
   display: block;
 }
 
-/* Tablet: narrower panel, less intrusive */
+/* ── Tablet (768–1023px) ── */
 @media (max-width: 1023px) {
-  .hero-geo-panel {
-    width: 26%;
-    opacity: 0.75;
+  .hero-grid {
+    /* Give text a bit more room; navy panel shrinks */
+    grid-template-columns: minmax(300px, 62fr) minmax(0, 38fr);
+    min-height: clamp(420px, 55vh, 680px);
+  }
+  .hero-heading {
+    font-size: clamp(1.75rem, 5vw, 3rem);
   }
 }
 
-/* Mobile: hide the side panel entirely — cleanliness & readability first */
+/* ── Mobile (<768px) ── */
 @media (max-width: 767px) {
-  .hero-geo-panel {
+  .hero-grid {
+    /* Single column — navy panel hidden */
+    grid-template-columns: 1fr;
+    min-height: auto;
+  }
+  .hero-text-col {
+    padding-block: 72px 64px;
+    padding-inline: 24px;
+  }
+  .hero-heading {
+    /* On mobile, clamp to readable range — never wraps to single word per line */
+    font-size: clamp(1.75rem, 8vw, 2.5rem);
+  }
+  /* Hide navy panel entirely on mobile */
+  .hero-navy-col {
     display: none;
+  }
+}
+
+/* ── Ultra-wide (≥1600px) ── */
+@media (min-width: 1600px) {
+  .hero-heading {
+    /* Hard cap — no larger than 4.5rem even on 4K */
+    font-size: 4.5rem;
+  }
+  .hero-body {
+    font-size: 1.125rem;
   }
 }

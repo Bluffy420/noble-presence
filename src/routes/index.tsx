@@ -48,39 +48,59 @@ function HomePage() {
 
 function Hero() {
   return (
-    <section className="hero-section border-b border-border overflow-hidden">
-      {/* Geometric panel — positioned absolutely on the right, invisible on mobile */}
-      <div className="hero-geo-panel" aria-hidden="true">
-        <GeometricBackground />
-      </div>
+    <section className="hero-section border-b border-border">
+      {/*
+        Two-column grid:
+          Left  col → white content area (always ≥55% width)
+          Right col → navy panel with SVG emblem (≤45% width)
 
-      {/* Content — always on top, left-dominant */}
-      <div className="hero-content mx-auto max-w-7xl px-6 pt-24 pb-28 lg:px-10 lg:pt-32 lg:pb-36">
-        <div className="text-[11px] font-medium uppercase tracking-[0.22em] text-muted-foreground">
-          Est. 1998 · New Delhi
+        The diagonal slash is achieved by the SVG's own polygon cut — the
+        left edge of the navy field is angled, not a straight vertical border.
+        overflow-hidden on the section clips any SVG overhang.
+      */}
+      <div className="hero-grid">
+
+        {/* ── LEFT: text content ─────────────────────────────── */}
+        <div className="hero-text-col">
+          <div className="hero-text-inner">
+            <div className="text-[11px] font-medium uppercase tracking-[0.22em] text-muted-foreground">
+              Est. 1998 · New Delhi
+            </div>
+
+            <h1 className="hero-heading mt-6 font-semibold leading-[1.06] tracking-tight">
+              Trusted legal counsel for businesses and individuals across India
+              {/* Gold punctuation dot — matches reference */}
+              <span className="hero-gold-dot" aria-hidden="true">.</span>
+            </h1>
+
+            <p className="hero-body mt-6 leading-relaxed text-muted-foreground">
+              NB Associates is a full-service law firm and legal consultancy advising clients on
+              commercial recovery, arbitration, and corporate matters with discretion, rigour, and
+              26+ years of practice.
+            </p>
+
+            <div className="mt-8 flex flex-wrap items-center gap-4">
+              <Link
+                to="/contact"
+                className="inline-flex h-12 items-center justify-center bg-navy px-7 text-sm font-medium tracking-wide text-navy-foreground transition-colors hover:bg-navy-hover"
+              >
+                Consult Us
+              </Link>
+              <Link
+                to="/services"
+                className="inline-flex h-12 items-center justify-center border border-border bg-background px-7 text-sm font-medium text-foreground transition-colors hover:border-navy hover:text-navy"
+              >
+                Our Practice Areas
+              </Link>
+            </div>
+          </div>
         </div>
-        <h1 className="mt-8 max-w-5xl text-[2.5rem] font-semibold leading-[1.05] tracking-tight sm:text-[3.5rem] lg:text-[4.5rem]">
-          Trusted legal counsel for businesses and individuals across India.
-        </h1>
-        <p className="mt-8 max-w-2xl text-lg leading-relaxed text-muted-foreground">
-          NB Associates is a full-service law firm and legal consultancy advising clients on
-          commercial recovery, arbitration, and corporate matters with discretion, rigour, and
-          26+ years of practice.
-        </p>
-        <div className="mt-10 flex flex-wrap items-center gap-4">
-          <Link
-            to="/contact"
-            className="inline-flex h-12 items-center justify-center bg-navy px-7 text-sm font-medium tracking-wide text-navy-foreground transition-colors hover:bg-navy-hover"
-          >
-            Consult Us
-          </Link>
-          <Link
-            to="/services"
-            className="inline-flex h-12 items-center justify-center border border-border bg-background px-7 text-sm font-medium text-foreground transition-colors hover:border-navy hover:text-navy"
-          >
-            Our Practice Areas
-          </Link>
+
+        {/* ── RIGHT: navy panel ──────────────────────────────── */}
+        <div className="hero-navy-col" aria-hidden="true">
+          <GeometricBackground />
         </div>
+
       </div>
     </section>
   );
