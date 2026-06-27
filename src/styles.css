@@ -197,10 +197,14 @@
   inset: 0;
 }
 
-.geo-bg-svg {
+.geo-bg-img {
   display: block;
   width: 100%;
   height: 100%;
+  object-fit: cover;
+  object-position: center center;
+  pointer-events: none;
+  user-select: none;
 }
 
 /* ── Tablet  768px – 1023px ── */
