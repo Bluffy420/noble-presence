@@ -1,4 +1,4 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import { SERVICES } from "@/lib/services";
 
 export const Route = createFileRoute("/services/")({
@@ -36,11 +36,10 @@ function ServicesPage() {
         <div className="mx-auto max-w-7xl px-6 py-16 lg:px-10 lg:py-24">
           <div className="grid gap-px overflow-hidden border border-border bg-border md:grid-cols-2">
             {SERVICES.map((s, i) => (
-              <Link
+              <a
                 key={s.slug}
-                to="/services/$slug"
-                params={{ slug: s.slug }}
-                className="group flex flex-col bg-background p-10 transition-colors hover:bg-surface"
+                href={s.wpUrl}
+                className="group flex flex-col bg-background p-10 transition-colors hover:bg-surface no-underline"
               >
                 <div className="text-[11px] font-medium tracking-[0.2em] text-muted-foreground">
                   {String(i + 1).padStart(2, "0")}
@@ -54,7 +53,7 @@ function ServicesPage() {
                 <span className="mt-8 inline-flex items-center text-[12px] font-medium uppercase tracking-[0.18em] text-navy">
                   Read more →
                 </span>
-              </Link>
+              </a>
             ))}
           </div>
         </div>

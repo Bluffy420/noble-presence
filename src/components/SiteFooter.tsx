@@ -10,8 +10,8 @@ export function SiteFooter() {
       <div className="mx-auto max-w-7xl px-6 py-16 lg:px-10">
         <div className="grid gap-12 lg:grid-cols-12">
 
-          {/* Brand — col-span-4 */}
-          <div className="lg:col-span-4">
+          {/* Brand — col-span-3 */}
+          <div className="lg:col-span-3">
             <div className="text-lg font-bold tracking-tight" style={{ color: "var(--foreground)" }}>
               NB Associates
             </div>
@@ -58,34 +58,32 @@ export function SiteFooter() {
             </ul>
           </div>
 
-          {/* Practice Areas — col-span-3 */}
-          <div className="lg:col-span-3">
+          {/* Practice Areas — col-span-5, two sub-columns */}
+          <div className="lg:col-span-5">
             <div
               className="mb-4 text-[10px] font-bold uppercase tracking-[0.16em]"
               style={{ color: "var(--foreground)" }}
             >
               Practice Areas
             </div>
-            <ul className="space-y-3 text-sm" style={{ color: "var(--muted-foreground)" }}>
-              {SERVICES.slice(0, 6).map((s) => (
-                <li key={s.slug}>
-                  <Link
-                    to="/services/$slug"
-                    params={{ slug: s.slug }}
-                    className="no-underline transition-colors"
-                    style={{ color: "var(--muted-foreground)" }}
-                    onMouseEnter={(e) => (e.currentTarget.style.color = "var(--gold)")}
-                    onMouseLeave={(e) => (e.currentTarget.style.color = "var(--muted-foreground)")}
-                  >
-                    {s.title}
-                  </Link>
-                </li>
+            <div className="grid grid-cols-2 gap-x-8 gap-y-3 text-sm">
+              {SERVICES.map((s) => (
+                <a
+                  key={s.slug}
+                  href={s.wpUrl}
+                  className="no-underline transition-colors"
+                  style={{ color: "var(--muted-foreground)" }}
+                  onMouseEnter={(e) => (e.currentTarget.style.color = "var(--gold)")}
+                  onMouseLeave={(e) => (e.currentTarget.style.color = "var(--muted-foreground)")}
+                >
+                  {s.title}
+                </a>
               ))}
-            </ul>
+            </div>
           </div>
 
-          {/* Contact — col-span-3 */}
-          <div className="lg:col-span-3">
+          {/* Contact — col-span-2 */}
+          <div className="lg:col-span-2">
             <div
               className="mb-4 text-[10px] font-bold uppercase tracking-[0.16em]"
               style={{ color: "var(--foreground)" }}
