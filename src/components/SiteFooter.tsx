@@ -126,7 +126,7 @@ export function SiteFooter() {
                   New Delhi Office
                 </div>
                 <address className="not-italic leading-relaxed">
-                  Prakash Deep Building 607,<br />
+                  Prakash Deep Building 706, 7th Floor,<br />
                   Tolstoy Road Barakhamba<br />
                   New Delhi – 110001
                 </address>
@@ -139,8 +139,10 @@ export function SiteFooter() {
                   Corporate Office
                 </div>
                 <address className="not-italic leading-relaxed">
-                  25 Gautam Palvi Rd<br />
-                  Ghaziabad, Uttar Pradesh
+                  Plot no. 12B, First Floor<br />
+                  Vaishali Sector 3A<br />
+                  Main Gautam Palvi Road<br />
+                  Ghaziabad, Uttar Pradesh - 201010
                 </address>
               </div>
             </div>
