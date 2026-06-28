@@ -9,15 +9,20 @@
 // Additionally, you should also exclude this file from your linter and/or formatter to prevent it from being checked or modified.
 
 import { Route as rootRouteImport } from './routes/__root'
+import { Route as TeamRouteImport } from './routes/team'
 import { Route as ContactRouteImport } from './routes/contact'
 import { Route as AboutRouteImport } from './routes/about'
-import { Route as TeamRouteImport } from './routes/team'
 import { Route as IndexRouteImport } from './routes/index'
 import { Route as ServicesIndexRouteImport } from './routes/services.index'
 import { Route as BlogsIndexRouteImport } from './routes/blogs.index'
 import { Route as ServicesSlugRouteImport } from './routes/services.$slug'
 import { Route as BlogsSlugRouteImport } from './routes/blogs.$slug'
 
+const TeamRoute = TeamRouteImport.update({
+  id: '/team',
+  path: '/team',
+  getParentRoute: () => rootRouteImport,
+} as any)
 const ContactRoute = ContactRouteImport.update({
   id: '/contact',
   path: '/contact',
@@ -26,11 +31,6 @@ const ContactRoute = ContactRouteImport.update({
 const AboutRoute = AboutRouteImport.update({
   id: '/about',
   path: '/about',
-  getParentRoute: () => rootRouteImport,
-} as any)
-const TeamRoute = TeamRouteImport.update({
-  id: '/team',
-  path: '/team',
   getParentRoute: () => rootRouteImport,
 } as any)
 const IndexRoute = IndexRouteImport.update({
@@ -62,8 +62,8 @@ const BlogsSlugRoute = BlogsSlugRouteImport.update({
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
-  '/team': typeof TeamRoute
   '/contact': typeof ContactRoute
+  '/team': typeof TeamRoute
   '/blogs/$slug': typeof BlogsSlugRoute
   '/services/$slug': typeof ServicesSlugRoute
   '/blogs/': typeof BlogsIndexRoute
@@ -72,8 +72,8 @@ export interface FileRoutesByFullPath {
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
-  '/team': typeof TeamRoute
   '/contact': typeof ContactRoute
+  '/team': typeof TeamRoute
   '/blogs/$slug': typeof BlogsSlugRoute
   '/services/$slug': typeof ServicesSlugRoute
   '/blogs': typeof BlogsIndexRoute
@@ -83,8 +83,8 @@ export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
   '/about': typeof AboutRoute
-  '/team': typeof TeamRoute
   '/contact': typeof ContactRoute
+  '/team': typeof TeamRoute
   '/blogs/$slug': typeof BlogsSlugRoute
   '/services/$slug': typeof ServicesSlugRoute
   '/blogs/': typeof BlogsIndexRoute
@@ -95,8 +95,8 @@ export interface FileRouteTypes {
   fullPaths:
     | '/'
     | '/about'
-    | '/team'
     | '/contact'
+    | '/team'
     | '/blogs/$slug'
     | '/services/$slug'
     | '/blogs/'
@@ -105,8 +105,8 @@ export interface FileRouteTypes {
   to:
     | '/'
     | '/about'
-    | '/team'
     | '/contact'
+    | '/team'
     | '/blogs/$slug'
     | '/services/$slug'
     | '/blogs'
@@ -115,8 +115,8 @@ export interface FileRouteTypes {
     | '__root__'
     | '/'
     | '/about'
-    | '/team'
     | '/contact'
+    | '/team'
     | '/blogs/$slug'
     | '/services/$slug'
     | '/blogs/'
@@ -126,8 +126,8 @@ export interface FileRouteTypes {
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
   AboutRoute: typeof AboutRoute
-  TeamRoute: typeof TeamRoute
   ContactRoute: typeof ContactRoute
+  TeamRoute: typeof TeamRoute
   BlogsSlugRoute: typeof BlogsSlugRoute
   ServicesSlugRoute: typeof ServicesSlugRoute
   BlogsIndexRoute: typeof BlogsIndexRoute
@@ -136,6 +136,13 @@ export interface RootRouteChildren {
 
 declare module '@tanstack/react-router' {
   interface FileRoutesByPath {
+    '/team': {
+      id: '/team'
+      path: '/team'
+      fullPath: '/team'
+      preLoaderRoute: typeof TeamRouteImport
+      parentRoute: typeof rootRouteImport
+    }
     '/contact': {
       id: '/contact'
       path: '/contact'
@@ -148,13 +155,6 @@ declare module '@tanstack/react-router' {
       path: '/about'
       fullPath: '/about'
       preLoaderRoute: typeof AboutRouteImport
-      parentRoute: typeof rootRouteImport
-    }
-    '/team': {
-      id: '/team'
-      path: '/team'
-      fullPath: '/team'
-      preLoaderRoute: typeof TeamRouteImport
       parentRoute: typeof rootRouteImport
     }
     '/': {
@@ -198,8 +198,8 @@ declare module '@tanstack/react-router' {
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
   AboutRoute: AboutRoute,
-  TeamRoute: TeamRoute,
   ContactRoute: ContactRoute,
+  TeamRoute: TeamRoute,
   BlogsSlugRoute: BlogsSlugRoute,
   ServicesSlugRoute: ServicesSlugRoute,
   BlogsIndexRoute: BlogsIndexRoute,

@@ -32,6 +32,7 @@ while ((m = serviceRe.exec(servicesSource)) !== null) {
 /* ── 2. Nav ── */
 const NAV = [
   { label: "About Us", href: `${REACT_URL}/about` },
+  { label: "Team",     href: `${REACT_URL}/team` },
   { label: "Services", href: `${REACT_URL}/services` },
   { label: "Blogs",    href: `${REACT_URL}/blogs` },
   { label: "Contact",  href: `${REACT_URL}/contact` },
