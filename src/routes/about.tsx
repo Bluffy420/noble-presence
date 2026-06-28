@@ -49,23 +49,107 @@ function AboutPage() {
 
         <section>
           <div className="mx-auto max-w-3xl px-6 py-20 lg:px-10">
-            {page?.content ? (
-              <article className="wp-content" dangerouslySetInnerHTML={{ __html: page?.content.rendered }} />
-            ) : (
-              <div className="space-y-6 text-base leading-relaxed text-muted-foreground">
-                <p>
-                  Established in 1998, NB Associates has grown into a trusted name in commercial
-                  litigation, debt recovery, arbitration, and corporate advisory work. Our
-                  practice combines courtroom experience with a commercial sensibility, and we
-                  act for clients ranging from individual entrepreneurs to listed companies and
-                  financial institutions.
+            <div className="space-y-8 text-base leading-relaxed text-muted-foreground">
+
+              <p>
+                NB Associates – Advocates &amp; Legal Consultants is a distinguished full-service
+                law firm in India, committed to delivering comprehensive, strategic, and
+                result-oriented legal solutions to individuals, businesses, corporations,
+                startups, MSMEs, financial institutions, and multinational entities.
+              </p>
+
+              <p>
+                The firm has been established with the vision of providing exceptional legal
+                representation, practical legal advice, and effective dispute resolution services
+                across a broad spectrum of legal disciplines.
+              </p>
+
+              <p>
+                The foundation of the firm has been built upon the principles of professional
+                excellence, integrity, transparency, confidentiality, and client-centric legal
+                services.
+              </p>
+
+              <p>
+                Over the years, a strong reputation has been developed by NB Associates through
+                consistent legal performance, extensive industry knowledge, and a deep
+                understanding of the Indian legal system.
+              </p>
+
+              {/* Recognised for */}
+              <div>
+                <p className="mb-4">
+                  The firm has been recognized for its ability to handle complex legal matters
+                  involving:
                 </p>
-                <p>
-                  We are based in New Delhi and represent clients across trial courts, High
-                  Courts, the Supreme Court, and a wide range of tribunals.
-                </p>
+                <ul className="grid gap-2 sm:grid-cols-2">
+                  {[
+                    "Arbitration",
+                    "MSME Disputes",
+                    "Commercial Litigation",
+                    "Corporate Laws",
+                    "Real Estate Disputes",
+                    "Infrastructure Disputes",
+                    "Criminal Litigation",
+                    "Banking Disputes",
+                    "Insolvency Matters",
+                    "Consumer Disputes",
+                    "RERA Matters",
+                    "Foreign Exchange Laws",
+                    "Constitutional Litigation",
+                  ].map((item) => (
+                    <li key={item} className="flex items-start gap-2">
+                      <span
+                        className="mt-[6px] h-[5px] w-[5px] shrink-0 rounded-full"
+                        style={{ background: "var(--gold)" }}
+                        aria-hidden="true"
+                      />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
               </div>
-            )}
+
+              <p>
+                The legal services of the firm are provided throughout India, with a strong
+                presence in Delhi, NCR, and various major cities.
+              </p>
+
+              {/* Courts & Tribunals */}
+              <div>
+                <p className="mb-4">The legal team regularly appears before:</p>
+                <ul className="grid gap-2 sm:grid-cols-2">
+                  {[
+                    "Supreme Court of India",
+                    "High Courts",
+                    "District Courts",
+                    "Commercial Courts",
+                    "Arbitration Tribunals",
+                    "Consumer Commissions",
+                    "RERA Authorities",
+                    "NCLT",
+                    "NCLAT",
+                    "Debt Recovery Tribunals",
+                    "Various Regulatory Authorities",
+                  ].map((item) => (
+                    <li key={item} className="flex items-start gap-2">
+                      <span
+                        className="mt-[6px] h-[5px] w-[5px] shrink-0 rounded-full"
+                        style={{ background: "var(--gold)" }}
+                        aria-hidden="true"
+                      />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <p>
+                The philosophy of NB Associates has always been centered around understanding
+                the unique legal requirements of every client and delivering customized legal
+                strategies designed to achieve the best possible outcomes.
+              </p>
+            </div>
           </div>
         </section>
       </main>
