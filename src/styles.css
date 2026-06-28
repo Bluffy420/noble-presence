@@ -113,7 +113,7 @@
   to { transform: translateX(-50%); }
 }
 .marquee-track {
-  animation: marquee 40s linear infinite;
+  animation: marquee 55s linear infinite;
 }
 
 /* ─── Hero section ────────────────────────────────────────────────────────── */

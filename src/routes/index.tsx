@@ -176,16 +176,25 @@ function ServicesSection() {
 }
 
 const CLIENT_LOGOS = [
-  "Allied Industries", "Northern Steel Pvt. Ltd.", "Capital Traders", "Meridian Exports",
-  "Vista Manufacturing", "Indus Engineering", "Crescent Holdings", "Pioneer Polymers",
-  "Sterling Logistics", "Apex Constructions",
+  { name: "Kotak Mahindra Bank", file: "kotak_mahindra_bank.png" },
+  { name: "Yes Bank",            file: "yes-bank.png"            },
+  { name: "Thomson Digital",     file: "thomson-digital.png"     },
+  { name: "Metro Tyres",         file: "metro-tyres.png"         },
+  { name: "Metro Ortem",         file: "metro-ortem.png"         },
+  { name: "Zenith Leisure",      file: "zenith-leisure.png"      },
+  { name: "CH Component",        file: "ch-component.png"        },
+  { name: "La Prestine",         file: "la-prestine.png"         },
+  { name: "Micro Network",       file: "micro-network.png"       },
+  { name: "Star Express",        file: "star-express.png"        },
 ];
 
 function Clients() {
+  // Duplicate for seamless infinite loop
   const loop = [...CLIENT_LOGOS, ...CLIENT_LOGOS];
   return (
     <section className="border-b border-border bg-surface">
-      <div className="mx-auto max-w-7xl px-6 py-20 lg:px-10">
+      {/* Section header */}
+      <div className="mx-auto max-w-7xl px-6 py-16 pb-10 lg:px-10">
         <div className="flex flex-col items-start gap-3 lg:flex-row lg:items-end lg:justify-between">
           <h2 className="text-3xl font-semibold tracking-tight sm:text-4xl">Our Clients</h2>
           <p className="text-sm uppercase tracking-[0.18em]" style={{ color: "var(--gold)" }}>
@@ -193,14 +202,43 @@ function Clients() {
           </p>
         </div>
       </div>
+
+      {/* Logo carousel strip */}
       <div className="relative overflow-hidden border-y border-border bg-background py-10">
-        <div className="marquee-track flex w-max items-center gap-16 px-6">
-          {loop.map((name, i) => (
+        {/* Fade edges */}
+        <div
+          className="pointer-events-none absolute inset-y-0 left-0 z-10 w-24"
+          style={{ background: "linear-gradient(to right, var(--background), transparent)" }}
+        />
+        <div
+          className="pointer-events-none absolute inset-y-0 right-0 z-10 w-24"
+          style={{ background: "linear-gradient(to left, var(--background), transparent)" }}
+        />
+
+        <div className="marquee-track flex w-max items-center gap-20 px-10">
+          {loop.map((client, i) => (
             <div
               key={i}
-              className="flex h-14 min-w-[200px] items-center justify-center border-l border-border px-8 text-sm font-medium uppercase tracking-[0.16em] text-muted-foreground first:border-l-0"
+              className="client-logo-item flex shrink-0 items-center justify-center"
+              style={{ height: 60, minWidth: 120 }}
             >
-              {name}
+              <img
+                src={`/logos/${client.file}`}
+                alt={client.name}
+                style={{
+                  maxHeight: 60,
+                  width: "auto",
+                  objectFit: "contain",
+                  filter: "grayscale(1) opacity(0.55)",
+                  transition: "filter 0.3s ease",
+                }}
+                onMouseEnter={(e) => {
+                  (e.currentTarget as HTMLImageElement).style.filter = "grayscale(0) opacity(1)";
+                }}
+                onMouseLeave={(e) => {
+                  (e.currentTarget as HTMLImageElement).style.filter = "grayscale(1) opacity(0.55)";
+                }}
+              />
             </div>
           ))}
         </div>
