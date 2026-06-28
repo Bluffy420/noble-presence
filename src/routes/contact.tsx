@@ -1,4 +1,5 @@
 import { createFileRoute } from "@tanstack/react-router";
+import { OfficeMap } from "@/components/OfficeMap";
 
 export const Route = createFileRoute("/contact")({
   head: () => ({
@@ -17,6 +18,7 @@ export const Route = createFileRoute("/contact")({
 function ContactPage() {
   return (
     <main>
+      {/* ── Hero ──────────────────────────────────────────────── */}
       <section className="border-b border-border">
         <div className="mx-auto max-w-7xl px-6 pt-24 pb-20 lg:px-10 lg:pt-32">
           <div className="text-[11px] font-medium uppercase tracking-[0.22em] text-muted-foreground">
@@ -32,38 +34,67 @@ function ContactPage() {
         </div>
       </section>
 
+      {/* ── Contact strip: Phone / Email / Offices ─────────────── */}
       <section>
-        <div className="mx-auto grid max-w-7xl gap-px overflow-hidden border-y border-border bg-border px-0 lg:grid-cols-3">
+        <div className="mx-auto grid max-w-7xl gap-px overflow-hidden border-y border-border bg-border px-0 lg:grid-cols-4">
+          {/* Phone */}
           <div className="bg-background p-10 lg:p-12">
             <div className="text-[11px] uppercase tracking-[0.18em] text-muted-foreground">Phone</div>
-            <a href="tel:+919811899279" className="mt-3 block text-xl font-semibold text-foreground hover:text-navy">
+            <a
+              href="tel:+919811899279"
+              className="mt-3 block text-xl font-semibold text-foreground hover:text-navy"
+            >
               +91 98118 99279
             </a>
             <p className="mt-3 text-sm text-muted-foreground">
               Mon–Sat · 10:00 to 19:00 IST
             </p>
           </div>
+
+          {/* Email */}
           <div className="bg-background p-10 lg:p-12">
             <div className="text-[11px] uppercase tracking-[0.18em] text-muted-foreground">Email</div>
-            <a href="mailto:mail@nbassociates.net" className="mt-3 block text-xl font-semibold text-foreground hover:text-navy">
+            <a
+              href="mailto:mail@nbassociates.net"
+              className="mt-3 block text-xl font-semibold text-foreground hover:text-navy"
+            >
               mail@nbassociates.net
             </a>
             <p className="mt-3 text-sm text-muted-foreground">
               Replies within one business day.
             </p>
           </div>
+
+          {/* New Delhi Office */}
           <div className="bg-background p-10 lg:p-12">
-            <div className="text-[11px] uppercase tracking-[0.18em] text-muted-foreground">Office</div>
-            <div className="mt-3 text-xl font-semibold text-foreground">New Delhi, India</div>
-            <p className="mt-3 text-sm text-muted-foreground">
+            <div className="text-[11px] uppercase tracking-[0.18em] text-muted-foreground">New Delhi Office</div>
+            <div className="mt-3 text-base font-semibold leading-snug text-foreground">
+              Delhi NCR (New Delhi)
+            </div>
+            <address className="mt-2 not-italic text-sm leading-relaxed text-muted-foreground">
+              706, Prakashdeep Building<br />
+              Tolstoy Marg<br />
+              New Delhi – 110001
+            </address>
+          </div>
+
+          {/* Corporate Office */}
+          <div className="bg-background p-10 lg:p-12">
+            <div className="text-[11px] uppercase tracking-[0.18em] text-muted-foreground">Corporate Office</div>
+            <div className="mt-3 text-base font-semibold leading-snug text-foreground">
+              Delhi NCR (Noida)
+            </div>
+            <address className="mt-2 not-italic text-sm leading-relaxed text-muted-foreground">
               Visits by appointment only.
-            </p>
+            </address>
           </div>
         </div>
       </section>
 
+      {/* ── Form + Office Map ──────────────────────────────────── */}
       <section>
         <div className="mx-auto grid max-w-7xl gap-12 px-6 py-20 lg:grid-cols-2 lg:px-10 lg:py-24">
+          {/* Left: consultation form */}
           <form
             className="flex flex-col gap-5"
             onSubmit={(e) => {
@@ -104,14 +135,34 @@ function ContactPage() {
             </p>
           </form>
 
-          <div className="h-[480px] w-full overflow-hidden border border-border bg-surface">
-            <iframe
-              title="NB Associates location"
-              src="https://www.google.com/maps?q=Connaught+Place,+New+Delhi&output=embed"
-              className="h-full w-full grayscale"
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-            />
+          {/* Right: office addresses + switching map */}
+          <div className="flex flex-col gap-8">
+            {/* Office address cards */}
+            <div className="grid gap-px overflow-hidden border border-border bg-border sm:grid-cols-2">
+              <div className="bg-background p-7">
+                <div className="text-[11px] uppercase tracking-[0.18em] text-muted-foreground">New Delhi Office</div>
+                <div className="mt-3 text-base font-semibold leading-snug text-foreground">
+                  Delhi NCR (New Delhi)
+                </div>
+                <address className="mt-2 not-italic text-sm leading-relaxed text-muted-foreground">
+                  706, Prakashdeep Building<br />
+                  Tolstoy Marg<br />
+                  New Delhi – 110001
+                </address>
+              </div>
+              <div className="bg-background p-7">
+                <div className="text-[11px] uppercase tracking-[0.18em] text-muted-foreground">Corporate Office</div>
+                <div className="mt-3 text-base font-semibold leading-snug text-foreground">
+                  Delhi NCR (Noida)
+                </div>
+                <address className="mt-2 not-italic text-sm leading-relaxed text-muted-foreground">
+                  Visits by appointment only.
+                </address>
+              </div>
+            </div>
+
+            {/* Office-switching map (light variant) */}
+            <OfficeMap variant="light" mapHeight="h-[320px] lg:h-[380px]" />
           </div>
         </div>
       </section>
@@ -119,7 +170,17 @@ function ContactPage() {
   );
 }
 
-function Field({ name, label, type = "text", required }: { name: string; label: string; type?: string; required?: boolean }) {
+function Field({
+  name,
+  label,
+  type = "text",
+  required,
+}: {
+  name: string;
+  label: string;
+  type?: string;
+  required?: boolean;
+}) {
   return (
     <div>
       <label className="mb-2 block text-[11px] font-medium uppercase tracking-[0.16em] text-muted-foreground">
