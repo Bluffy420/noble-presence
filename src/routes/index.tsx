@@ -147,11 +147,10 @@ function ServicesSection() {
 
         <div className="mt-16 grid gap-px overflow-hidden border border-border bg-border md:grid-cols-2 lg:grid-cols-3">
           {SERVICES.map((s, i) => (
-            <Link
+            <a
               key={s.slug}
-              to="/services/$slug"
-              params={{ slug: s.slug }}
-              className="group flex flex-col bg-background p-8 transition-colors hover:bg-surface lg:p-10"
+              href={s.wpUrl}
+              className="group flex flex-col bg-background p-8 transition-colors hover:bg-surface lg:p-10 no-underline"
             >
               <div className="text-[11px] font-medium tracking-[0.2em] text-muted-foreground">
                 {String(i + 1).padStart(2, "0")}
@@ -168,7 +167,7 @@ function ServicesSection() {
                   <path d="M1 6h10M7 2l4 4-4 4" stroke="currentColor" strokeWidth="1.25" strokeLinecap="square" />
                 </svg>
               </span>
-            </Link>
+            </a>
           ))}
         </div>
       </div>
@@ -356,7 +355,7 @@ function Insights() {
                   Read more →
                 </span>
               </div>
-            </Link>
+            </a>
           ))}
         </div>
       </div>
