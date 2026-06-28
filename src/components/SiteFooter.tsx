@@ -40,6 +40,7 @@ export function SiteFooter() {
                 { to: "/",        label: "Home" },
                 { to: "/services",label: "Services" },
                 { to: "/about",   label: "About Us" },
+                { to: "/team",    label: "Team" },
                 { to: "/blogs",   label: "Blogs" },
                 { to: "/contact", label: "Contact" },
               ].map(({ to, label }) => (
