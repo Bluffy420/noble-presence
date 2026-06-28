@@ -1,3 +1,21 @@
+# ── SPA fallback ──────────────────────────────────────────────────────────────
+# Any request that doesn't match a real file or directory is rewritten to
+# index.html so TanStack Router can handle the route client-side.
+# This fixes 404 on hard reload of /services, /about, /contact, etc.
+
+<IfModule mod_rewrite.c>
+  RewriteEngine On
+  RewriteBase /
+
+  # Let real files and directories through (assets, hero-panel.png, shell.json…)
+  RewriteCond %{REQUEST_FILENAME} !-f
+  RewriteCond %{REQUEST_FILENAME} !-d
+
+  # Everything else → index.html
+  RewriteRule ^ index.html [L]
+</IfModule>
+
+# ── CORS for shell.json (WordPress connector) ─────────────────────────────────
 <IfModule mod_headers.c>
   <FilesMatch "^shell\.json$">
     Header set Access-Control-Allow-Origin "https://nbassociates.net"
