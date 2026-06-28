@@ -252,7 +252,7 @@ const NEW_DELHI_MAP_URL =
   "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3501.9!2d77.2142873!3d28.6279027!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390cfd3396400001%3A0x8bec8e0f5abf5d85!2sPRAKASH%20DEEP%2C%20607%2C%20Tolstoy%20Rd%2C%20Barakhamba%2C%20New%20Delhi%2C%20Delhi%20110001!5e0!3m2!1sen!2sin!4v1700000000000";
 
 const CORPORATE_MAP_EMBED =
-  "https://www.google.com/maps/embed?pb=!4v1782631451350!6m8!1m7!1sJnn7bG-2gNMwp5Oulq22Wg!2m2!1d28.64246607765575!2d77.33512435061388!3f80.65613296198899!4f-19.246935382970364!5f0.7820865974627469";
+  "https://www.google.com/maps/embed?pb=!4v1782633064747!6m8!1m7!1sJnn7bG-2gNMwp5Oulq22Wg!2m2!1d28.64246607765575!2d77.33512435061388!3f43.35121248935134!4f11.833760599795141!5f0.7820865974627469";
 
 function ConsultSection() {
   const [activeOffice, setActiveOffice] = React.useState<"newdelhi" | "corporate">("newdelhi");
@@ -346,7 +346,7 @@ function ConsultSection() {
               style={{ filter: "grayscale(0.3) contrast(1.05)" }}
               loading="lazy"
               allowFullScreen
-              referrerPolicy="no-referrer-when-downgrade"
+              referrerPolicy="strict-origin-when-cross-origin"
             />
           </div>
         </div>
