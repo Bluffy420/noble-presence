@@ -93,19 +93,20 @@ const headerHtml = `
   </div>
 </header>`.trim();
 
-/* ── 4. Footer HTML (unchanged) ── */
+/* ── 4. Footer HTML ── */
 const quickLinks = [
   { label: "Home",     href: `${REACT_URL}/` },
   { label: "Services", href: `${REACT_URL}/services` },
   { label: "About Us", href: `${REACT_URL}/about` },
+  { label: "Team",     href: `${REACT_URL}/team` },
   { label: "Blogs",    href: `${REACT_URL}/blogs` },
   { label: "Contact",  href: `${REACT_URL}/contact` },
 ].map(({ label, href }) =>
   `<li><a href="${href}" class="nba-footer-link">${esc(label)}</a></li>`
 ).join("\n          ");
 
-const practiceLinks = serviceEntries.slice(0, 6).map(({ slug, title }) =>
-  `<li><a href="${WP_URL}/${slug}" class="nba-footer-link">${esc(title)}</a></li>`
+const practiceLinks = serviceEntries.map(({ slug, title }) =>
+  `<a href="${WP_URL}/${slug}/" class="nba-footer-link nba-footer-practice-link">${esc(title)}</a>`
 ).join("\n          ");
 
 const year = new Date().getFullYear();
@@ -114,6 +115,7 @@ const footerHtml = `
 <footer class="nba-footer">
   <div class="nba-footer-inner">
     <div class="nba-footer-grid">
+
       <div class="nba-footer-col nba-footer-col--brand">
         <div class="nba-footer-brand-name">NB Associates</div>
         <div class="nba-footer-brand-sub">Advocates &amp; Legal Consultants</div>
@@ -122,14 +124,19 @@ const footerHtml = `
           individuals across India for over 26 years.
         </p>
       </div>
+
       <div class="nba-footer-col nba-footer-col--quick">
         <div class="nba-footer-heading">Quick Links</div>
         <ul class="nba-footer-links">${quickLinks}</ul>
       </div>
+
       <div class="nba-footer-col nba-footer-col--practice">
         <div class="nba-footer-heading">Practice Areas</div>
-        <ul class="nba-footer-links">${practiceLinks}</ul>
+        <div class="nba-footer-practice-grid">
+          ${practiceLinks}
+        </div>
       </div>
+
       <div class="nba-footer-col nba-footer-col--contact">
         <div class="nba-footer-heading">Contact</div>
         <ul class="nba-footer-links">
@@ -137,11 +144,31 @@ const footerHtml = `
           <li><a href="mailto:mail@nbassociates.net" class="nba-footer-link">mail@nbassociates.net</a></li>
           <li class="nba-footer-text">New Delhi, India</li>
         </ul>
+        <div class="nba-footer-offices">
+          <div class="nba-footer-office">
+            <div class="nba-footer-office-heading">New Delhi Office</div>
+            <address class="nba-footer-address">
+              Prakash Deep Building 706, 7th Floor,<br>
+              Tolstoy Road Barakhamba<br>
+              New Delhi &ndash; 110001
+            </address>
+          </div>
+          <div class="nba-footer-office">
+            <div class="nba-footer-office-heading">Corporate Office</div>
+            <address class="nba-footer-address">
+              Plot no. 12B, First Floor<br>
+              Vaishali Sector 3A<br>
+              Main Gautam Palvi Road<br>
+              Ghaziabad, Uttar Pradesh - 201010
+            </address>
+          </div>
+        </div>
       </div>
+
     </div>
     <div class="nba-footer-bottom">
-      <div>&copy; ${year} NB Associates. All rights reserved.</div>
-      <div>Advocates &amp; Legal Consultants</div>
+      <div>&copy; ${year} NB Associates &mdash; Advocates &amp; Legal Consultants</div>
+      <div>All Rights Reserved</div>
     </div>
   </div>
 </footer>`.trim();
@@ -300,9 +327,9 @@ const css = `
 .nba-footer-grid { display:grid; gap:3rem; grid-template-columns:1fr; }
 @media (min-width:1024px){
   .nba-footer-grid { grid-template-columns:repeat(12,1fr); gap:2rem; }
-  .nba-footer-col--brand    { grid-column:span 4; }
+  .nba-footer-col--brand    { grid-column:span 3; }
   .nba-footer-col--quick    { grid-column:span 2; }
-  .nba-footer-col--practice { grid-column:span 3; }
+  .nba-footer-col--practice { grid-column:span 4; }
   .nba-footer-col--contact  { grid-column:span 3; }
 }
 .nba-footer-brand-name { font-size:1.125rem; font-weight:700; letter-spacing:-.01em; color:var(--nba-fg); }
@@ -313,6 +340,17 @@ const css = `
 .nba-footer-text       { color:var(--nba-muted-fg); font-size:.875rem; }
 .nba-footer-link       { color:var(--nba-muted-fg); text-decoration:none; transition:color .15s; }
 .nba-footer-link:hover { color:var(--nba-gold) !important; }
+.nba-footer-practice-grid {
+  display:grid; grid-template-columns:1fr 1fr; gap:.75rem; font-size:.875rem;
+}
+.nba-footer-practice-link { color:var(--nba-muted-fg); text-decoration:none; transition:color .15s; line-height:1.4; }
+.nba-footer-practice-link:hover { color:var(--nba-gold) !important; }
+.nba-footer-offices { margin-top:1.5rem; display:flex; flex-direction:column; gap:1rem; }
+.nba-footer-office-heading {
+  font-size:10px; font-weight:700; text-transform:uppercase; letter-spacing:.16em;
+  color:var(--nba-fg); margin-bottom:.375rem;
+}
+.nba-footer-address { font-size:.8125rem; color:var(--nba-muted-fg); line-height:1.7; font-style:normal; }
 .nba-footer-bottom {
   margin-top:3.5rem; padding-top:2rem; border-top:1px solid var(--nba-border);
   display:flex; flex-direction:column; gap:1rem;
@@ -320,6 +358,25 @@ const css = `
 }
 @media (min-width:640px){
   .nba-footer-bottom{ flex-direction:row; justify-content:space-between; align-items:center; }
+}
+
+/* ── Prose content typography ── */
+.wp-content,
+.entry-content,
+.post-content,
+.page-content {
+  line-height:1.9 !important;
+  font-weight:500 !important;
+  text-align:justify !important;
+  font-size:1.0625rem !important;
+}
+.wp-content p, .entry-content p, .post-content p, .page-content p {
+  margin-bottom:1.5rem !important;
+}
+@media (max-width:767px) {
+  .wp-content, .entry-content, .post-content, .page-content {
+    text-align:left !important;
+  }
 }
 
 /* ── Disclaimer ── */
