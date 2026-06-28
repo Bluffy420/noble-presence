@@ -58,8 +58,8 @@ export function SiteFooter() {
             </ul>
           </div>
 
-          {/* Practice Areas — col-span-5, two sub-columns */}
-          <div className="lg:col-span-5">
+          {/* Practice Areas — col-span-4, two sub-columns */}
+          <div className="lg:col-span-4">
             <div
               className="mb-4 text-[10px] font-bold uppercase tracking-[0.16em]"
               style={{ color: "var(--foreground)" }}
@@ -83,7 +83,7 @@ export function SiteFooter() {
           </div>
 
           {/* Contact — col-span-2 */}
-          <div className="lg:col-span-2">
+          <div className="lg:col-span-3">
             <div
               className="mb-4 text-[10px] font-bold uppercase tracking-[0.16em]"
               style={{ color: "var(--foreground)" }}
@@ -115,6 +115,35 @@ export function SiteFooter() {
               </li>
               <li style={{ color: "var(--muted-foreground)" }}>New Delhi, India</li>
             </ul>
+
+            {/* Office addresses */}
+            <div className="mt-6 space-y-4 text-sm" style={{ color: "var(--muted-foreground)" }}>
+              <div>
+                <div
+                  className="mb-1 text-[10px] font-bold uppercase tracking-[0.16em]"
+                  style={{ color: "var(--foreground)" }}
+                >
+                  New Delhi Office
+                </div>
+                <address className="not-italic leading-relaxed">
+                  Prakash Deep Building 607,<br />
+                  Tolstoy Road Barakhamba<br />
+                  New Delhi – 110001
+                </address>
+              </div>
+              <div>
+                <div
+                  className="mb-1 text-[10px] font-bold uppercase tracking-[0.16em]"
+                  style={{ color: "var(--foreground)" }}
+                >
+                  Corporate Office
+                </div>
+                <address className="not-italic leading-relaxed">
+                  25 Gautam Palvi Rd<br />
+                  Ghaziabad, Uttar Pradesh
+                </address>
+              </div>
+            </div>
           </div>
         </div>
 
