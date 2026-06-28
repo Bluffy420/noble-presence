@@ -54,7 +54,7 @@ function Hero() {
         {/* ── LEFT: text content ────────────────────────── */}
         <div className="hero-text-col">
           <div className="hero-text-inner">
-            <div className="text-[11px] font-medium uppercase tracking-[0.22em] text-muted-foreground">
+            <div className="text-[11px] font-medium uppercase tracking-[0.22em]" style={{ color: "var(--gold)" }}>
               Est. 1998 · New Delhi
             </div>
 
@@ -118,7 +118,7 @@ function TrustStats() {
             </div>
           ))}
         </div>
-        <p className="mt-10 text-center text-sm uppercase tracking-[0.22em] text-muted-foreground">
+        <p className="mt-10 text-center text-sm uppercase tracking-[0.22em]" style={{ color: "var(--gold)" }}>
           Trusted by businesses &amp; individuals across India
         </p>
       </div>
@@ -132,7 +132,7 @@ function ServicesSection() {
       <div className="mx-auto max-w-7xl px-6 py-24 lg:px-10 lg:py-32">
         <div className="grid items-end gap-8 lg:grid-cols-12">
           <div className="lg:col-span-7">
-            <div className="text-[11px] font-medium uppercase tracking-[0.22em] text-muted-foreground">
+            <div className="text-[11px] font-medium uppercase tracking-[0.22em]" style={{ color: "var(--gold)" }}>
               02 — Practice
             </div>
             <h2 className="mt-6 text-4xl font-semibold tracking-tight sm:text-5xl">
@@ -189,7 +189,7 @@ function Clients() {
       <div className="mx-auto max-w-7xl px-6 py-20 lg:px-10">
         <div className="flex flex-col items-start gap-3 lg:flex-row lg:items-end lg:justify-between">
           <h2 className="text-3xl font-semibold tracking-tight sm:text-4xl">Our Clients</h2>
-          <p className="text-sm uppercase tracking-[0.18em] text-muted-foreground">
+          <p className="text-sm uppercase tracking-[0.18em]" style={{ color: "var(--gold)" }}>
             03 — Engagements across sectors
           </p>
         </div>
@@ -225,7 +225,7 @@ function WhyUs() {
       <div className="mx-auto max-w-7xl px-6 py-24 lg:px-10 lg:py-32">
         <div className="grid gap-12 lg:grid-cols-12">
           <div className="lg:col-span-4">
-            <div className="text-[11px] font-medium uppercase tracking-[0.22em] text-muted-foreground">
+            <div className="text-[11px] font-medium uppercase tracking-[0.22em]" style={{ color: "var(--gold)" }}>
               04 — The Firm
             </div>
             <h2 className="mt-6 text-4xl font-semibold leading-tight tracking-tight sm:text-5xl">
@@ -306,7 +306,7 @@ function Insights() {
       <div className="mx-auto max-w-7xl px-6 py-24 lg:px-10 lg:py-32">
         <div className="flex flex-col items-start justify-between gap-4 lg:flex-row lg:items-end">
           <div>
-            <div className="text-[11px] font-medium uppercase tracking-[0.22em] text-muted-foreground">
+            <div className="text-[11px] font-medium uppercase tracking-[0.22em]" style={{ color: "var(--gold)" }}>
               06 — Journal
             </div>
             <h2 className="mt-6 text-4xl font-semibold tracking-tight sm:text-5xl">
