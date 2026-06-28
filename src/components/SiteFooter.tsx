@@ -125,8 +125,8 @@ export function SiteFooter() {
           className="mt-14 flex flex-col items-start justify-between gap-4 border-t pt-8 text-xs sm:flex-row sm:items-center"
           style={{ borderColor: "var(--ivory-border)", color: "var(--muted-foreground)" }}
         >
-          <div>© {new Date().getFullYear()} NB Associates. All rights reserved.</div>
-          <div>Advocates &amp; Legal Consultants</div>
+          <div>© {new Date().getFullYear()} NB Associates — Advocates &amp; Legal Consultants</div>
+          <div>All Rights Reserved</div>
         </div>
       </div>
     </footer>
