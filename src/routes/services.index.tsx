@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { SERVICES } from "@/lib/services";
+import { SocialShare } from "@/components/SocialShare";
 
 export const Route = createFileRoute("/services/")({
   head: () => ({
@@ -31,6 +32,8 @@ function ServicesPage() {
           </p>
         </div>
       </section>
+
+      <SocialShare />
 
       <section>
         <div className="mx-auto max-w-7xl px-6 py-16 lg:px-10 lg:py-24">

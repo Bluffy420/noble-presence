@@ -1,6 +1,7 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
 import { getPageBySlug } from "@/lib/wordpress.functions";
+import { SocialShare } from "@/components/SocialShare";
 
 const aboutQuery = queryOptions({
   queryKey: ["wp-page", "about-us"],
@@ -46,6 +47,8 @@ function AboutPage() {
             </p>
           </div>
         </section>
+
+        <SocialShare />
 
         <section>
           <div className="mx-auto max-w-3xl px-6 py-20 lg:px-10">

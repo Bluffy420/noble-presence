@@ -1,6 +1,7 @@
 import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
 import { getPostBySlug } from "@/lib/wordpress.functions";
+import { SocialShare } from "@/components/SocialShare";
 
 const postQuery = (slug: string) =>
   queryOptions({
@@ -69,6 +70,8 @@ function PostPage() {
             </div>
           </div>
         </header>
+
+        <SocialShare />
 
         {post._embedded?.["wp:featuredmedia"]?.[0]?.source_url && (
           <div className="mx-auto max-w-5xl px-6 pt-12 lg:px-10">
