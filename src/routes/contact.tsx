@@ -82,10 +82,12 @@ function ContactPage() {
           <div className="bg-background p-10 lg:p-12">
             <div className="text-[11px] uppercase tracking-[0.18em] text-muted-foreground">Corporate Office</div>
             <div className="mt-3 text-base font-semibold leading-snug text-foreground">
-              Delhi NCR (Noida)
+              Delhi NCR (Ghaziabad)
             </div>
             <address className="mt-2 not-italic text-sm leading-relaxed text-muted-foreground">
-              Visits by appointment only.
+              Plot no. 12B, First Floor<br />
+              Vaishali Sector 3A, Main Gautam Palvi Road<br />
+              Ghaziabad, Uttar Pradesh – 201010
             </address>
           </div>
         </div>
@@ -135,35 +137,8 @@ function ContactPage() {
             </p>
           </form>
 
-          {/* Right: office addresses + switching map */}
-          <div className="flex flex-col gap-8">
-            {/* Office address cards */}
-            <div className="grid gap-px overflow-hidden border border-border bg-border sm:grid-cols-2">
-              <div className="bg-background p-7">
-                <div className="text-[11px] uppercase tracking-[0.18em] text-muted-foreground">New Delhi Office</div>
-                <div className="mt-3 text-base font-semibold leading-snug text-foreground">
-                  Delhi NCR (New Delhi)
-                </div>
-                <address className="mt-2 not-italic text-sm leading-relaxed text-muted-foreground">
-                  706, Prakashdeep Building<br />
-                  Tolstoy Marg<br />
-                  New Delhi – 110001
-                </address>
-              </div>
-              <div className="bg-background p-7">
-                <div className="text-[11px] uppercase tracking-[0.18em] text-muted-foreground">Corporate Office</div>
-                <div className="mt-3 text-base font-semibold leading-snug text-foreground">
-                  Delhi NCR (Noida)
-                </div>
-                <address className="mt-2 not-italic text-sm leading-relaxed text-muted-foreground">
-                  Visits by appointment only.
-                </address>
-              </div>
-            </div>
-
-            {/* Office-switching map (light variant) */}
-            <OfficeMap variant="light" mapHeight="h-[320px] lg:h-[380px]" />
-          </div>
+          {/* Right: office-switching map only */}
+          <OfficeMap variant="light" mapHeight="h-[320px] lg:h-[380px]" />
         </div>
       </section>
     </main>
