@@ -9,6 +9,7 @@ export type Service = {
 const WP = "https://nbassociates.net";
 
 export const SERVICES: Service[] = [
+  // A
   {
     slug: "arbitration-and-alternative-dispute-resolution",
     title: "Arbitration & Alternative Dispute Resolution",
@@ -17,6 +18,7 @@ export const SERVICES: Service[] = [
       "We act as counsel in domestic and institutional arbitrations under the Arbitration & Conciliation Act, 1996, including Section 9 interim relief, Section 17 protection, and Section 34 challenges.",
     wpUrl: `${WP}/arbitration-and-alternative-dispute-resolution/`,
   },
+  // B
   {
     slug: "banking-laws",
     title: "Banking Laws",
@@ -24,6 +26,15 @@ export const SERVICES: Service[] = [
     description:
       "We advise banks, financial institutions, and borrowers on banking laws, loan documentation, security enforcement, and dispute resolution before banking courts and tribunals.",
     wpUrl: `${WP}/banking-laws/`,
+  },
+  // C
+  {
+    slug: "cheque-bounce-cases",
+    title: "Cheque Bounce Cases",
+    short: "Prosecution and defence in cheque dishonour cases under Section 138 N.I. Act.",
+    description:
+      "We represent payees and accused in cheque bounce proceedings under Section 138 of the Negotiable Instruments Act, including demand notices, trial court appearances, appeals, and compounding.",
+    wpUrl: `${WP}/cheque-bounce-cases/`,
   },
   {
     slug: "commercial-debt-recovery",
@@ -40,6 +51,14 @@ export const SERVICES: Service[] = [
     description:
       "We represent businesses and individuals in commercial disputes before trial courts, High Courts, and tribunals, covering contract breaches, partnership disputes, and complex civil litigation.",
     wpUrl: `${WP}/commercial-disputes-and-business-litigation/`,
+  },
+  {
+    slug: "commercial-leasing-and-licensing",
+    title: "Commercial Leasing and Licensing",
+    short: "Advisory and drafting for commercial lease, leave & licence, and tenancy matters.",
+    description:
+      "We advise landlords, tenants, and licensees on commercial lease structuring, leave and licence agreements, rent disputes, eviction proceedings, and compliance with local tenancy legislation.",
+    wpUrl: `${WP}/commercial-leasing-and-licensing/`,
   },
   {
     slug: "company-law",
@@ -73,6 +92,7 @@ export const SERVICES: Service[] = [
       "We represent accused and complainants in criminal matters including economic offences, cheque bouncing under Section 138 N.I. Act, bail applications, and appellate proceedings before sessions courts and High Courts.",
     wpUrl: `${WP}/criminal-law/`,
   },
+  // E
   {
     slug: "employment-and-labour-laws",
     title: "Employment & Labour Laws",
@@ -81,6 +101,7 @@ export const SERVICES: Service[] = [
       "We advise employers and employees on employment contracts, termination, non-compete clauses, PF/ESI compliance, and represent clients before labour courts and industrial tribunals.",
     wpUrl: `${WP}/employment-and-labour-laws/`,
   },
+  // F
   {
     slug: "fema-law",
     title: "FEMA & Foreign Exchange",
@@ -89,6 +110,7 @@ export const SERVICES: Service[] = [
       "We advise on FEMA regulations governing foreign investment, ECB, overseas remittances, and represent clients in proceedings before the Enforcement Directorate.",
     wpUrl: `${WP}/fema-law/`,
   },
+  // I
   {
     slug: "insolvency-and-bankruptcy-law",
     title: "Insolvency & Bankruptcy Law",
@@ -97,6 +119,7 @@ export const SERVICES: Service[] = [
       "We advise creditors, resolution applicants, and corporate debtors on insolvency proceedings under the Insolvency & Bankruptcy Code, including CIRP initiation, resolution plans, and liquidation.",
     wpUrl: `${WP}/insolvency-and-bankruptcy-law/`,
   },
+  // M
   {
     slug: "mergers-and-acquisitions",
     title: "Mergers & Acquisitions",
@@ -113,6 +136,7 @@ export const SERVICES: Service[] = [
       "We represent registered MSMEs in conciliation and arbitration proceedings under the MSMED Act, recovering principal, interest, and statutory dues from buyers who default on payments.",
     wpUrl: `${WP}/msme-dispute-resolution-and-debt-recovery/`,
   },
+  // R
   {
     slug: "rbi-laws",
     title: "RBI & Banking Regulations",
@@ -129,6 +153,7 @@ export const SERVICES: Service[] = [
       "We advise on property acquisitions, title due diligence, RERA compliance, construction contracts, and dispute resolution in real estate and infrastructure matters.",
     wpUrl: `${WP}/real-estate-and-infrastructure-law/`,
   },
+  // S
   {
     slug: "supreme-court-and-constitutional-litigation",
     title: "Supreme Court & Constitutional Litigation",
