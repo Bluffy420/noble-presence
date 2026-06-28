@@ -5,7 +5,7 @@ export function SiteFooter() {
   return (
     <footer
       className="font-sans"
-      style={{ borderTop: "1px solid var(--ivory-border)", background: "var(--background)" }}
+      style={{ borderTop: "1px solid var(--ivory-border)", background: "var(--ivory)" }}
     >
       <div className="mx-auto max-w-7xl px-6 py-16 lg:px-10">
         <div className="grid gap-12 lg:grid-cols-12">
