@@ -9,7 +9,7 @@
  *   - Border bottom: #dedad0
  */
 
-import { writeFileSync, readFileSync } from "fs";
+import { writeFileSync, readFileSync, mkdirSync } from "fs";
 import { resolve, dirname } from "path";
 import { fileURLToPath } from "url";
 
@@ -331,6 +331,7 @@ const css = `
 `.trim();
 
 /* ── 6. Write shell.json ── */
+mkdirSync(DIST, { recursive: true });
 writeFileSync(
   resolve(DIST, "shell.json"),
   JSON.stringify({ css, header: headerHtml, footer: footerHtml }, null, 2),

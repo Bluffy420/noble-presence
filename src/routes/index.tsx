@@ -355,7 +355,7 @@ function Insights() {
                   Read more →
                 </span>
               </div>
-            </a>
+            </Link>
           ))}
         </div>
       </div>
