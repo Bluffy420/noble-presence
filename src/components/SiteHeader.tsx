@@ -50,7 +50,7 @@ export function SiteHeader() {
             </span>
             <span
               className="text-[9.5px] uppercase tracking-[0.16em]"
-              style={{ color: "var(--muted-foreground)" }}
+              style={{ color: "var(--gold)" }}
             >
               Advocates &amp; Legal Consultants
             </span>
