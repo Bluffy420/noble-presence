@@ -315,30 +315,18 @@ function Insights() {
               Explore our most-read legal articles and resources.
             </p>
           </div>
-          <Link to="/blogs" className="text-[12px] font-medium uppercase tracking-[0.18em] text-navy hover:underline">
+          <a href="https://nbassociates.net/blog" className="text-[12px] font-medium uppercase tracking-[0.18em] text-navy hover:underline no-underline">
             View all articles →
-          </Link>
+          </a>
         </div>
 
         <div className="mt-14 grid gap-px overflow-hidden border border-border bg-border md:grid-cols-3">
           {posts.slice(0, 3).map((p) => (
-            <Link
+            <a
               key={p.id}
-              to="/blogs/$slug"
-              params={{ slug: p.slug }}
-              className="group flex flex-col bg-background"
+              href={p.link}
+              className="group flex flex-col bg-background no-underline"
             >
-              {p._embedded?.["wp:featuredmedia"]?.[0]?.source_url ? (
-                <div className="aspect-[4/3] overflow-hidden bg-surface">
-                  <img
-                    src={p._embedded?.["wp:featuredmedia"]?.[0]?.source_url}
-                    alt=""
-                    className="h-full w-full object-cover grayscale transition-all duration-500 group-hover:scale-105 group-hover:grayscale-0"
-                  />
-                </div>
-              ) : (
-                <div className="aspect-[4/3] bg-surface" />
-              )}
               <div className="flex flex-1 flex-col p-7">
                 <div className="text-[11px] uppercase tracking-[0.18em] text-muted-foreground">
                   {new Date(p.date).toLocaleDateString("en-IN", { day: "numeric", month: "long", year: "numeric" })}
@@ -355,7 +343,7 @@ function Insights() {
                   Read more →
                 </span>
               </div>
-            </Link>
+            </a>
           ))}
         </div>
       </div>

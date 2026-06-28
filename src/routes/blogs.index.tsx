@@ -1,10 +1,10 @@
-import { createFileRoute, Link } from "@tanstack/react-router";
+import { createFileRoute } from "@tanstack/react-router";
 import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
 import { getPosts } from "@/lib/wordpress.functions";
 
 const postsQuery = queryOptions({
   queryKey: ["posts", "all"],
-  queryFn: () => getPosts({ perPage: 30 }),
+  queryFn: () => getPosts({ perPage: 6 }),
 });
 
 export const Route = createFileRoute("/blogs/")({
@@ -55,21 +55,11 @@ function BlogsPage() {
           ) : (
             <div className="grid gap-px overflow-hidden border border-border bg-border md:grid-cols-2 lg:grid-cols-3">
               {posts.map((p) => (
-                <Link
+                <a
                   key={p.id}
-                  to="/blogs/$slug"
-                  params={{ slug: p.slug }}
-                  className="group flex flex-col bg-background"
+                  href={p.link}
+                  className="group flex flex-col bg-background no-underline"
                 >
-                  {p._embedded?.["wp:featuredmedia"]?.[0]?.source_url && (
-                    <div className="aspect-[4/3] overflow-hidden bg-surface">
-                      <img
-                        src={p._embedded?.["wp:featuredmedia"]?.[0]?.source_url}
-                        alt=""
-                        className="h-full w-full object-cover grayscale transition-all duration-500 group-hover:scale-105 group-hover:grayscale-0"
-                      />
-                    </div>
-                  )}
                   <div className="flex flex-1 flex-col p-7">
                     <div className="text-[11px] uppercase tracking-[0.18em] text-muted-foreground">
                       {new Date(p.date).toLocaleDateString("en-IN", { day: "numeric", month: "long", year: "numeric" })}
@@ -86,7 +76,7 @@ function BlogsPage() {
                       Read more →
                     </span>
                   </div>
-                </Link>
+                </a>
               ))}
             </div>
           )}
