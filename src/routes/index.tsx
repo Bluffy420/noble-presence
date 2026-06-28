@@ -176,16 +176,16 @@ function ServicesSection() {
 }
 
 const CLIENT_LOGOS = [
-  { name: "Kotak Mahindra Bank", file: "kotak_mahindra_bank.png" },
-  { name: "Yes Bank",            file: "yes-bank.png"            },
-  { name: "Thomson Digital",     file: "thomson-digital.png"     },
-  { name: "Metro Tyres",         file: "metro-tyres.png"         },
-  { name: "Metro Ortem",         file: "metro-ortem.png"         },
-  { name: "Zenith Leisure",      file: "zenith-leisure.png"      },
-  { name: "CH Component",        file: "ch-component.png"        },
-  { name: "La Prestine",         file: "la-prestine.png"         },
-  { name: "Micro Network",       file: "micro-network.png"       },
-  { name: "Star Express",        file: "star-express.png"        },
+  { name: "Kotak Mahindra Bank", file: "kotak-mahindra-bank.svg" },
+  { name: "Yes Bank",            file: "yes-bank.svg"            },
+  { name: "Thomson Digital",     file: "thomson-digital.svg"     },
+  { name: "Metro Tires",         file: "metro-tires.svg"         },
+  { name: "Metro Hotom",         file: "metro-hotom.svg"         },
+  { name: "Janeth Leisure",      file: "janeth-leisure.svg"      },
+  { name: "CH Component",        file: "ch-component.svg"        },
+  { name: "La Prestine",         file: "la-prestine.svg"         },
+  { name: "Micro Network",       file: "micro-network.svg"       },
+  { name: "Star Express",        file: "star-express.svg"        },
 ];
 
 function Clients() {
@@ -229,14 +229,6 @@ function Clients() {
                   maxHeight: 60,
                   width: "auto",
                   objectFit: "contain",
-                  filter: "grayscale(1) opacity(0.55)",
-                  transition: "filter 0.3s ease",
-                }}
-                onMouseEnter={(e) => {
-                  (e.currentTarget as HTMLImageElement).style.filter = "grayscale(0) opacity(1)";
-                }}
-                onMouseLeave={(e) => {
-                  (e.currentTarget as HTMLImageElement).style.filter = "grayscale(1) opacity(0.55)";
                 }}
               />
             </div>
