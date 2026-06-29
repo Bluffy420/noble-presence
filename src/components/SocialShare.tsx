@@ -192,11 +192,11 @@ export function SocialShare() {
             borderRadius: 3,
             border: isActive
               ? "1px solid var(--gold)"
-              : "1px solid transparent",
+              : `1px solid ${brandColor}33`,
             background: isActive
               ? "rgba(200,168,90, 0.08)"
-              : "transparent",
-            color: isActive ? "var(--gold)" : "var(--muted-foreground)",
+              : `${brandColor}0d`,
+            color: isActive ? "var(--gold)" : brandColor,
             cursor: "pointer",
             transition:
               "color 0.18s, border-color 0.18s, background 0.18s, transform 0.15s, box-shadow 0.18s",
@@ -209,15 +209,17 @@ export function SocialShare() {
               if (isActive) return;
               const el = e.currentTarget as HTMLElement;
               el.style.color = brandColor;
-              el.style.borderColor = brandColor + "66"; // 40% alpha border
+              el.style.borderColor = brandColor + "99";
+              el.style.background = brandColor + "22";
               el.style.transform = "translateY(-2px)";
-              el.style.boxShadow = `0 4px 12px ${brandColor}30`;
+              el.style.boxShadow = `0 4px 12px ${brandColor}40`;
             },
             onMouseLeave: (e: React.MouseEvent<HTMLElement>) => {
               if (isActive) return;
               const el = e.currentTarget as HTMLElement;
-              el.style.color = "var(--muted-foreground)";
-              el.style.borderColor = "transparent";
+              el.style.color = brandColor;
+              el.style.borderColor = brandColor + "33";
+              el.style.background = brandColor + "0d";
               el.style.transform = "translateY(0)";
               el.style.boxShadow = "none";
             },

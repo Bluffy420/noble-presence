@@ -52,7 +52,15 @@ function AboutPage() {
 
         <section>
           <div className="mx-auto max-w-3xl px-6 py-20 lg:px-10">
-            <div className="space-y-8 text-base leading-relaxed text-muted-foreground">
+            <div
+              className="space-y-8 text-base leading-relaxed text-muted-foreground"
+              style={{ lineHeight: 1.9, fontWeight: 500 }}
+            >
+              <style>{`
+                @media (min-width: 1024px) { .about-prose { text-align: justify; } }
+                @media (max-width: 1023px) { .about-prose { text-align: left; } }
+              `}</style>
+              <div className="about-prose space-y-8">
 
               <p>
                 NB Associates – Advocates &amp; Legal Consultants is a distinguished full-service
@@ -152,6 +160,7 @@ function AboutPage() {
                 the unique legal requirements of every client and delivering customized legal
                 strategies designed to achieve the best possible outcomes.
               </p>
+            </div>
             </div>
           </div>
         </section>

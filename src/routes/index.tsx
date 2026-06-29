@@ -387,8 +387,17 @@ function ConsultSection() {
 
 function Insights() {
   const { data: posts } = useSuspenseQuery(postsQuery);
+
+  const handleViewAll = (e: React.MouseEvent<HTMLButtonElement>) => {
+    e.preventDefault();
+    const target = document.getElementById("blogs");
+    if (target) {
+      target.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  };
+
   return (
-    <section>
+    <section id="blogs">
       <div className="mx-auto max-w-7xl px-6 py-24 lg:px-10 lg:py-32">
         <div className="flex flex-col items-start justify-between gap-4 lg:flex-row lg:items-end">
           <div>
@@ -402,9 +411,12 @@ function Insights() {
               Explore our most-read legal articles and resources.
             </p>
           </div>
-          <a href="https://nbassociates.net/blog" className="text-[12px] font-medium uppercase tracking-[0.18em] text-navy hover:underline no-underline">
-            View all articles →
-          </a>
+          <button
+            onClick={handleViewAll}
+            className="text-[12px] font-medium uppercase tracking-[0.18em] text-navy hover:underline bg-transparent border-0 cursor-pointer p-0"
+          >
+            View All Articles →
+          </button>
         </div>
 
         <div className="mt-14 grid gap-px overflow-hidden border border-border bg-border md:grid-cols-3">
