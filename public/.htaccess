@@ -1,17 +1,23 @@
-# ── SPA fallback ──────────────────────────────────────────────────────────────
-# Any request that doesn't match a real file or directory is rewritten to
-# index.html so TanStack Router can handle the route client-side.
-# This fixes 404 on hard reload of /services, /about, /contact, etc.
+# ── Trailing-slash redirect ────────────────────────────────────────────────────
+# Vite outputs dist/team/, dist/services/, etc. as real directories.
+# Hostinger/Apache sees these directories and 301 → /team/, then 403s on
+# directory listing. Strip the slash first so the SPA rewrite always fires.
 
 <IfModule mod_rewrite.c>
   RewriteEngine On
   RewriteBase /
 
-  # Let real files and directories through (assets, hero-panel.png, shell.json…)
-  RewriteCond %{REQUEST_FILENAME} !-f
-  RewriteCond %{REQUEST_FILENAME} !-d
+  # 1. Remove trailing slash (except for root "/")
+  #    /team/ → /team, /services/ → /services, etc.
+  RewriteCond %{REQUEST_URI} ^(.+)/$
+  RewriteCond %{REQUEST_URI} !^/$
+  RewriteRule ^ %1 [R=301,L]
 
-  # Everything else → index.html
+  # 2. Let real FILES through (JS/CSS chunks, images, shell.json, favicon…)
+  #    Do NOT pass directories through — Vite route dirs must not be served.
+  RewriteCond %{REQUEST_FILENAME} !-f
+
+  # 3. Everything else (including route dirs like /team, /services) → index.html
   RewriteRule ^ index.html [L]
 </IfModule>
 
@@ -22,3 +28,6 @@
     Header set Cache-Control "public, max-age=3600, stale-while-revalidate=86400"
   </FilesMatch>
 </IfModule>
+
+# ── Disable directory listing (belt-and-suspenders) ───────────────────────────
+Options -Indexes
