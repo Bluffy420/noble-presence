@@ -22,6 +22,12 @@ export type WPPost = {
 
 export type WPPage = WPPost;
 
+export interface WPPostsResult {
+  posts: WPPost[];
+  totalPages: number;
+  total: number;
+}
+
 async function wpFetch<T>(path: string, params?: Record<string, string>): Promise<T> {
   const url = new URL(`${WP_BASE}${path}`);
   if (params) Object.entries(params).forEach(([k, v]) => url.searchParams.set(k, v));
@@ -30,13 +36,41 @@ async function wpFetch<T>(path: string, params?: Record<string, string>): Promis
   return res.json() as Promise<T>;
 }
 
-/** Fetch a list of published posts */
+async function wpFetchWithHeaders(
+  path: string,
+  params?: Record<string, string>,
+): Promise<{ data: WPPost[]; totalPages: number; total: number }> {
+  const url = new URL(`${WP_BASE}${path}`);
+  if (params) Object.entries(params).forEach(([k, v]) => url.searchParams.set(k, v));
+  const res = await fetch(url.toString());
+  if (!res.ok) throw new Error(`WordPress API error ${res.status}: ${url}`);
+  const totalPages = parseInt(res.headers.get("X-WP-TotalPages") ?? "1", 10);
+  const total = parseInt(res.headers.get("X-WP-Total") ?? "0", 10);
+  const data = (await res.json()) as WPPost[];
+  return { data, totalPages, total };
+}
+
+/** Fetch a list of published posts (simple, for home page) */
 export async function getPosts(args: { perPage?: number } = {}): Promise<WPPost[]> {
   return wpFetch<WPPost[]>("/posts", {
     per_page: String(args.perPage ?? 10),
     _embed: "wp:featuredmedia",
     status: "publish",
   });
+}
+
+/** Fetch a paginated page of posts (for the Blogs page) */
+export async function getPostsPaginated(args: {
+  page?: number;
+  perPage?: number;
+} = {}): Promise<WPPostsResult> {
+  const { data, totalPages, total } = await wpFetchWithHeaders("/posts", {
+    per_page: String(args.perPage ?? 9),
+    page: String(args.page ?? 1),
+    _embed: "wp:featuredmedia",
+    status: "publish",
+  });
+  return { posts: data, totalPages, total };
 }
 
 /** Fetch a single post by slug */

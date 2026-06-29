@@ -1,14 +1,38 @@
 import React from "react";
-import {
-  Linkedin,
-  Twitter,
-  Facebook,
-  Mail,
-  Link as LinkIcon,
-  Send,
-} from "lucide-react";
+import { Mail, Link as LinkIcon } from "lucide-react";
 
-// ── Inline SVG icons for platforms lucide doesn't cover ──────────────────────
+// ── Platform brand colours ────────────────────────────────────────────────────
+const BRAND: Record<string, string> = {
+  linkedin:  "#0A66C2",
+  x:         "#000000",
+  facebook:  "#1877F2",
+  whatsapp:  "#25D366",
+  telegram:  "#27A7E7",
+  instagram: "#E1306C",
+  youtube:   "#FF0000",
+  email:     "#C8A85A",
+  copy:      "#C8A85A",
+};
+
+// ── Inline SVG icons ──────────────────────────────────────────────────────────
+const LinkedInIcon = () => (
+  <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16" aria-hidden="true">
+    <path d="M20.447 20.452h-3.554v-5.569c0-1.328-.027-3.037-1.852-3.037-1.853 0-2.136 1.445-2.136 2.939v5.667H9.351V9h3.414v1.561h.046c.477-.9 1.637-1.85 3.37-1.85 3.601 0 4.267 2.37 4.267 5.455v6.286zM5.337 7.433a2.062 2.062 0 0 1-2.063-2.065 2.064 2.064 0 1 1 2.063 2.065zm1.782 13.019H3.555V9h3.564v11.452zM22.225 0H1.771C.792 0 0 .774 0 1.729v20.542C0 23.227.792 24 1.771 24h20.451C23.2 24 24 23.227 24 22.271V1.729C24 .774 23.2 0 22.222 0h.003z"/>
+  </svg>
+);
+
+const XIcon = () => (
+  <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16" aria-hidden="true">
+    <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-4.714-6.231-5.401 6.231H2.74l7.73-8.835L1.254 2.25H8.08l4.261 5.628 5.903-5.628zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+  </svg>
+);
+
+const FacebookIcon = () => (
+  <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16" aria-hidden="true">
+    <path d="M24 12.073c0-6.627-5.373-12-12-12s-12 5.373-12 12c0 5.99 4.388 10.954 10.125 11.854v-8.385H7.078v-3.47h3.047V9.43c0-3.007 1.792-4.669 4.533-4.669 1.312 0 2.686.235 2.686.235v2.953H15.83c-1.491 0-1.956.925-1.956 1.874v2.25h3.328l-.532 3.47h-2.796v8.385C19.612 23.027 24 18.062 24 12.073z"/>
+  </svg>
+);
+
 const WhatsAppIcon = () => (
   <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16" aria-hidden="true">
     <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z" />
@@ -34,15 +58,16 @@ const YouTubeIcon = () => (
   </svg>
 );
 
-// ── Types ────────────────────────────────────────────────────────────────────
+// ── Types ─────────────────────────────────────────────────────────────────────
 interface ShareButton {
+  id: string;
   label: string;
   icon: React.ReactNode;
   href?: (url: string, title: string) => string;
   action?: (url: string) => void;
 }
 
-// ── Component ────────────────────────────────────────────────────────────────
+// ── Component ─────────────────────────────────────────────────────────────────
 export function SocialShare() {
   const [copied, setCopied] = React.useState(false);
 
@@ -55,53 +80,60 @@ export function SocialShare() {
 
   const buttons: ShareButton[] = [
     {
+      id: "linkedin",
       label: "Share on LinkedIn",
-      icon: <Linkedin size={15} />,
+      icon: <LinkedInIcon />,
       href: (url) =>
         `https://www.linkedin.com/sharing/share-offsite/?url=${encodeURIComponent(url)}`,
     },
     {
+      id: "x",
       label: "Share on X",
-      icon: <Twitter size={15} />,
+      icon: <XIcon />,
       href: (url) =>
         `https://twitter.com/intent/tweet?url=${encodeURIComponent(url)}`,
     },
     {
+      id: "facebook",
       label: "Share on Facebook",
-      icon: <Facebook size={15} />,
+      icon: <FacebookIcon />,
       href: (url) =>
         `https://www.facebook.com/sharer/sharer.php?u=${encodeURIComponent(url)}`,
     },
     {
+      id: "whatsapp",
       label: "Share on WhatsApp",
       icon: <WhatsAppIcon />,
-      href: (url) =>
-        `https://wa.me/?text=${encodeURIComponent(url)}`,
+      href: (url) => `https://wa.me/?text=${encodeURIComponent(url)}`,
     },
     {
+      id: "telegram",
       label: "Share on Telegram",
       icon: <TelegramIcon />,
-      href: (url) =>
-        `https://t.me/share/url?url=${encodeURIComponent(url)}`,
+      href: (url) => `https://t.me/share/url?url=${encodeURIComponent(url)}`,
     },
     {
+      id: "instagram",
       label: "Share on Instagram",
       icon: <InstagramIcon />,
       // Instagram has no web share API — opens profile as a soft CTA
       href: () => `https://www.instagram.com/`,
     },
     {
+      id: "youtube",
       label: "Share on YouTube",
       icon: <YouTubeIcon />,
       href: () => `https://www.youtube.com/`,
     },
     {
+      id: "email",
       label: "Share by Email",
       icon: <Mail size={15} />,
       href: (url, title) =>
         `mailto:?subject=${encodeURIComponent(title)}&body=${encodeURIComponent(url)}`,
     },
     {
+      id: "copy",
       label: copied ? "Copied!" : "Copy link",
       icon: <LinkIcon size={15} />,
       action: handleCopy,
@@ -148,7 +180,9 @@ export function SocialShare() {
 
         {/* Buttons */}
         {buttons.map((btn) => {
-          const isActive = btn.label === "Copied!";
+          const isActive = btn.id === "copy" && copied;
+          const brandColor = BRAND[btn.id] ?? "var(--gold)";
+
           const commonStyle: React.CSSProperties = {
             display: "inline-flex",
             alignItems: "center",
@@ -159,10 +193,13 @@ export function SocialShare() {
             border: isActive
               ? "1px solid var(--gold)"
               : "1px solid transparent",
-            background: isActive ? "rgba(var(--gold-rgb, 185,147,78), 0.1)" : "transparent",
+            background: isActive
+              ? "rgba(200,168,90, 0.08)"
+              : "transparent",
             color: isActive ? "var(--gold)" : "var(--muted-foreground)",
             cursor: "pointer",
-            transition: "color 0.2s, border-color 0.2s, background 0.2s, transform 0.15s",
+            transition:
+              "color 0.18s, border-color 0.18s, background 0.18s, transform 0.15s, box-shadow 0.18s",
             flexShrink: 0,
             textDecoration: "none",
           };
@@ -171,9 +208,10 @@ export function SocialShare() {
             onMouseEnter: (e: React.MouseEvent<HTMLElement>) => {
               if (isActive) return;
               const el = e.currentTarget as HTMLElement;
-              el.style.color = "var(--gold)";
-              el.style.borderColor = "var(--gold)";
+              el.style.color = brandColor;
+              el.style.borderColor = brandColor + "66"; // 40% alpha border
               el.style.transform = "translateY(-2px)";
+              el.style.boxShadow = `0 4px 12px ${brandColor}30`;
             },
             onMouseLeave: (e: React.MouseEvent<HTMLElement>) => {
               if (isActive) return;
@@ -181,13 +219,14 @@ export function SocialShare() {
               el.style.color = "var(--muted-foreground)";
               el.style.borderColor = "transparent";
               el.style.transform = "translateY(0)";
+              el.style.boxShadow = "none";
             },
           };
 
           if (btn.action) {
             return (
               <button
-                key={btn.label}
+                key={btn.id}
                 aria-label={btn.label}
                 title={btn.label}
                 onClick={() => btn.action!(url)}
@@ -201,7 +240,7 @@ export function SocialShare() {
 
           return (
             <a
-              key={btn.label}
+              key={btn.id}
               href={btn.href!(url, title)}
               aria-label={btn.label}
               title={btn.label}

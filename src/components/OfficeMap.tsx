@@ -2,7 +2,8 @@ import React from "react";
 
 // ── Map embed URLs ─────────────────────────────────────────────────────────────
 export const NEW_DELHI_MAP_URL =
-  "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3501.9!2d77.2142873!3d28.6279027!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390cfd3396400001%3A0x8bec8e0f5abf5d85!2sPRAKASH%20DEEP%2C%20607%2C%20Tolstoy%20Rd%2C%20Barakhamba%2C%20New%20Delhi%2C%20Delhi%20110001!5e0!3m2!1sen!2sin!4v1700000000000";
+  // Source: https://maps.app.goo.gl/s8U9iinmtcGPiwV49
+  "https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3501.687!2d77.21428699999999!3d28.6279027!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x390cfd5b46b26f03%3A0x2e2f1a73de2e6f4!2sPrakash%20Deep%20Building%2C%20Tolstoy%20Marg%2C%20Barakhamba%2C%20New%20Delhi%2C%20Delhi%20110001!5e0!3m2!1sen!2sin!4v1750000000001!5m2!1sen!2sin";
 
 export const CORPORATE_MAP_EMBED =
   "https://www.google.com/maps/embed?pb=!4v1782633064747!6m8!1m7!1sJnn7bG-2gNMwp5Oulq22Wg!2m2!1d28.64246607765575!2d77.33512435061388!3f43.35121248935134!4f11.833760599795141!5f0.7820865974627469";

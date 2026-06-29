@@ -69,7 +69,7 @@ function ContactPage() {
           <div className="bg-background p-10 lg:p-12">
             <div className="text-[11px] uppercase tracking-[0.18em] text-muted-foreground">New Delhi Office</div>
             <div className="mt-3 text-base font-semibold leading-snug text-foreground">
-              Delhi NCR (New Delhi)
+              New Delhi Office
             </div>
             <address className="mt-2 not-italic text-sm leading-relaxed text-muted-foreground">
               706, Prakashdeep Building<br />
@@ -82,7 +82,7 @@ function ContactPage() {
           <div className="bg-background p-10 lg:p-12">
             <div className="text-[11px] uppercase tracking-[0.18em] text-muted-foreground">Corporate Office</div>
             <div className="mt-3 text-base font-semibold leading-snug text-foreground">
-              Delhi NCR (Ghaziabad)
+              Corporate Office — Delhi NCR
             </div>
             <address className="mt-2 not-italic text-sm leading-relaxed text-muted-foreground">
               Plot no. 12B, First Floor<br />
