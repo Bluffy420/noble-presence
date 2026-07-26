@@ -1,5 +1,6 @@
 import { createFileRoute } from "@tanstack/react-router";
 import { useState } from "react";
+import { BackgroundPattern } from "@/components/BackgroundPattern";
 
 export const Route = createFileRoute("/team")({
   head: () => ({
@@ -183,65 +184,171 @@ const MANAGEMENT = TEAM.filter((m) => m.category === "management");
 function TeamPage() {
   return (
     <main>
-      {/* Hero */}
-      <section className="border-b border-border">
-        <div className="mx-auto max-w-7xl px-6 pt-24 pb-20 lg:px-10 lg:pt-32">
-          <div className="text-[11px] font-medium uppercase tracking-[0.22em] text-muted-foreground">
-            The Firm
-          </div>
-          <h1 className="mt-8 max-w-4xl text-[2.5rem] font-semibold leading-[1.05] tracking-tight sm:text-[4rem]">
-            Our Team
-          </h1>
-          <p className="mt-8 max-w-2xl text-lg leading-relaxed text-muted-foreground">
-            Meet the experienced legal professionals and management team behind NB Associates –
-            Advocates &amp; Legal Consultants.
-          </p>
-        </div>
-      </section>
-
-      {/* Introduction */}
-      <section className="border-b border-border bg-surface">
-        <div className="mx-auto max-w-7xl px-6 py-16 lg:px-10 lg:py-20">
-          <div className="grid gap-8 lg:grid-cols-12">
-            <div className="lg:col-span-4">
-              <div
-                className="text-[11px] font-medium uppercase tracking-[0.22em]"
-                style={{ color: "var(--gold)" }}
-              >
-                01 — Our People
-              </div>
-              <h2 className="mt-6 text-3xl font-semibold leading-tight tracking-tight sm:text-4xl">
-                Experienced across every practice area
-              </h2>
-            </div>
-            <div className="flex items-center lg:col-span-8">
-              <p className="text-base leading-relaxed text-muted-foreground">
-                NB Associates comprises experienced legal professionals possessing decades of
-                expertise across litigation, arbitration, corporate advisory, regulatory matters,
-                criminal law, real estate disputes, and management processes. The firm is committed
-                to delivering practical legal solutions through a collaborative and client-focused
-                approach.
-              </p>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Partners grid */}
-      <section className="border-b border-border">
-        <div className="mx-auto max-w-7xl px-6 py-20 lg:px-10 lg:py-24">
-          <div className="mb-14">
-            <div
-              className="text-[11px] font-medium uppercase tracking-[0.22em]"
-              style={{ color: "var(--gold)" }}
+      {/* ── Hero — dark slate, single-column ── */}
+      <section className="bg-dark-gradient" style={{ background: "#0F172A" }}>
+        <BackgroundPattern type="network-graph" variant="dark" />
+        <div
+          style={{
+            maxWidth: "1200px",
+            margin: "0 auto",
+            padding: "120px 24px 64px",
+          }}
+        >
+          <div style={{ maxWidth: "720px" }}>
+            <p
+              style={{
+                fontFamily: '"Inter", sans-serif',
+                fontSize: "0.8125rem",
+                fontWeight: 600,
+                letterSpacing: "0.08em",
+                textTransform: "uppercase",
+                color: "#1d4ed8",
+                margin: 0,
+              }}
             >
-              02 — Partners
-            </div>
-            <h2 className="mt-6 text-3xl font-semibold tracking-tight sm:text-4xl">
-              Legal Partners
-            </h2>
+              Our Team
+            </p>
+            <h1
+              style={{
+                fontFamily: '"Inter", sans-serif',
+                fontSize: "clamp(2.5rem, 6vw, 4.5rem)",
+                fontWeight: 700,
+                lineHeight: 1.05,
+                letterSpacing: "-0.03em",
+                color: "#ffffff",
+                margin: "16px 0 0",
+              }}
+            >
+              Experienced legal professionals
+            </h1>
+            <p
+              style={{
+                fontFamily: '"Inter", sans-serif',
+                fontSize: "1.125rem",
+                lineHeight: 1.7,
+                color: "#94a3b8",
+                marginTop: "24px",
+                maxWidth: "580px",
+              }}
+            >
+              Meet the advocates, partners, and management team behind
+              NB Associates — delivering solutions across litigation,
+              arbitration, and corporate law.
+            </p>
           </div>
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+
+          {/* CTA row */}
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              flexWrap: "wrap",
+              gap: "16px",
+              marginTop: "48px",
+              paddingTop: "32px",
+              borderTop: "1px solid rgba(255,255,255,0.08)",
+            }}
+          >
+            <span
+              style={{
+                fontFamily: '"Inter", sans-serif',
+                fontSize: "0.8125rem",
+                fontWeight: 500,
+                color: "#64748b",
+              }}
+            >
+              Partners &middot; Management &middot; Advocates
+            </span>
+            <a
+              href="#partners"
+              style={{
+                fontFamily: '"Inter", sans-serif',
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "8px",
+                padding: "12px 28px",
+                background: "#1d4ed8",
+                color: "#ffffff",
+                fontWeight: 600,
+                fontSize: "0.875rem",
+                textDecoration: "none",
+                borderRadius: "4px",
+                transition: "background 0.15s",
+              }}
+            >
+              Meet the Team
+              <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
+                <path
+                  d="M3 7h8M7 3l4 4-4 4"
+                  stroke="currentColor"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      {/* ── Partners section — white background ── */}
+      <section id="partners" style={{ background: "#ffffff" }}>
+        <BackgroundPattern type="floating-shapes" variant="light" />
+        <div
+          style={{
+            maxWidth: "1200px",
+            margin: "0 auto",
+            padding: "100px 24px",
+          }}
+        >
+          <div style={{ maxWidth: "640px", marginBottom: "64px" }}>
+            <p
+              style={{
+                fontFamily: '"Inter", sans-serif',
+                fontSize: "0.8125rem",
+                fontWeight: 600,
+                letterSpacing: "0.08em",
+                textTransform: "uppercase",
+                color: "#1d4ed8",
+                margin: 0,
+              }}
+            >
+              Partners
+            </p>
+            <h2
+              style={{
+                fontFamily: '"Inter", sans-serif',
+                fontSize: "clamp(2rem, 4vw, 3.25rem)",
+                fontWeight: 700,
+                lineHeight: 1.08,
+                letterSpacing: "-0.03em",
+                color: "#0F172A",
+                margin: "12px 0 0",
+              }}
+            >
+              Seasoned advocates with decades of experience
+            </h2>
+            <p
+              style={{
+                fontFamily: '"Inter", sans-serif',
+                fontSize: "1.0625rem",
+                lineHeight: 1.7,
+                color: "#64748b",
+                marginTop: "16px",
+              }}
+            >
+              Our partners bring deep expertise across litigation, corporate
+              law, arbitration, and dispute resolution.
+            </p>
+          </div>
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fill, minmax(340px, 1fr))",
+              gap: "32px",
+            }}
+          >
             {PARTNERS.map((member) => (
               <MemberCard key={member.slug} member={member} />
             ))}
@@ -249,24 +356,138 @@ function TeamPage() {
         </div>
       </section>
 
-      {/* Management team */}
-      <section>
-        <div className="mx-auto max-w-7xl px-6 py-20 lg:px-10 lg:py-24">
-          <div className="mb-14">
-            <div
-              className="text-[11px] font-medium uppercase tracking-[0.22em]"
-              style={{ color: "var(--gold)" }}
+      {/* ── Management section — surface background ── */}
+      <section id="management" style={{ background: "#f8fafc" }}>
+        <BackgroundPattern type="concentric-rings" variant="light" />
+        <div
+          style={{
+            maxWidth: "1200px",
+            margin: "0 auto",
+            padding: "100px 24px",
+          }}
+        >
+          <div style={{ maxWidth: "640px", marginBottom: "64px" }}>
+            <p
+              style={{
+                fontFamily: '"Inter", sans-serif',
+                fontSize: "0.8125rem",
+                fontWeight: 600,
+                letterSpacing: "0.08em",
+                textTransform: "uppercase",
+                color: "#1d4ed8",
+                margin: 0,
+              }}
             >
-              03 — Management
-            </div>
-            <h2 className="mt-6 text-3xl font-semibold tracking-tight sm:text-4xl">
-              Management Team
+              Management
+            </p>
+            <h2
+              style={{
+                fontFamily: '"Inter", sans-serif',
+                fontSize: "clamp(2rem, 4vw, 3.25rem)",
+                fontWeight: 700,
+                lineHeight: 1.08,
+                letterSpacing: "-0.03em",
+                color: "#0F172A",
+                margin: "12px 0 0",
+              }}
+            >
+              Operations &amp; client relations
             </h2>
+            <p
+              style={{
+                fontFamily: '"Inter", sans-serif',
+                fontSize: "1.0625rem",
+                lineHeight: 1.7,
+                color: "#64748b",
+                marginTop: "16px",
+              }}
+            >
+              Dedicated professionals ensuring seamless case coordination,
+              client relations, and operational excellence.
+            </p>
           </div>
-          <div className="grid gap-6 sm:grid-cols-2 lg:grid-cols-3">
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fill, minmax(340px, 1fr))",
+              gap: "32px",
+            }}
+          >
             {MANAGEMENT.map((member) => (
               <MemberCard key={member.slug} member={member} />
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* ── Bottom CTA — dark slate ── */}
+      <section className="bg-dark-gradient" style={{ background: "#0F172A" }}>
+        <BackgroundPattern type="circuit-board" variant="dark" />
+        <div
+          style={{
+            maxWidth: "700px",
+            margin: "0 auto",
+            padding: "100px 24px",
+            textAlign: "center",
+          }}
+        >
+          <h2
+            style={{
+              fontFamily: '"Inter", sans-serif',
+              fontSize: "clamp(2rem, 4vw, 3.25rem)",
+              fontWeight: 700,
+              lineHeight: 1.08,
+              letterSpacing: "-0.03em",
+              color: "#ffffff",
+              margin: 0,
+            }}
+          >
+            Let's discuss your legal needs
+          </h2>
+          <p
+            style={{
+              fontFamily: '"Inter", sans-serif',
+              fontSize: "1.0625rem",
+              lineHeight: 1.7,
+              color: "#94a3b8",
+              marginTop: "20px",
+              maxWidth: "500px",
+              marginLeft: "auto",
+              marginRight: "auto",
+            }}
+          >
+            Schedule a consultation with our experienced team of advocates and
+            legal professionals.
+          </p>
+          <div style={{ marginTop: "40px" }}>
+            <a
+              href="/contact"
+              style={{
+                fontFamily: '"Inter", sans-serif',
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "8px",
+                padding: "14px 36px",
+                background: "#1d4ed8",
+                color: "#ffffff",
+                fontWeight: 600,
+                fontSize: "0.9375rem",
+                textDecoration: "none",
+                borderRadius: "4px",
+                transition: "background 0.15s",
+              }}
+            >
+              Schedule a Consultation
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
+                <path
+                  d="M4 8h8M8 4l4 4-4 4"
+                  stroke="currentColor"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+            </a>
           </div>
         </div>
       </section>
@@ -282,41 +503,37 @@ function MemberCard({ member }: { member: TeamMember }) {
 
   return (
     <article
-      className="group flex flex-col overflow-hidden bg-background transition-all duration-300"
       style={{
-        border: "1px solid var(--border)",
-        borderRadius: "2px",
-        boxShadow: "0 1px 4px rgba(0,0,0,0.04)",
-      }}
-      onMouseEnter={(e) => {
-        (e.currentTarget as HTMLElement).style.boxShadow =
-          "0 8px 32px rgba(11,29,58,0.10)";
-        (e.currentTarget as HTMLElement).style.borderColor = "var(--gold)";
-      }}
-      onMouseLeave={(e) => {
-        (e.currentTarget as HTMLElement).style.boxShadow =
-          "0 1px 4px rgba(0,0,0,0.04)";
-        (e.currentTarget as HTMLElement).style.borderColor = "var(--border)";
+        display: "flex",
+        flexDirection: "column",
+        overflow: "hidden",
+        background: "#ffffff",
+        border: "1px solid #e2e8f0",
+        borderRadius: "4px",
       }}
     >
       {/* Photo */}
       <div
-        className="relative w-full overflow-hidden bg-surface"
-        style={{ aspectRatio: "4 / 5" }}
+        style={{
+          position: "relative",
+          width: "100%",
+          aspectRatio: "4 / 5",
+          overflow: "hidden",
+          background: "#f8fafc",
+        }}
       >
-        {/* Gold accent top bar */}
-        <div
-          className="absolute top-0 left-0 right-0 z-10 h-[3px]"
-          style={{ background: "var(--gold)" }}
-        />
-
         {imgError ? (
           <ImageFallback name={member.name} />
         ) : (
           <img
             src={member.image}
             alt={`${member.name} — ${member.position}`}
-            className="h-full w-full object-cover object-top transition-transform duration-500 group-hover:scale-[1.03]"
+            style={{
+              width: "100%",
+              height: "100%",
+              objectFit: "cover",
+              objectPosition: "top",
+            }}
             onError={() => setImgError(true)}
             loading="lazy"
           />
@@ -324,24 +541,52 @@ function MemberCard({ member }: { member: TeamMember }) {
       </div>
 
       {/* Content */}
-      <div className="flex flex-1 flex-col p-7">
-        {/* Name + credential badge */}
+      <div
+        style={{
+          flex: 1,
+          display: "flex",
+          flexDirection: "column",
+          padding: "28px",
+        }}
+      >
+        {/* Name + position */}
         <div>
-          <h3 className="text-lg font-semibold leading-snug tracking-tight text-foreground">
+          <h3
+            style={{
+              fontFamily: '"Inter", sans-serif',
+              fontSize: "1.125rem",
+              fontWeight: 700,
+              lineHeight: 1.3,
+              color: "#0F172A",
+              margin: 0,
+            }}
+          >
             {member.name}
           </h3>
           <div
-            className="mt-1 text-[11px] font-semibold uppercase tracking-[0.16em]"
-            style={{ color: "var(--gold)" }}
+            style={{
+              fontFamily: '"Inter", sans-serif',
+              fontSize: "0.75rem",
+              fontWeight: 600,
+              letterSpacing: "0.04em",
+              color: "#1d4ed8",
+              marginTop: "6px",
+            }}
           >
             {member.position}
           </div>
           {member.credential && (
             <div
-              className="mt-2 inline-block rounded-sm px-2 py-0.5 text-[10px] font-semibold uppercase tracking-[0.12em]"
               style={{
-                background: "var(--navy)",
-                color: "var(--navy-foreground)",
+                fontFamily: '"Inter", sans-serif',
+                display: "inline-block",
+                padding: "4px 10px",
+                marginTop: "10px",
+                background: "#1d4ed8",
+                color: "#ffffff",
+                fontSize: "0.625rem",
+                fontWeight: 600,
+                letterSpacing: "0.04em",
                 borderRadius: "2px",
               }}
             >
@@ -350,42 +595,88 @@ function MemberCard({ member }: { member: TeamMember }) {
           )}
         </div>
 
-        {/* Experience pill */}
-        <div className="mt-4 flex items-center gap-2">
+        {/* Experience */}
+        <div
+          style={{
+            display: "flex",
+            alignItems: "center",
+            gap: "8px",
+            marginTop: "16px",
+          }}
+        >
           <span
-            className="h-[1px] w-4 shrink-0"
-            style={{ background: "var(--gold)" }}
+            style={{
+              width: "20px",
+              height: "2px",
+              background: "#1d4ed8",
+              flexShrink: 0,
+            }}
           />
-          <span className="text-[11px] uppercase tracking-[0.14em] text-muted-foreground">
+          <span
+            style={{
+              fontFamily: '"Inter", sans-serif',
+              fontSize: "0.75rem",
+              fontWeight: 600,
+              color: "#64748b",
+            }}
+          >
             {member.experience} of experience
           </span>
         </div>
 
         {/* Bio */}
-        <div className="mt-5 flex-1 text-sm leading-relaxed text-muted-foreground">
-          <p>{member.bio[0]}</p>
+        <div
+          style={{
+            fontFamily: '"Inter", sans-serif',
+            fontSize: "0.875rem",
+            lineHeight: 1.7,
+            color: "#64748b",
+            marginTop: "20px",
+            flex: 1,
+          }}
+        >
+          <p style={{ margin: 0 }}>{member.bio[0]}</p>
 
-          {/* Expandable remaining bio */}
           {(member.bio.length > 1 || member.highlights) && (
             <>
               <div
-                className="overflow-hidden transition-all duration-300"
-                style={{ maxHeight: expanded ? "600px" : "0px", opacity: expanded ? 1 : 0 }}
+                style={{
+                  overflow: "hidden",
+                  maxHeight: expanded ? "800px" : "0px",
+                  opacity: expanded ? 1 : 0,
+                  transition: "max-height 0.3s ease, opacity 0.3s ease",
+                }}
               >
                 {member.bio.slice(1).map((para, i) => (
-                  <p key={i} className="mt-3">
+                  <p key={i} style={{ marginTop: "12px" }}>
                     {para}
                   </p>
                 ))}
                 {member.highlights && (
-                  <ul className="mt-4 space-y-1">
+                  <ul
+                    style={{
+                      marginTop: "16px",
+                      padding: 0,
+                      listStyle: "none",
+                      display: "flex",
+                      flexWrap: "wrap",
+                      gap: "8px",
+                    }}
+                  >
                     {member.highlights.map((h) => (
-                      <li key={h} className="flex items-start gap-2">
-                        <span
-                          className="mt-[6px] h-[4px] w-[4px] shrink-0 rounded-full"
-                          style={{ background: "var(--gold)" }}
-                          aria-hidden="true"
-                        />
+                      <li
+                        key={h}
+                        style={{
+                          fontFamily: '"Inter", sans-serif',
+                          fontSize: "0.75rem",
+                          fontWeight: 500,
+                          color: "#0F172A",
+                          background: "#f8fafc",
+                          border: "1px solid #e2e8f0",
+                          borderRadius: "4px",
+                          padding: "4px 10px",
+                        }}
+                      >
                         {h}
                       </li>
                     ))}
@@ -395,19 +686,29 @@ function MemberCard({ member }: { member: TeamMember }) {
 
               <button
                 onClick={() => setExpanded((v) => !v)}
-                className="mt-4 flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-[0.16em] transition-colors"
-                style={{ color: "var(--navy)" }}
-                onMouseEnter={(e) =>
-                  ((e.currentTarget as HTMLElement).style.color = "var(--gold)")
-                }
-                onMouseLeave={(e) =>
-                  ((e.currentTarget as HTMLElement).style.color = "var(--navy)")
-                }
+                style={{
+                  fontFamily: '"Inter", sans-serif',
+                  background: "none",
+                  border: "none",
+                  padding: 0,
+                  marginTop: "16px",
+                  fontSize: "0.75rem",
+                  fontWeight: 600,
+                  color: "#1d4ed8",
+                  cursor: "pointer",
+                  display: "inline-flex",
+                  alignItems: "center",
+                  gap: "6px",
+                }}
               >
                 {expanded ? "Show less" : "Read more"}
                 <svg
-                  className="h-3 w-3 transition-transform duration-200"
-                  style={{ transform: expanded ? "rotate(180deg)" : "none" }}
+                  style={{
+                    width: "12px",
+                    height: "12px",
+                    transition: "transform 0.2s",
+                    transform: expanded ? "rotate(180deg)" : "none",
+                  }}
                   viewBox="0 0 12 12"
                   fill="none"
                 >
@@ -439,12 +740,22 @@ function ImageFallback({ name }: { name: string }) {
 
   return (
     <div
-      className="flex h-full w-full items-center justify-center"
-      style={{ background: "var(--navy)" }}
+      style={{
+        display: "flex",
+        width: "100%",
+        height: "100%",
+        alignItems: "center",
+        justifyContent: "center",
+        background: "#0F172A",
+      }}
     >
       <span
-        className="text-5xl font-semibold tracking-tight"
-        style={{ color: "var(--gold)" }}
+        style={{
+          fontFamily: '"Inter", sans-serif',
+          fontSize: "3rem",
+          fontWeight: 700,
+          color: "#1d4ed8",
+        }}
       >
         {initials}
       </span>

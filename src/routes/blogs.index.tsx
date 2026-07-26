@@ -3,6 +3,7 @@ import { createFileRoute } from "@tanstack/react-router";
 import { useQuery } from "@tanstack/react-query";
 import { getPostsPaginated } from "@/lib/wordpress.functions";
 import { SocialShare } from "@/components/SocialShare";
+import { BackgroundPattern } from "@/components/BackgroundPattern";
 
 const PER_PAGE = 9;
 
@@ -19,10 +20,10 @@ export const Route = createFileRoute("/blogs/")({
   }),
   component: BlogsPage,
   errorComponent: ({ error }: { error: Error }) => (
-    <div className="min-h-screen bg-background">
-      <div className="mx-auto max-w-3xl px-6 py-32 text-center">
-        <h1 className="text-2xl font-semibold tracking-tight">Couldn't load articles</h1>
-        <p className="mt-3 text-muted-foreground">{error.message}</p>
+    <div style={{ minHeight: "100vh", backgroundColor: "#ffffff" }}>
+      <div style={{ maxWidth: "768px", margin: "0 auto", padding: "8rem 1.5rem", textAlign: "center" }}>
+        <h1 style={{ fontSize: "1.5rem", fontWeight: 700, letterSpacing: "-0.02em", color: "#0f172a" }}>Couldn't load articles</h1>
+        <p style={{ marginTop: "0.75rem", color: "#64748b" }}>{error.message}</p>
       </div>
     </div>
   ),
@@ -42,60 +43,171 @@ function BlogsPage() {
 
   return (
     <main>
-      {/* ── Hero ── */}
-      <section className="border-b border-border">
-        <div className="mx-auto max-w-7xl px-6 pt-24 pb-20 lg:px-10 lg:pt-32">
-          <div className="text-[11px] font-medium uppercase tracking-[0.22em] text-muted-foreground">
-            Journal
+      {/* ── Hero — Clean, white, left-aligned ── */}
+      <section style={{ backgroundColor: "#ffffff" }}>
+        <BackgroundPattern type="floating-shapes" variant="light" />
+        <div style={{ maxWidth: "1280px", margin: "0 auto", padding: "7rem 1.5rem 5rem 1.5rem" }}>
+          <div style={{ maxWidth: "720px" }}>
+            <h1
+              style={{
+                fontFamily: '"Inter", ui-sans-serif, system-ui, sans-serif',
+                fontSize: "clamp(2.5rem, 6vw, 4.5rem)",
+                fontWeight: 700,
+                lineHeight: 1.08,
+                letterSpacing: "-0.03em",
+                color: "#0f172a",
+                margin: 0,
+              }}
+            >
+              Legal <span style={{ color: "#1d4ed8" }}>Insights</span>
+            </h1>
+            <p
+              style={{
+                fontFamily: '"Inter", ui-sans-serif, system-ui, sans-serif',
+                fontSize: "1.125rem",
+                fontWeight: 400,
+                lineHeight: 1.7,
+                color: "#64748b",
+                marginTop: "1.5rem",
+                maxWidth: "560px",
+              }}
+            >
+              Articles, analysis, and commentary from the NB Associates team —{" "}
+              <span style={{ color: "#1d4ed8", fontWeight: 600 }}>explore our library</span>.
+            </p>
+            {/* Thin divider */}
+            <div style={{ height: "1px", backgroundColor: "#e2e8f0", marginTop: "2.5rem", width: "100%" }} />
+            {/* CTA row */}
+            <div
+              style={{
+                display: "flex",
+                flexWrap: "wrap",
+                alignItems: "center",
+                justifyContent: "space-between",
+                gap: "1rem",
+                marginTop: "1.5rem",
+              }}
+            >
+              <span
+                style={{
+                  fontSize: "0.6875rem",
+                  fontWeight: 600,
+                  letterSpacing: "0.22em",
+                  textTransform: "uppercase",
+                  color: "#64748b",
+                }}
+              >
+                Journal &middot; NB Associates
+              </span>
+              <a
+                href="#articles"
+                style={{
+                  display: "inline-block",
+                  fontFamily: '"Inter", ui-sans-serif, system-ui, sans-serif',
+                  fontSize: "0.8125rem",
+                  fontWeight: 600,
+                  letterSpacing: "0.02em",
+                  textTransform: "uppercase",
+                  textDecoration: "none",
+                  color: "#ffffff",
+                  backgroundColor: "#1d4ed8",
+                  padding: "0.875rem 2rem",
+                  border: "none",
+                  cursor: "pointer",
+                  borderRadius: "6px",
+                  transition: "background-color 0.2s",
+                }}
+                onMouseEnter={(e) => { e.currentTarget.style.backgroundColor = "#1e40af"; }}
+                onMouseLeave={(e) => { e.currentTarget.style.backgroundColor = "#1d4ed8"; }}
+              >
+                Browse Articles
+              </a>
+            </div>
           </div>
-          <h1 className="mt-8 text-[2.5rem] font-semibold leading-[1.05] tracking-tight sm:text-[3.5rem]">
-            Legal Insights
-          </h1>
-          <p className="mt-8 max-w-2xl text-lg leading-relaxed text-muted-foreground">
-            Articles, analysis, and commentary from the NB Associates team.
-          </p>
         </div>
       </section>
 
       {/* ── Social Share ── */}
       <SocialShare />
 
-      {/* ── Blog Grid ── */}
-      <section>
-        <div className="mx-auto max-w-7xl px-6 py-20 lg:px-10">
+      {/* ── Blog Grid — White background ── */}
+      <section id="articles" style={{ backgroundColor: "#f8fafc" }}>
+        <BackgroundPattern type="barcode" variant="light" />
+        <div style={{ maxWidth: "1280px", margin: "0 auto", padding: "0 1.5rem 6rem 1.5rem" }}>
           {isError && (
-            <p className="mb-8 text-muted-foreground">
+            <p style={{ color: "#64748b", marginBottom: "2rem" }}>
               {(error as Error).message ?? "Could not load posts."}
             </p>
           )}
 
           {isLoading && posts.length === 0 ? (
             /* Skeleton */
-            <div className="grid gap-px overflow-hidden border border-border bg-border md:grid-cols-2 lg:grid-cols-3">
+            <div style={{ display: "grid", gap: "1.5rem", gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))" }}>
               {Array.from({ length: PER_PAGE }).map((_, i) => (
-                <div key={i} className="flex flex-col bg-background p-7 animate-pulse">
-                  <div className="h-3 w-24 rounded bg-muted" />
-                  <div className="mt-4 h-5 w-3/4 rounded bg-muted" />
-                  <div className="mt-3 h-3 w-full rounded bg-muted" />
-                  <div className="mt-2 h-3 w-5/6 rounded bg-muted" />
+                <div
+                  key={i}
+                  style={{
+                    backgroundColor: "#ffffff",
+                    border: "1px solid #e2e8f0",
+                    borderRadius: "8px",
+                    padding: "2rem",
+                    display: "flex",
+                    flexDirection: "column",
+                    animation: "pulse 2s infinite",
+                  }}
+                >
+                  <div style={{ height: "0.75rem", width: "6rem", backgroundColor: "#e2e8f0", borderRadius: "4px" }} />
+                  <div style={{ height: "1.25rem", width: "75%", backgroundColor: "#e2e8f0", borderRadius: "4px", marginTop: "1rem" }} />
+                  <div style={{ height: "0.75rem", width: "100%", backgroundColor: "#e2e8f0", borderRadius: "4px", marginTop: "0.75rem" }} />
+                  <div style={{ height: "0.75rem", width: "83%", backgroundColor: "#e2e8f0", borderRadius: "4px", marginTop: "0.5rem" }} />
                 </div>
               ))}
             </div>
           ) : posts.length === 0 ? (
-            <p className="text-muted-foreground">No articles yet. Check back soon.</p>
+            <p style={{ color: "#64748b" }}>No articles yet. Check back soon.</p>
           ) : (
             <div
-              className="grid gap-px overflow-hidden border border-border bg-border md:grid-cols-2 lg:grid-cols-3"
-              style={{ opacity: isLoading ? 0.6 : 1, transition: "opacity 0.2s" }}
+              style={{
+                display: "grid",
+                gap: "1.5rem",
+                gridTemplateColumns: "repeat(auto-fill, minmax(300px, 1fr))",
+                opacity: isLoading ? 0.6 : 1,
+                transition: "opacity 0.2s",
+              }}
             >
               {posts.map((p) => (
                 <a
                   key={p.id}
                   href={p.link}
-                  className="group flex flex-col bg-background no-underline"
+                  style={{
+                    display: "flex",
+                    flexDirection: "column",
+                    textDecoration: "none",
+                    backgroundColor: "#ffffff",
+                    border: "1px solid #e2e8f0",
+                    borderRadius: "8px",
+                    transition: "box-shadow 0.25s, border-color 0.25s",
+                    cursor: "pointer",
+                  }}
+                  onMouseEnter={(e) => {
+                    e.currentTarget.style.borderColor = "#1d4ed8";
+                    e.currentTarget.style.boxShadow = "0 4px 24px rgba(29,78,216,0.10)";
+                  }}
+                  onMouseLeave={(e) => {
+                    e.currentTarget.style.borderColor = "#e2e8f0";
+                    e.currentTarget.style.boxShadow = "none";
+                  }}
                 >
-                  <div className="flex flex-1 flex-col p-7">
-                    <div className="text-[11px] uppercase tracking-[0.18em] text-muted-foreground">
+                  <div style={{ flex: 1, display: "flex", flexDirection: "column", padding: "2rem" }}>
+                    <div
+                      style={{
+                        fontSize: "0.6875rem",
+                        fontWeight: 600,
+                        letterSpacing: "0.18em",
+                        textTransform: "uppercase",
+                        color: "#64748b",
+                      }}
+                    >
                       {new Date(p.date).toLocaleDateString("en-IN", {
                         day: "numeric",
                         month: "long",
@@ -103,15 +215,46 @@ function BlogsPage() {
                       })}
                     </div>
                     <h2
-                      className="mt-4 text-lg font-semibold leading-snug tracking-tight text-foreground group-hover:text-navy"
+                      style={{
+                        fontFamily: '"Inter", ui-sans-serif, system-ui, sans-serif',
+                        fontSize: "1.125rem",
+                        fontWeight: 700,
+                        lineHeight: 1.35,
+                        letterSpacing: "-0.01em",
+                        color: "#0f172a",
+                        marginTop: "1.25rem",
+                        marginBottom: 0,
+                      }}
                       dangerouslySetInnerHTML={{ __html: p.title.rendered }}
                     />
                     <div
-                      className="mt-3 flex-1 text-sm leading-relaxed text-muted-foreground line-clamp-3"
+                      style={{
+                        fontFamily: '"Inter", ui-sans-serif, system-ui, sans-serif',
+                        fontSize: "0.875rem",
+                        fontWeight: 400,
+                        lineHeight: 1.7,
+                        color: "#64748b",
+                        marginTop: "0.75rem",
+                        flex: 1,
+                        overflow: "hidden",
+                        display: "-webkit-box",
+                        WebkitLineClamp: 3,
+                        WebkitBoxOrient: "vertical",
+                      }}
                       dangerouslySetInnerHTML={{ __html: p.excerpt.rendered }}
                     />
-                    <span className="mt-6 text-[12px] font-medium uppercase tracking-[0.18em] text-navy">
-                      Read more →
+                    <span
+                      style={{
+                        fontSize: "0.75rem",
+                        fontWeight: 600,
+                        letterSpacing: "0.18em",
+                        textTransform: "uppercase",
+                        color: "#1d4ed8",
+                        marginTop: "1.5rem",
+                        transition: "color 0.2s",
+                      }}
+                    >
+                      Read more &rarr;
                     </span>
                   </div>
                 </a>
@@ -160,13 +303,13 @@ function Pagination({
     minWidth: 40,
     height: 40,
     padding: "0 0.75rem",
-    fontSize: "13px",
+    fontSize: "0.8125rem",
     fontWeight: 500,
     letterSpacing: "0.02em",
-    border: "1px solid var(--border)",
-    borderRadius: "2px",
-    background: "var(--background)",
-    color: "var(--foreground)",
+    border: "1px solid #e2e8f0",
+    borderRadius: "6px",
+    backgroundColor: "#ffffff",
+    color: "#0f172a",
     cursor: "pointer",
     transition: "border-color 0.15s, color 0.15s, background 0.15s",
     textDecoration: "none",
@@ -174,19 +317,31 @@ function Pagination({
     flexShrink: 0,
   };
 
-  const active: React.CSSProperties = { ...base, background: "var(--navy)", color: "#ffffff", borderColor: "var(--navy)", cursor: "default" };
-  const disabled: React.CSSProperties = { ...base, color: "var(--muted-foreground)", cursor: "not-allowed", opacity: 0.45 };
+  const active: React.CSSProperties = {
+    ...base,
+    backgroundColor: "#1d4ed8",
+    color: "#ffffff",
+    borderColor: "#1d4ed8",
+    cursor: "default",
+  };
+
+  const disabled: React.CSSProperties = {
+    ...base,
+    color: "#64748b",
+    cursor: "not-allowed",
+    opacity: 0.45,
+  };
 
   const hover = {
     onMouseEnter: (e: React.MouseEvent<HTMLElement>) => {
       const el = e.currentTarget;
-      el.style.borderColor = "var(--navy)";
-      el.style.color = "var(--navy)";
+      el.style.borderColor = "#1d4ed8";
+      el.style.color = "#1d4ed8";
     },
     onMouseLeave: (e: React.MouseEvent<HTMLElement>) => {
       const el = e.currentTarget;
-      el.style.borderColor = "var(--border)";
-      el.style.color = "var(--foreground)";
+      el.style.borderColor = "#e2e8f0";
+      el.style.color = "#0f172a";
     },
   };
 
@@ -199,7 +354,7 @@ function Pagination({
         alignItems: "center",
         justifyContent: "center",
         gap: "0.375rem",
-        marginTop: "3rem",
+        marginTop: "3.5rem",
       }}
     >
       <button
@@ -209,13 +364,13 @@ function Pagination({
         style={current === 1 ? disabled : base}
         {...(current !== 1 ? hover : {})}
       >
-        ← Prev
+        &larr; Prev
       </button>
 
       {items.map((item, i) =>
         item === "…" ? (
-          <span key={`ellipsis-${i}`} style={{ ...base, border: "none", cursor: "default", color: "var(--muted-foreground)" }}>
-            …
+          <span key={`ellipsis-${i}`} style={{ ...base, border: "none", cursor: "default", color: "#64748b" }}>
+            &hellip;
           </span>
         ) : (
           <button
@@ -238,7 +393,7 @@ function Pagination({
         style={current === total ? disabled : base}
         {...(current !== total ? hover : {})}
       >
-        Next →
+        Next &rarr;
       </button>
     </nav>
   );

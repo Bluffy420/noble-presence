@@ -2,6 +2,7 @@ import { createFileRoute, Link, notFound } from "@tanstack/react-router";
 import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
 import { getPostBySlug } from "@/lib/wordpress.functions";
 import { SocialShare } from "@/components/SocialShare";
+import { BackgroundPattern } from "@/components/BackgroundPattern";
 
 const postQuery = (slug: string) =>
   queryOptions({
@@ -31,18 +32,112 @@ export const Route = createFileRoute("/blogs/$slug")({
   }),
   component: PostPage,
   notFoundComponent: () => (
-  <div className="mx-auto max-w-3xl px-6 py-32 text-center">
-    <h1 className="text-3xl font-semibold tracking-tight">Article not found</h1>
-    <Link to="/blogs" className="mt-6 inline-block text-navy underline">
-      Back to all articles
-    </Link>
-  </div>
+    <div
+      style={{
+        background: "#ffffff",
+        padding: "128px 24px",
+        textAlign: "center",
+      }}
+    >
+      <div style={{ maxWidth: "640px", margin: "0 auto" }}>
+        <h1
+          style={{
+            fontFamily: '"Inter", "Inter Variable", ui-sans-serif, system-ui, sans-serif',
+            fontWeight: 700,
+            fontSize: "clamp(1.75rem, 4vw, 2.5rem)",
+            lineHeight: "1.1",
+            color: "#0F172A",
+            margin: "0 0 16px",
+          }}
+        >
+          Article not found
+        </h1>
+        <p
+          style={{
+            fontFamily: '"Inter", "Inter Variable", ui-sans-serif, system-ui, sans-serif',
+            fontSize: "0.875rem",
+            lineHeight: "1.6",
+            color: "#64748b",
+            margin: "0 0 28px",
+          }}
+        >
+          This article may have been removed or the link is no longer valid.
+        </p>
+        <Link
+          to="/blogs"
+          style={{
+            display: "inline-flex",
+            alignItems: "center",
+            justifyContent: "center",
+            height: "48px",
+            padding: "0 32px",
+            background: "#1d4ed8",
+            color: "#ffffff",
+            fontWeight: 700,
+            fontSize: "0.875rem",
+            textDecoration: "none",
+            borderRadius: "8px",
+            lineHeight: "1",
+          }}
+        >
+          Back to Legal Insights
+        </Link>
+      </div>
+    </div>
   ),
   errorComponent: ({ error }) => (
-  <div className="mx-auto max-w-3xl px-6 py-32 text-center">
-    <h1 className="text-2xl font-semibold tracking-tight">Couldn't load this article</h1>
-    <p className="mt-3 text-muted-foreground">{error.message}</p>
-  </div>
+    <div
+      style={{
+        background: "#ffffff",
+        padding: "128px 24px",
+        textAlign: "center",
+      }}
+    >
+      <div style={{ maxWidth: "640px", margin: "0 auto" }}>
+        <h1
+          style={{
+            fontFamily: '"Inter", "Inter Variable", ui-sans-serif, system-ui, sans-serif',
+            fontWeight: 700,
+            fontSize: "clamp(1.75rem, 4vw, 2.5rem)",
+            lineHeight: "1.1",
+            color: "#0F172A",
+            margin: "0 0 16px",
+          }}
+        >
+          Couldn't load this article
+        </h1>
+        <p
+          style={{
+            fontFamily: '"Inter", "Inter Variable", ui-sans-serif, system-ui, sans-serif',
+            fontSize: "0.875rem",
+            lineHeight: "1.6",
+            color: "#64748b",
+            margin: "0 0 28px",
+          }}
+        >
+          {error.message}
+        </p>
+        <Link
+          to="/blogs"
+          style={{
+            display: "inline-flex",
+            alignItems: "center",
+            justifyContent: "center",
+            height: "48px",
+            padding: "0 32px",
+            background: "#1d4ed8",
+            color: "#ffffff",
+            fontWeight: 700,
+            fontSize: "0.875rem",
+            textDecoration: "none",
+            borderRadius: "8px",
+            lineHeight: "1",
+          }}
+        >
+          Back to Legal Insights
+        </Link>
+      </div>
+    </div>
   ),
 });
 
@@ -50,56 +145,223 @@ function PostPage() {
   const { slug } = Route.useParams();
   const { data: post } = useSuspenseQuery(postQuery(slug));
 
+  const formattedDate = new Date(post.date).toLocaleDateString("en-IN", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
+  });
+
+  const featuredImage =
+    post._embedded?.["wp:featuredmedia"]?.[0]?.source_url;
+
+  const excerptText =
+    post.excerpt?.rendered
+      ?.replace(/<[^>]+>/g, "")
+      ?.trim() || "";
+
   return (
-    <main>
+    <main style={{ background: "#ffffff", minHeight: "100vh" }}>
       <article>
-        <header className="border-b border-border">
-          <div className="mx-auto max-w-3xl px-6 pt-20 pb-12 lg:px-10 lg:pt-28">
+        {/* ── Hero ── */}
+        <header
+          style={{
+            background: "#ffffff",
+            padding: "80px 24px 0",
+          }}
+        >
+          <div style={{ maxWidth: "720px", margin: "0 auto" }}>
+            {/* Back link */}
             <Link
               to="/blogs"
-              className="text-[11px] font-medium uppercase tracking-[0.22em] text-muted-foreground hover:text-navy"
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "6px",
+                fontSize: "0.8125rem",
+                fontWeight: 400,
+                color: "#64748b",
+                textDecoration: "none",
+                lineHeight: "1",
+              }}
             >
-              ← Legal Insights
+              <svg
+                width="14"
+                height="14"
+                viewBox="0 0 14 14"
+                fill="none"
+                style={{ transform: "translateY(0.5px)" }}
+              >
+                <path
+                  d="M9 3L5 7l4 4"
+                  stroke="currentColor"
+                  strokeWidth="1.5"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                />
+              </svg>
+              Legal Insights
             </Link>
+
+            {/* Headline */}
             <h1
-              className="mt-8 text-[2rem] font-semibold leading-[1.15] tracking-tight sm:text-[2.75rem]"
+              style={{
+                marginTop: "24px",
+                fontFamily: '"Inter", "Inter Variable", ui-sans-serif, system-ui, sans-serif',
+                fontWeight: 700,
+                fontSize: "clamp(2rem, 5vw, 3.25rem)",
+                lineHeight: "1.08",
+                color: "#0F172A",
+                margin: "24px 0 0",
+              }}
               dangerouslySetInnerHTML={{ __html: post.title.rendered }}
             />
-            <div className="mt-6 text-sm uppercase tracking-[0.14em] text-muted-foreground">
-              {new Date(post.date).toLocaleDateString("en-IN", { day: "numeric", month: "long", year: "numeric" })}
-            </div>
+
+            {/* Excerpt */}
+            {excerptText && (
+              <p
+                style={{
+                  marginTop: "16px",
+                  fontFamily: '"Inter", "Inter Variable", ui-sans-serif, system-ui, sans-serif',
+                  fontSize: "1rem",
+                  lineHeight: "1.65",
+                  color: "#64748b",
+                  maxWidth: "600px",
+                }}
+              >
+                {excerptText}
+              </p>
+            )}
+
+            {/* Date */}
+            <p
+              style={{
+                marginTop: "24px",
+                fontFamily: '"Inter", "Inter Variable", ui-sans-serif, system-ui, sans-serif',
+                fontSize: "0.75rem",
+                textTransform: "uppercase",
+                letterSpacing: "0.16em",
+                color: "#64748b",
+              }}
+            >
+              {formattedDate}
+            </p>
           </div>
         </header>
 
-        <SocialShare />
-
-        {post._embedded?.["wp:featuredmedia"]?.[0]?.source_url && (
-          <div className="mx-auto max-w-5xl px-6 pt-12 lg:px-10">
-            <div className="aspect-[16/9] w-full overflow-hidden bg-surface">
-              <img src={post._embedded?.["wp:featuredmedia"]?.[0]?.source_url} alt="" className="h-full w-full object-cover" />
+        {/* ── Featured image ── */}
+        {featuredImage && (
+          <div
+            style={{
+              maxWidth: "960px",
+              margin: "48px auto 0",
+              padding: "0 24px",
+            }}
+          >
+            <div
+              style={{
+                overflow: "hidden",
+                borderRadius: "12px",
+                width: "100%",
+                background: "#f8fafc",
+              }}
+            >
+              <img
+                src={featuredImage}
+                alt=""
+                style={{
+                  width: "100%",
+                  height: "auto",
+                  display: "block",
+                }}
+              />
             </div>
           </div>
         )}
 
-        <div className="mx-auto max-w-3xl px-6 py-16 lg:px-10">
-          <div className="wp-content" dangerouslySetInnerHTML={{ __html: post.content.rendered }} />
-        </div>
-      </article>
+        {/* ── Article body ── */}
+        <div
+          style={{
+            maxWidth: "720px",
+            margin: "0 auto",
+            padding: featuredImage ? "56px 24px 48px" : "64px 24px 48px",
+          }}
+        >
+          <div
+            className="wp-content"
+            dangerouslySetInnerHTML={{ __html: post.content.rendered }}
+            style={{
+              fontFamily: '"Inter", "Inter Variable", ui-sans-serif, system-ui, sans-serif',
+              fontSize: "1rem",
+              lineHeight: "1.8",
+              color: "#0f172a",
+            }}
+          />
 
-      <section className="border-t border-border bg-surface">
-        <div className="mx-auto max-w-3xl px-6 py-16 text-center lg:px-10">
-          <h2 className="text-2xl font-semibold tracking-tight">Need legal counsel?</h2>
-          <p className="mt-3 text-muted-foreground">
-            Speak with our team for a confidential consultation.
-          </p>
-          <Link
-            to="/contact"
-            className="mt-8 inline-flex h-12 items-center justify-center bg-navy px-7 text-sm font-medium text-navy-foreground hover:bg-navy-hover"
+          {/* Social share */}
+          <div
+            style={{
+              marginTop: "48px",
+              paddingTop: "24px",
+              borderTop: "1px solid #e2e8f0",
+            }}
           >
-            Consult Us
-          </Link>
+            <SocialShare />
+          </div>
         </div>
-      </section>
+
+        {/* ── CTA ── */}
+        <section
+          style={{
+            borderTop: "1px solid #e2e8f0",
+            background: "#f8fafc",
+            padding: "48px 24px",
+            position: "relative",
+          }}
+        >
+          <BackgroundPattern type="floating-shapes" variant="light" />
+          <div
+            style={{
+              maxWidth: "720px",
+              margin: "0 auto",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              flexWrap: "wrap",
+              gap: "16px",
+            }}
+          >
+            <span
+              style={{
+                fontSize: "0.8125rem",
+                fontWeight: 600,
+                color: "#0F172A",
+              }}
+            >
+              Need legal counsel?
+            </span>
+
+            <Link
+              to="/contact"
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                justifyContent: "center",
+                height: "48px",
+                padding: "0 32px",
+                background: "#1d4ed8",
+                color: "#ffffff",
+                fontWeight: 700,
+                fontSize: "0.875rem",
+                textDecoration: "none",
+                borderRadius: "8px",
+                lineHeight: "1",
+              }}
+            >
+              Request a Consultation
+            </Link>
+          </div>
+        </section>
+      </article>
     </main>
   );
 }
