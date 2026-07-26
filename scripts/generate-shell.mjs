@@ -389,11 +389,11 @@ const css = `
 `.trim();
 
 /* ── 6. Write shell.json ── */
+const HOME_DIR = resolve(DIST, "home");
+mkdirSync(HOME_DIR, { recursive: true });
 mkdirSync(DIST, { recursive: true });
-writeFileSync(
-  resolve(DIST, "shell.json"),
-  JSON.stringify({ css, header: headerHtml, footer: footerHtml }, null, 2),
-  "utf8"
-);
+const shellContent = JSON.stringify({ css, header: headerHtml, footer: footerHtml }, null, 2);
+writeFileSync(resolve(DIST, "shell.json"), shellContent, "utf8");
+writeFileSync(resolve(HOME_DIR, "shell.json"), shellContent, "utf8");
 
 console.log("shell.json written successfully");

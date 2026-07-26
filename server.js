@@ -36,6 +36,11 @@ app.use(
 
 // SPA fallback: every non-asset request returns index.html so
 // TanStack Router can resolve /services, /about, /blogs, etc. on refresh.
+app.get("/home/shell.json", (_req, res) => {
+  res.set("Cache-Control", "no-cache");
+  res.sendFile(path.join(dist, "shell.json"));
+});
+
 app.get("*", (_req, res) => {
   res.set("Cache-Control", "no-cache");
   res.sendFile(path.join(dist, "index.html"));
