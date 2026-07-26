@@ -32,3 +32,4 @@ dist-ssr
 *.sw?
 .tanstack/
 dist/
+vite.config.timestamp_*.js
