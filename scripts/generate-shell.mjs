@@ -1,5 +1,5 @@
 /**
- * scripts/generate-shell.mjs  —  v12.0.0
+ * scripts/generate-shell.mjs  —  v13.0.0
  *
  * Header design:
  *   - Deep ivory (#f2efe8) background
@@ -175,7 +175,7 @@ const footerHtml = `
 
 /* ── 5. CSS ── */
 const css = `
-/* ══ NB Associates Shell v12 ══ */
+/* ══ NB Associates Shell v13 ══ */
 @import url('https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,400;0,14..32,500;0,14..32,600;0,14..32,700;1,14..32,400&display=swap');
 
 :root {
@@ -377,6 +377,70 @@ const css = `
   .wp-content, .entry-content, .post-content, .page-content {
     text-align:left !important;
   }
+}
+
+/* ── Title centering for WordPress pages ── */
+.entry-title,
+.page-title,
+h1.entry-title,
+.page .entry-title,
+.single .entry-title,
+.page-header .page-title,
+.entry-header .entry-title,
+.woocommerce-products-header__title.page-title {
+  text-align: center !important;
+  max-width: 80rem;
+  margin-left: auto !important;
+  margin-right: auto !important;
+  padding: 2.5rem 1.5rem 0.5rem !important;
+  font-family: var(--nba-font);
+  font-size: 2rem !important;
+  font-weight: 700 !important;
+  color: var(--nba-navy) !important;
+  letter-spacing: -0.01em;
+  line-height: 1.3;
+}
+
+/* ── WordPress buttons consistent with home page ── */
+.wp-block-button__link,
+.wp-block-button .wp-block-button__link,
+.elementor-button,
+.elementor-button.elementor-size-md,
+.elementor-button.elementor-size-sm,
+a.wp-block-button__link,
+.wp-block-file .wp-block-file__button,
+.wp-block-button.is-style-outline .wp-block-button__link {
+  display: inline-flex !important;
+  height: 40px !important;
+  align-items: center !important;
+  justify-content: center !important;
+  background: var(--nba-navy) !important;
+  color: var(--nba-navy-fg) !important;
+  padding: 0 1.25rem !important;
+  font-size: 12px !important;
+  font-weight: 700 !important;
+  text-transform: uppercase !important;
+  letter-spacing: 0.08em !important;
+  text-decoration: none !important;
+  border-radius: var(--nba-r) !important;
+  border: none !important;
+  box-shadow: none !important;
+  font-family: var(--nba-font) !important;
+  line-height: 40px !important;
+  white-space: nowrap !important;
+  transition: background .2s, color .2s !important;
+  cursor: pointer;
+}
+.wp-block-button__link:hover,
+.wp-block-button .wp-block-button__link:hover,
+.elementor-button:hover,
+.elementor-button.elementor-size-md:hover,
+.elementor-button.elementor-size-sm:hover,
+a.wp-block-button__link:hover,
+.wp-block-file .wp-block-file__button:hover {
+  background: var(--nba-gold) !important;
+  color: var(--nba-navy) !important;
+  text-decoration: none !important;
 }
 
 /* ── Disclaimer ── */
