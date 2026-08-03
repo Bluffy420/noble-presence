@@ -65,7 +65,7 @@ export function SiteHeader() {
             padding: "0 24px",
           }}
         >
-          {/* Logo badge + text */}
+          {/* Logo badge + text — on mobile (< 768px) only the logo icon shows */}
           <Link
             to="/"
             onClick={() => setOpen(false)}
@@ -93,7 +93,10 @@ export function SiteHeader() {
                 borderRadius: "50%",
               }}
             />
-            <div style={{ display: "flex", flexDirection: "column", lineHeight: 1.15 }}>
+            <div
+              className="nba-logo-text-desktop"
+              style={{ display: "flex", flexDirection: "column", lineHeight: 1.15 }}
+            >
               <span style={{ fontSize: 16, fontWeight: 700, letterSpacing: "0.06em", color: "#0F172A" }}>NB ASSOCIATES</span>
               <span style={{ fontSize: 9.5, fontWeight: 600, letterSpacing: "0.14em", textTransform: "uppercase", color: "#64748b" }}>Advocates &amp; Legal Consultants</span>
             </div>

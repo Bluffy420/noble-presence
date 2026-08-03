@@ -356,6 +356,13 @@
   transform: scale(1.06);
 }
 
+/* ── Logo text: hide on mobile to prevent overlap with hamburger ── */
+@media (max-width: 574px) {
+  .nba-logo-text-desktop {
+    display: none !important;
+  }
+}
+
 /* ── Geometric background (hero panel) ── */
 .geo-bg-wrapper {
   position: relative;
