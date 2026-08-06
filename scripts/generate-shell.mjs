@@ -3,7 +3,7 @@
  *
  * Matches the actual React site source (SiteHeader.tsx, SiteFooter.tsx,
  * styles.css). White header with blue (#1d4ed8) accents, dark gradient
- * footer with dot patterns. Logo-only on mobile.
+ * footer with dot patterns. Logo text visible on mobile.
  */
 
 import { writeFileSync, readFileSync, mkdirSync } from "fs";
@@ -58,7 +58,7 @@ const headerHtml = `
         width="48"
         height="48"
       />
-      <div class="nba-logo-text nba-logo-text-desktop">
+      <div class="nba-logo-text">
         <span class="nba-logo-name">NB ASSOCIATES</span>
         <span class="nba-logo-sub">Advocates &amp; Legal Consultants</span>
       </div>
@@ -69,6 +69,12 @@ const headerHtml = `
       <div class="nba-nav-divider"></div>
       <a href="${REACT_URL}/contact" class="nba-cta-btn">Consult Us</a>
     </nav>
+
+    <div class="nba-mobile-inline-links">
+      ${NAV.slice(0, 3).map(({ label, href }) =>
+        `<a href="${href}" class="nba-mobile-inline-link">${esc(label)}</a>`
+      ).join("")}
+    </div>
 
     <button
       class="nba-hamburger"
@@ -235,9 +241,6 @@ const css = `
   display: block; border-radius: 50%;
 }
 .nba-logo-text { display: flex; flex-direction: column; line-height: 1.15; }
-@media (max-width: 574px) {
-  .nba-logo-text-desktop { display: none !important; }
-}
 .nba-logo-name {
   font-size: 1rem; font-weight: 700;
   letter-spacing: 0.06em; color: var(--nba-navy);
@@ -302,6 +305,23 @@ const css = `
 .nba-hamburger.nba-open span:nth-child(1){ transform:translateY(7px) rotate(45deg); }
 .nba-hamburger.nba-open span:nth-child(2){ opacity:0; }
 .nba-hamburger.nba-open span:nth-child(3){ transform:translateY(-7px) rotate(-45deg); }
+
+/* ── Mobile inline links ── */
+.nba-mobile-inline-links { display:none; align-items:center; gap: 2px; flex-shrink: 0; }
+@media (max-width: 1023px) { .nba-mobile-inline-links{ display:flex; } }
+@media (min-width:1024px){ .nba-mobile-inline-links{ display:none !important; } }
+.nba-mobile-inline-link {
+  display: inline-block; padding: 6px 8px;
+  font-size: 11px; font-weight: 500;
+  letter-spacing: 0.02em;
+  color: var(--nba-muted-fg); text-decoration: none;
+  border-bottom: 2px solid transparent;
+  transition: color var(--nba-transition), border-color var(--nba-transition);
+}
+.nba-mobile-inline-link:hover {
+  color: var(--nba-navy) !important;
+  border-bottom-color: var(--nba-primary) !important;
+}
 
 /* ── Mobile nav ── */
 .nba-mobile-nav {
