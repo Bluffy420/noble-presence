@@ -22,7 +22,6 @@ export function SiteHeader() {
 
   return (
     <>
-      {/* Inject keyframes into the document */}
       <style>{`
         @keyframes headerFadeUp {
           0% { opacity: 0; transform: translateY(-16px); }
@@ -58,47 +57,49 @@ export function SiteHeader() {
           style={{
             margin: "0 auto",
             display: "flex",
-            height: 72,
+            height: 64,
             maxWidth: 1280,
             alignItems: "center",
             justifyContent: "space-between",
-            padding: "0 24px",
+            padding: "0 16px",
           }}
         >
-          {/* Logo badge + text — on mobile (< 768px) only the logo icon shows */}
+          {/* Logo badge + name */}
           <Link
             to="/"
             onClick={() => setOpen(false)}
             style={{
               display: "flex",
               alignItems: "center",
-              gap: "12px",
+              gap: "10px",
               textDecoration: "none",
-              transition: "all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
-            }}
-            onMouseEnter={(e) => {
-              e.currentTarget.style.opacity = "0.85";
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.opacity = "1";
+              flexShrink: 1,
+              minWidth: 0,
+              overflow: "hidden",
             }}
           >
             <img
               src="/logo.png"
               alt="NB Associates"
               style={{
-                height: 48,
-                width: 48,
+                height: 40,
+                width: 40,
                 display: "block",
                 borderRadius: "50%",
+                flexShrink: 0,
               }}
             />
             <div
-              className="nba-logo-text-desktop"
-              style={{ display: "flex", flexDirection: "column", lineHeight: 1.15 }}
+              style={{
+                display: "flex",
+                flexDirection: "column",
+                lineHeight: 1.15,
+                minWidth: 0,
+                overflow: "hidden",
+              }}
             >
-              <span style={{ fontSize: 16, fontWeight: 700, letterSpacing: "0.06em", color: "#0F172A" }}>NB ASSOCIATES</span>
-              <span style={{ fontSize: 9.5, fontWeight: 600, letterSpacing: "0.14em", textTransform: "uppercase", color: "#64748b" }}>Advocates &amp; Legal Consultants</span>
+              <span style={{ fontSize: 14, fontWeight: 700, letterSpacing: "0.06em", color: "#0F172A", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>NB ASSOCIATES</span>
+              <span style={{ fontSize: 8.5, fontWeight: 600, letterSpacing: "0.14em", textTransform: "uppercase", color: "#64748b", whiteSpace: "nowrap", overflow: "hidden", textOverflow: "ellipsis" }}>Advocates &amp; Legal Consultants</span>
             </div>
           </Link>
 
@@ -109,7 +110,7 @@ export function SiteHeader() {
               alignItems: "center",
               gap: 2,
             }}
-            className="max-lg:hidden lg:flex"
+            className="max-md:hidden"
           >
             {nav.map((n) => (
               <Link
@@ -189,80 +190,110 @@ export function SiteHeader() {
             </div>
           </nav>
 
-          {/* Hamburger */}
-          <button
-            aria-label="Toggle menu"
-            onClick={() => setOpen((o) => !o)}
+          {/* Mobile: compact inline nav links + hamburger */}
+          <div
+            className="md:hidden"
             style={{
-              display: "inline-flex",
-              height: 40,
-              width: 40,
+              display: "flex",
               alignItems: "center",
-              justifyContent: "center",
-              background: "none",
-              border: "none",
-              cursor: "pointer",
-              padding: 0,
-              borderRadius: 6,
-              transition: "all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
-            }}
-            className="lg:hidden"
-            onMouseEnter={(e) => {
-              e.currentTarget.style.background = "#f8fafc";
-            }}
-            onMouseLeave={(e) => {
-              e.currentTarget.style.background = "none";
+              gap: "4px",
+              flexShrink: 0,
             }}
           >
-            <span className="sr-only">Menu</span>
-            <div style={{ display: "flex", flexDirection: "column", gap: 5 }}>
-              <span
-                style={{
-                  display: "block",
-                  height: 2,
-                  width: 20,
-                  background: "#0F172A",
-                  borderRadius: 1,
-                  transition: "transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
-                  transform: open ? "translateY(7px) rotate(45deg)" : "none",
-                }}
-              />
-              <span
-                style={{
-                  display: "block",
-                  height: 2,
-                  width: 20,
-                  background: "#0F172A",
-                  borderRadius: 1,
-                  transition: "opacity 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
-                  opacity: open ? 0 : 1,
-                }}
-              />
-              <span
-                style={{
-                  display: "block",
-                  height: 2,
-                  width: 20,
-                  background: "#0F172A",
-                  borderRadius: 1,
-                  transition: "transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
-                  transform: open ? "translateY(-7px) rotate(-45deg)" : "none",
-                }}
-              />
-            </div>
-          </button>
+            {/* Mobile inline links — always visible, compact */}
+            {nav.slice(0, 3).map((n) => (
+              <Link
+                key={n.to}
+                to={n.to}
+                onClick={() => setOpen(false)}
+                style={{ textDecoration: "none" }}
+                activeProps={{ style: { color: "#1d4ed8" } }}
+              >
+                {({ isActive }) => (
+                  <span
+                    style={{
+                      display: "inline-block",
+                      padding: "6px 8px",
+                      fontSize: 11,
+                      fontWeight: isActive ? 700 : 500,
+                      letterSpacing: "0.02em",
+                      color: isActive ? "#1d4ed8" : "#64748b",
+                      borderBottom: isActive ? "2px solid #1d4ed8" : "2px solid transparent",
+                      transition: "all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
+                    }}
+                  >
+                    {n.label}
+                  </span>
+                )}
+              </Link>
+            ))}
+            <button
+              aria-label={open ? "Close menu" : "Open menu"}
+              onClick={() => setOpen((o) => !o)}
+              style={{
+                display: "inline-flex",
+                height: 36,
+                width: 36,
+                alignItems: "center",
+                justifyContent: "center",
+                background: open ? "#f1f5f9" : "none",
+                border: "none",
+                cursor: "pointer",
+                padding: 0,
+                borderRadius: 6,
+                transition: "all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
+                marginLeft: 2,
+              }}
+            >
+              <div style={{ display: "flex", flexDirection: "column", gap: 4 }}>
+                <span
+                  style={{
+                    display: "block",
+                    height: 2,
+                    width: 18,
+                    background: "#0F172A",
+                    borderRadius: 1,
+                    transition: "transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
+                    transform: open ? "translateY(6px) rotate(45deg)" : "none",
+                  }}
+                />
+                <span
+                  style={{
+                    display: "block",
+                    height: 2,
+                    width: 18,
+                    background: "#0F172A",
+                    borderRadius: 1,
+                    transition: "opacity 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
+                    opacity: open ? 0 : 1,
+                  }}
+                />
+                <span
+                  style={{
+                    display: "block",
+                    height: 2,
+                    width: 18,
+                    background: "#0F172A",
+                    borderRadius: 1,
+                    transition: "transform 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
+                    transform: open ? "translateY(-6px) rotate(-45deg)" : "none",
+                  }}
+                />
+              </div>
+            </button>
+          </div>
         </div>
 
-        {/* Mobile nav */}
+        {/* Mobile expanded nav — shows the remaining links */}
         {open && (
           <div
             style={{
               background: "#ffffff",
               borderTop: "1px solid #e2e8f0",
               boxShadow: "0 20px 60px rgba(15,23,42,0.1)",
-              animation: "mobileNavFadeIn 0.25s ease-out both",
+              animation: "mobileNavFadeIn 0.2s ease-out both",
             }}
-            className="lg:hidden"
+            className="md:hidden"
           >
             <nav
               style={{
@@ -270,10 +301,11 @@ export function SiteHeader() {
                 maxWidth: 1280,
                 display: "flex",
                 flexDirection: "column",
-                padding: "8px 24px 24px",
+                padding: "4px 16px 16px",
               }}
             >
-              {nav.map((n) => (
+              {/* Remaining links (index 3+) */}
+              {nav.slice(3).map((n) => (
                 <Link
                   key={n.to}
                   to={n.to}
@@ -286,38 +318,15 @@ export function SiteHeader() {
                       style={{
                         display: "flex",
                         alignItems: "center",
-                        gap: 12,
+                        gap: 10,
                         borderBottom: "1px solid #e2e8f0",
-                        padding: "14px 0",
+                        padding: "12px 0",
                         fontSize: 14,
                         fontWeight: isActive ? 600 : 500,
                         color: isActive ? "#1d4ed8" : "#64748b",
                         transition: "all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
-                        ...(isActive
-                          ? { boxShadow: "0 0 20px rgba(29,78,216,0.15)" }
-                          : {}),
-                      }}
-                      onMouseEnter={(e) => {
-                        if (!isActive) {
-                          e.currentTarget.style.color = "#0F172A";
-                          e.currentTarget.style.paddingLeft = "8px";
-                        }
-                      }}
-                      onMouseLeave={(e) => {
-                        if (!isActive) {
-                          e.currentTarget.style.color = "#64748b";
-                          e.currentTarget.style.paddingLeft = "0";
-                        }
                       }}
                     >
-                      <span
-                        style={{
-                          height: 1,
-                          width: isActive ? 24 : 0,
-                          background: "#1d4ed8",
-                          transition: "width 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
-                        }}
-                      />
                       {n.label}
                     </div>
                   )}
@@ -330,9 +339,9 @@ export function SiteHeader() {
                   display: "flex",
                   alignItems: "center",
                   justifyContent: "center",
-                  height: 46,
-                  marginTop: 16,
-                  fontSize: 14,
+                  height: 44,
+                  marginTop: 12,
+                  fontSize: 13,
                   fontWeight: 600,
                   textDecoration: "none",
                   background: "linear-gradient(135deg, #0F172A, #1a2744)",
@@ -341,16 +350,6 @@ export function SiteHeader() {
                   borderRadius: 6,
                   cursor: "pointer",
                   transition: "all 0.3s cubic-bezier(0.25, 0.46, 0.45, 0.94)",
-                }}
-                onMouseEnter={(e) => {
-                  e.currentTarget.style.background = "#1d4ed8";
-                  e.currentTarget.style.transform = "translateY(-1px)";
-                  e.currentTarget.style.boxShadow = "0 4px 14px rgba(29,78,216,0.35)";
-                }}
-                onMouseLeave={(e) => {
-                  e.currentTarget.style.background = "linear-gradient(135deg, #0F172A, #1a2744)";
-                  e.currentTarget.style.transform = "";
-                  e.currentTarget.style.boxShadow = "none";
                 }}
               >
                 Consult Us
